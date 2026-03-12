@@ -81,65 +81,65 @@ const LL={energy:"能源",resource:"基础资源",agriculture:"农业",mining:"�
 /* ═══ data ═══ */
 function getData(){
 const N=[
-{id:1,n:"Power",c:"energy"},{id:2,n:"Water",c:"resource"},{id:66,n:"Seeds",c:"agriculture"},
-{id:10,n:"Crude Oil",c:"refinery"},{id:14,n:"Minerals",c:"mining"},{id:15,n:"Bauxite",c:"mining"},
-{id:16,n:"Silicon",c:"mining"},{id:42,n:"Iron Ore",c:"mining"},{id:44,n:"Sand",c:"mining"},
-{id:68,n:"Gold Ore",c:"mining"},{id:104,n:"Clay",c:"quarry"},{id:105,n:"Limestone",c:"quarry"},
-{id:106,n:"Wood",c:"quarry"},
-{id:3,n:"Apples",c:"agriculture"},{id:4,n:"Oranges",c:"agriculture"},{id:5,n:"Grapes",c:"agriculture"},
-{id:6,n:"Grain",c:"agriculture"},{id:72,n:"Sugarcane",c:"agriculture"},{id:40,n:"Cotton",c:"agriculture"},
-{id:118,n:"Coffee Beans",c:"agriculture"},{id:120,n:"Vegetables",c:"agriculture"},{id:136,n:"Cocoa",c:"agriculture"},
-{id:17,n:"Chemicals",c:"mining"},{id:18,n:"Aluminium",c:"intermediate"},{id:43,n:"Steel",c:"intermediate"},
-{id:45,n:"Glass",c:"intermediate"},{id:69,n:"Golden Bars",c:"intermediate"},{id:73,n:"Ethanol",c:"refinery"},
-{id:74,n:"Methane",c:"refinery"},{id:12,n:"Diesel",c:"refinery"},{id:108,n:"Planks",c:"construction"},
-{id:103,n:"Cement",c:"construction"},{id:102,n:"Bricks",c:"construction"},
-{id:11,n:"Petrol",c:"refinery"},{id:19,n:"Plastic",c:"intermediate"},{id:41,n:"Fabric",c:"intermediate"},
-{id:20,n:"Processors",c:"factory"},{id:75,n:"Carbon Fibers",c:"intermediate"},{id:135,n:"Sugar",c:"food"},
-{id:133,n:"Flour",c:"food"},{id:139,n:"Fodder",c:"food"},{id:141,n:"Vegetable Oil",c:"food"},
-{id:119,n:"Coffee Powder",c:"food"},{id:107,n:"Steel Beams",c:"construction"},
-{id:101,n:"Reinforced Concrete",c:"construction"},{id:110,n:"Tools",c:"construction"},
-{id:109,n:"Windows",c:"construction"},{id:9,n:"Eggs",c:"agriculture"},{id:13,n:"Transport",c:"refinery"},
-{id:46,n:"Leather",c:"intermediate"},
-{id:21,n:"Electronic Comps",c:"factory"},{id:22,n:"Batteries",c:"factory"},
-{id:76,n:"Carbon Composite",c:"intermediate"},{id:35,n:"Software",c:"factory"},
-{id:115,n:"Cows",c:"agriculture"},{id:116,n:"Pigs",c:"agriculture"},{id:134,n:"Butter",c:"food"},
-{id:137,n:"Dough",c:"food"},{id:138,n:"Sauce",c:"food"},{id:60,n:"Underwear",c:"consumer"},
-{id:62,n:"Dress",c:"consumer"},{id:83,n:"Rocket Fuel",c:"aerospace"},{id:85,n:"Solid Fuel Booster",c:"aerospace"},
-{id:142,n:"Salad",c:"food"},
-{id:23,n:"Displays",c:"factory"},{id:7,n:"Steak",c:"agriculture"},{id:8,n:"Sausages",c:"agriculture"},
-{id:117,n:"Milk",c:"agriculture"},{id:52,n:"Combustion Engine",c:"factory"},
-{id:48,n:"Electric Motor",c:"factory"},{id:50,n:"Basic Interior",c:"factory"},
-{id:79,n:"High Grade E-Comps",c:"aerospace"},{id:77,n:"Fuselage",c:"aerospace"},
-{id:78,n:"Wing",c:"aerospace"},{id:84,n:"Propellant Tank",c:"aerospace"},
-{id:86,n:"Rocket Engine",c:"aerospace"},{id:87,n:"Heat Shield",c:"aerospace"},
-{id:89,n:"Jet Engine",c:"aerospace"},{id:111,n:"Construction Units",c:"construction"},
-{id:114,n:"Robots",c:"factory"},{id:61,n:"Gloves",c:"consumer"},{id:63,n:"Stiletto Heel",c:"consumer"},
-{id:65,n:"Sneakers",c:"consumer"},{id:49,n:"Luxury Interior",c:"factory"},
-{id:124,n:"Orange Juice",c:"food"},{id:125,n:"Apple Cider",c:"food"},{id:126,n:"Ginger Beer",c:"food"},
-{id:128,n:"Pasta",c:"food"},{id:132,n:"Cocktails",c:"food"},{id:143,n:"Samosa",c:"food"},
-{id:121,n:"Bread",c:"food"},
-{id:24,n:"Smartphones",c:"consumer"},{id:25,n:"Tablets",c:"consumer"},{id:27,n:"Monitors",c:"consumer"},
-{id:28,n:"Televisions",c:"consumer"},{id:47,n:"On-board Computer",c:"factory"},
-{id:51,n:"Car Body",c:"factory"},{id:80,n:"Flight Computer",c:"aerospace"},
-{id:88,n:"Ion Drive",c:"aerospace"},{id:82,n:"Attitude Control",c:"aerospace"},
-{id:112,n:"Bulldozer",c:"construction"},{id:122,n:"Cheese",c:"food"},{id:140,n:"Chocolate",c:"food"},
-{id:71,n:"Necklace",c:"consumer"},{id:64,n:"Handbags",c:"consumer"},{id:70,n:"Luxury Watch",c:"consumer"},
-{id:123,n:"Apple Pie",c:"food"},{id:129,n:"Hamburger",c:"food"},{id:131,n:"Meat Balls",c:"food"},
-{id:26,n:"Laptops",c:"consumer"},{id:81,n:"Cockpit",c:"aerospace"},
-{id:90,n:"Sub-orbital 2nd Stage",c:"aerospace"},{id:92,n:"Orbital Booster",c:"aerospace"},
-{id:53,n:"Economy E-Car",c:"consumer"},{id:54,n:"Luxury E-Car",c:"consumer"},
-{id:55,n:"Economy Car",c:"consumer"},{id:56,n:"Luxury Car",c:"consumer"},
-{id:57,n:"Truck",c:"consumer"},{id:99,n:"Satellite",c:"aerospace"},
-{id:127,n:"Frozen Pizza",c:"food"},{id:130,n:"Lasagna",c:"food"},
-{id:97,n:"Single Engine Plane",c:"aerospace"},{id:98,n:"Quadcopter",c:"aerospace"},
-{id:91,n:"Sub-orbital Rocket",c:"aerospace"},{id:95,n:"Jumbo Jet",c:"aerospace"},
-{id:96,n:"Luxury Jet",c:"aerospace"},{id:93,n:"Starship",c:"aerospace"},
-{id:94,n:"BFR",c:"aerospace"},
-{id:29,n:"Plant Research",c:"research"},{id:30,n:"Energy Research",c:"research"},
-{id:31,n:"Mining Research",c:"research"},{id:32,n:"Electronics Research",c:"research"},
-{id:33,n:"Breeding Research",c:"research"},{id:34,n:"Chemistry Research",c:"research"},
-{id:58,n:"Automotive Research",c:"research"},{id:59,n:"Fashion Research",c:"research"},
-{id:100,n:"Aerospace Research",c:"research"},{id:113,n:"Materials Research",c:"research"},
+{id:1,n:"Power",zh:"电力",c:"energy"},{id:2,n:"Water",zh:"水",c:"resource"},{id:66,n:"Seeds",zh:"种子",c:"agriculture"},
+{id:10,n:"Crude Oil",zh:"原油",c:"refinery"},{id:14,n:"Minerals",zh:"矿石",c:"mining"},{id:15,n:"Bauxite",zh:"铝土矿",c:"mining"},
+{id:16,n:"Silicon",zh:"硅",c:"mining"},{id:42,n:"Iron Ore",zh:"铁矿石",c:"mining"},{id:44,n:"Sand",zh:"沙子",c:"mining"},
+{id:68,n:"Gold Ore",zh:"金矿石",c:"mining"},{id:104,n:"Clay",zh:"黏土",c:"quarry"},{id:105,n:"Limestone",zh:"石灰石",c:"quarry"},
+{id:106,n:"Wood",zh:"木材",c:"quarry"},
+{id:3,n:"Apples",zh:"苹果",c:"agriculture"},{id:4,n:"Oranges",zh:"橙子",c:"agriculture"},{id:5,n:"Grapes",zh:"葡萄",c:"agriculture"},
+{id:6,n:"Grain",zh:"谷物",c:"agriculture"},{id:72,n:"Sugarcane",zh:"甘蔗",c:"agriculture"},{id:40,n:"Cotton",zh:"棉花",c:"agriculture"},
+{id:118,n:"Coffee Beans",zh:"咖啡豆",c:"agriculture"},{id:120,n:"Vegetables",zh:"蔬菜",c:"agriculture"},{id:136,n:"Cocoa",zh:"可可",c:"agriculture"},
+{id:17,n:"Chemicals",zh:"化学品",c:"mining"},{id:18,n:"Aluminium",zh:"铝",c:"intermediate"},{id:43,n:"Steel",zh:"钢铁",c:"intermediate"},
+{id:45,n:"Glass",zh:"玻璃",c:"intermediate"},{id:69,n:"Golden Bars",zh:"金条",c:"intermediate"},{id:73,n:"Ethanol",zh:"乙醇",c:"refinery"},
+{id:74,n:"Methane",zh:"甲烷",c:"refinery"},{id:12,n:"Diesel",zh:"柴油",c:"refinery"},{id:108,n:"Planks",zh:"木板",c:"construction"},
+{id:103,n:"Cement",zh:"水泥",c:"construction"},{id:102,n:"Bricks",zh:"砖块",c:"construction"},
+{id:11,n:"Petrol",zh:"汽油",c:"refinery"},{id:19,n:"Plastic",zh:"塑料",c:"intermediate"},{id:41,n:"Fabric",zh:"织物",c:"intermediate"},
+{id:20,n:"Processors",zh:"处理器",c:"factory"},{id:75,n:"Carbon Fibers",zh:"碳纤维",c:"intermediate"},{id:135,n:"Sugar",zh:"糖",c:"food"},
+{id:133,n:"Flour",zh:"面粉",c:"food"},{id:139,n:"Fodder",zh:"饲料",c:"food"},{id:141,n:"Vegetable Oil",zh:"植物油",c:"food"},
+{id:119,n:"Coffee Powder",zh:"咖啡粉",c:"food"},{id:107,n:"Steel Beams",zh:"钢梁",c:"construction"},
+{id:101,n:"Reinforced Concrete",zh:"钢筋混凝土",c:"construction"},{id:110,n:"Tools",zh:"工具",c:"construction"},
+{id:109,n:"Windows",zh:"玻璃窗",c:"construction"},{id:9,n:"Eggs",zh:"鸡蛋",c:"agriculture"},{id:13,n:"Transport",zh:"运输",c:"refinery"},
+{id:46,n:"Leather",zh:"皮革",c:"intermediate"},
+{id:21,n:"Electronic Comps",zh:"电子元件",c:"factory"},{id:22,n:"Batteries",zh:"电池",c:"factory"},
+{id:76,n:"Carbon Composite",zh:"碳复合材料",c:"intermediate"},{id:35,n:"Software",zh:"软件",c:"factory"},
+{id:115,n:"Cows",zh:"奶牛",c:"agriculture"},{id:116,n:"Pigs",zh:"猪",c:"agriculture"},{id:134,n:"Butter",zh:"黄油",c:"food"},
+{id:137,n:"Dough",zh:"面团",c:"food"},{id:138,n:"Sauce",zh:"酱料",c:"food"},{id:60,n:"Underwear",zh:"内衣",c:"consumer"},
+{id:62,n:"Dress",zh:"连衣裙",c:"consumer"},{id:83,n:"Rocket Fuel",zh:"火箭燃料",c:"aerospace"},{id:85,n:"Solid Fuel Booster",zh:"固体燃料助推器",c:"aerospace"},
+{id:142,n:"Salad",zh:"沙拉",c:"food"},
+{id:23,n:"Displays",zh:"显示屏",c:"factory"},{id:7,n:"Steak",zh:"牛排",c:"agriculture"},{id:8,n:"Sausages",zh:"香肠",c:"agriculture"},
+{id:117,n:"Milk",zh:"牛奶",c:"agriculture"},{id:52,n:"Combustion Engine",zh:"内燃机",c:"factory"},
+{id:48,n:"Electric Motor",zh:"电动机",c:"factory"},{id:50,n:"Basic Interior",zh:"基础内饰",c:"factory"},
+{id:79,n:"High Grade E-Comps",zh:"高级电子元件",c:"aerospace"},{id:77,n:"Fuselage",zh:"机身",c:"aerospace"},
+{id:78,n:"Wing",zh:"机翼",c:"aerospace"},{id:84,n:"Propellant Tank",zh:"推进剂罐",c:"aerospace"},
+{id:86,n:"Rocket Engine",zh:"火箭发动机",c:"aerospace"},{id:87,n:"Heat Shield",zh:"隔热板",c:"aerospace"},
+{id:89,n:"Jet Engine",zh:"喷气发动机",c:"aerospace"},{id:111,n:"Construction Units",zh:"建筑单元",c:"construction"},
+{id:114,n:"Robots",zh:"机器人",c:"factory"},{id:61,n:"Gloves",zh:"手套",c:"consumer"},{id:63,n:"Stiletto Heel",zh:"细跟高跟鞋",c:"consumer"},
+{id:65,n:"Sneakers",zh:"运动鞋",c:"consumer"},{id:49,n:"Luxury Interior",zh:"豪华内饰",c:"factory"},
+{id:124,n:"Orange Juice",zh:"橙汁",c:"food"},{id:125,n:"Apple Cider",zh:"苹果酒",c:"food"},{id:126,n:"Ginger Beer",zh:"姜汁啤酒",c:"food"},
+{id:128,n:"Pasta",zh:"意大利面",c:"food"},{id:132,n:"Cocktails",zh:"鸡尾酒",c:"food"},{id:143,n:"Samosa",zh:"炸三角",c:"food"},
+{id:121,n:"Bread",zh:"面包",c:"food"},
+{id:24,n:"Smartphones",zh:"智能手机",c:"consumer"},{id:25,n:"Tablets",zh:"平板电脑",c:"consumer"},{id:27,n:"Monitors",zh:"显示器",c:"consumer"},
+{id:28,n:"Televisions",zh:"电视",c:"consumer"},{id:47,n:"On-board Computer",zh:"车载电脑",c:"factory"},
+{id:51,n:"Car Body",zh:"车身",c:"factory"},{id:80,n:"Flight Computer",zh:"飞行电脑",c:"aerospace"},
+{id:88,n:"Ion Drive",zh:"离子驱动",c:"aerospace"},{id:82,n:"Attitude Control",zh:"姿态控制系统",c:"aerospace"},
+{id:112,n:"Bulldozer",zh:"推土机",c:"construction"},{id:122,n:"Cheese",zh:"奶酪",c:"food"},{id:140,n:"Chocolate",zh:"巧克力",c:"food"},
+{id:71,n:"Necklace",zh:"项链",c:"consumer"},{id:64,n:"Handbags",zh:"手提包",c:"consumer"},{id:70,n:"Luxury Watch",zh:"奢华手表",c:"consumer"},
+{id:123,n:"Apple Pie",zh:"苹果派",c:"food"},{id:129,n:"Hamburger",zh:"汉堡",c:"food"},{id:131,n:"Meat Balls",zh:"肉丸",c:"food"},
+{id:26,n:"Laptops",zh:"笔记本电脑",c:"consumer"},{id:81,n:"Cockpit",zh:"驾驶舱",c:"aerospace"},
+{id:90,n:"Sub-orbital 2nd Stage",zh:"亚轨道二级",c:"aerospace"},{id:92,n:"Orbital Booster",zh:"轨道助推器",c:"aerospace"},
+{id:53,n:"Economy E-Car",zh:"经济型电动车",c:"consumer"},{id:54,n:"Luxury E-Car",zh:"豪华电动车",c:"consumer"},
+{id:55,n:"Economy Car",zh:"经济型汽车",c:"consumer"},{id:56,n:"Luxury Car",zh:"豪华汽车",c:"consumer"},
+{id:57,n:"Truck",zh:"卡车",c:"consumer"},{id:99,n:"Satellite",zh:"卫星",c:"aerospace"},
+{id:127,n:"Frozen Pizza",zh:"冷冻披萨",c:"food"},{id:130,n:"Lasagna",zh:"千层面",c:"food"},
+{id:97,n:"Single Engine Plane",zh:"单引擎飞机",c:"aerospace"},{id:98,n:"Quadcopter",zh:"四旋翼无人机",c:"aerospace"},
+{id:91,n:"Sub-orbital Rocket",zh:"亚轨道火箭",c:"aerospace"},{id:95,n:"Jumbo Jet",zh:"巨型客机",c:"aerospace"},
+{id:96,n:"Luxury Jet",zh:"豪华私人飞机",c:"aerospace"},{id:93,n:"Starship",zh:"星舰",c:"aerospace"},
+{id:94,n:"BFR",zh:"超重型火箭",c:"aerospace"},
+{id:29,n:"Plant Research",zh:"植物研究",c:"research"},{id:30,n:"Energy Research",zh:"能源研究",c:"research"},
+{id:31,n:"Mining Research",zh:"采矿研究",c:"research"},{id:32,n:"Electronics Research",zh:"电子研究",c:"research"},
+{id:33,n:"Breeding Research",zh:"育种研究",c:"research"},{id:34,n:"Chemistry Research",zh:"化学研究",c:"research"},
+{id:58,n:"Automotive Research",zh:"汽车研究",c:"research"},{id:59,n:"Fashion Research",zh:"时尚研究",c:"research"},
+{id:100,n:"Aerospace Research",zh:"航空研究",c:"research"},{id:113,n:"Materials Research",zh:"材料研究",c:"research"},
 ];
 
 const E=[
@@ -267,7 +267,7 @@ const E=[
 {s:88,t:99,a:1},{s:80,t:99,a:1},{s:79,t:99,a:2},{s:23,t:99,a:1},{s:87,t:99,a:1},
 ];
 
-return {nodes:N.map(d=>({id:d.id,name:d.n,cat:d.c})), edges:E.map(d=>({source:d.s,target:d.t,amount:d.a||1}))};
+return {nodes:N.map(d=>({id:d.id,name:d.n,zh:d.zh||d.n,cat:d.c})), edges:E.map(d=>({source:d.s,target:d.t,amount:d.a||1}))};
 }
 
 /* ═══ compute layer (longest-path from roots) ═══ */
@@ -433,14 +433,18 @@ function render(){
 
   /* ── labels ── */
   const lG=gRoot.append("g");
+  const lbOff=d=>d.x+Math.max(5,Math.min(10,3+(deg[d.id].i+deg[d.id].o)*.3))+3;
   lblSel=lG.selectAll("text").data(nodes).join("text")
-    .attr("x",d=>d.x+Math.max(5,Math.min(10,3+(deg[d.id].i+deg[d.id].o)*.3))+3)
+    .attr("x",d=>lbOff(d))
     .attr("y",d=>d.y)
-    .attr("dominant-baseline","middle")
-    .attr("font-family","Noto Sans SC,sans-serif").attr("font-size",8.5)
-    .attr("fill","rgba(200,214,229,.55)")
-    .text(d=>d.name)
-    .style("display",showLabels?"block":"none");
+    .attr("font-family","Noto Sans SC,sans-serif")
+    .attr("fill","rgba(200,214,229,.6)")
+    .style("display",showLabels?"block":"none")
+    .each(function(d){
+      const t=d3.select(this);
+      t.append("tspan").attr("x",lbOff(d)).attr("dy","-0.3em").attr("font-size",9).attr("font-weight",500).text(d.zh);
+      t.append("tspan").attr("x",lbOff(d)).attr("dy","1.2em").attr("font-size",7).attr("fill","rgba(200,214,229,.35)").text(d.name);
+    });
 
   /* ── zoom + initial fit ── */
   const zm=d3.zoom().scaleExtent([.05,5]).on("zoom",e=>{gRoot.attr("transform",e.transform);});
@@ -481,7 +485,7 @@ function render(){
   /* ── interactions ── */
   function onOver(ev,d){
     const tip=document.getElementById("tip");
-    tip.innerHTML=`<b>${d.name}</b><br><span style="color:${CC[d.cat]}">${LL[d.cat]||d.cat}</span> · Layer ${d.layer}`;
+    tip.innerHTML=`<b>${d.zh}</b> <span style="color:rgba(200,214,229,.4);font-size:10px">${d.name}</span><br><span style="color:${CC[d.cat]}">${LL[d.cat]||d.cat}</span> · Layer ${d.layer}`;
     tip.classList.add("v"); tip.style.left=(ev.pageX+10)+"px"; tip.style.top=(ev.pageY-10)+"px";
     if(!selNode) hlNode(d);
   }
@@ -495,13 +499,13 @@ function render(){
     });
     nodeSel.style("opacity",n=>conn.has(n.id)?1:.04);
     lblSel.style("opacity",n=>conn.has(n.id)?1:.03)
-      .attr("font-weight",n=>n.id===d.id?700:400).attr("font-size",n=>n.id===d.id?10.5:8.5);
+      .attr("font-weight",n=>n.id===d.id?700:400);
     linkSel.style("stroke-opacity",e=>hlE.has(e)?.65:.015);
   }
   function clearHL(){
     selNode=null;
     nodeSel.style("opacity",1);
-    lblSel.style("opacity",1).attr("font-weight",400).attr("font-size",8.5);
+    lblSel.style("opacity",1).attr("font-weight",400);
     linkSel.style("stroke-opacity",.12);
     document.getElementById("info").style.display="none";
   }
@@ -513,14 +517,14 @@ function render(){
       if(e.target===d.id&&map[e.source]) ins.push({nd:map[e.source],a:e.amount});
       if(e.source===d.id&&map[e.target]) outs.push({nd:map[e.target],a:e.amount});
     });
-    let h=`<div class="nt">${d.name}</div><div class="nm">${LL[d.cat]||d.cat} · ID ${d.id} · Layer ${d.layer}</div>`;
+    let h=`<div class="nt">${d.zh}</div><div class="nm" style="color:rgba(200,214,229,.5);margin-bottom:2px">${d.name}</div><div class="nm">${LL[d.cat]||d.cat} · ID ${d.id} · Layer ${d.layer}</div>`;
     if(ins.length){
       h+=`<div class="sl">原料 (${ins.length})</div>`;
-      ins.forEach(i=>{h+=`<div class="di" data-id="${i.nd.id}">← ${i.nd.name}<span class="am">×${i.a}</span></div>`;});
+      ins.forEach(i=>{h+=`<div class="di" data-id="${i.nd.id}">← ${i.nd.zh} <span style="color:rgba(200,214,229,.35);font-size:9px">${i.nd.name}</span><span class="am">×${i.a}</span></div>`;});
     } else h+=`<div class="sl">原料</div><div class="di" style="color:#4fd1c5">基础资源（无需原料）</div>`;
     if(outs.length){
       h+=`<div class="sl">用于生产 (${outs.length})</div>`;
-      outs.forEach(o=>{h+=`<div class="di" data-id="${o.nd.id}">→ ${o.nd.name}</div>`;});
+      outs.forEach(o=>{h+=`<div class="di" data-id="${o.nd.id}">→ ${o.nd.zh} <span style="color:rgba(200,214,229,.35);font-size:9px">${o.nd.name}</span></div>`;});
     }
     el.innerHTML=h;
     el.querySelectorAll(".di[data-id]").forEach(el=>{
@@ -537,7 +541,7 @@ function render(){
   document.getElementById("search").oninput=e=>{
     const q=e.target.value.toLowerCase().trim();
     if(!q){clearHL();return;}
-    const m=nodes.filter(n=>n.name.toLowerCase().includes(q));
+    const m=nodes.filter(n=>n.name.toLowerCase().includes(q)||n.zh.includes(q));
     if(m.length===1){selNode=m[0];hlNode(m[0]);showInfo(m[0]);}
     else if(m.length>1){
       const ids=new Set(m.map(n=>n.id));
