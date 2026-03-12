@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimCompanies · 生产关系层级图</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@300;400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:#0b0f19;color:#c8d6e5;overflow:hidden;height:100vh}
+#app{display:flex;flex-direction:column;height:100vh}
+
+.hdr{background:linear-gradient(135deg,#0d1321,#1a1f36);border-bottom:1px solid rgba(99,179,237,.12);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:100}
+.hdr h1{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:#63b3ed;letter-spacing:.8px}
+.hdr h1 b{color:#4fd1c5}
+.hdr-r{display:flex;gap:8px;align-items:center}
+.sb{width:170px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:rgba(99,179,237,.05);border:1px solid rgba(99,179,237,.2);border-radius:4px;color:#c8d6e5;outline:none}
+.sb:focus{border-color:#63b3ed}
+.sb::placeholder{color:rgba(200,214,229,.3)}
+.btn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 12px;border:1px solid rgba(99,179,237,.25);background:rgba(99,179,237,.06);color:#63b3ed;border-radius:3px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn:hover{background:rgba(99,179,237,.18);border-color:#63b3ed}
+.btn.on{background:rgba(79,209,197,.18);border-color:#4fd1c5;color:#4fd1c5}
+
+.main{flex:1;display:flex;position:relative;overflow:hidden}
+#gc{flex:1;position:relative}
+#gc svg{width:100%;height:100%;cursor:grab}
+#gc svg:active{cursor:grabbing}
+
+.side{width:260px;background:rgba(13,19,33,.96);border-left:1px solid rgba(99,179,237,.08);padding:14px;overflow-y:auto;flex-shrink:0;transition:width .2s}
+.side.off{width:0;padding:0;border:none;overflow:hidden}
+.side h3{font-family:'JetBrains Mono',monospace;font-size:10px;color:#4fd1c5;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.li{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:11px;cursor:pointer;opacity:.75;transition:opacity .15s}
+.li:hover{opacity:1}
+.li.off{opacity:.25}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+.ni{margin-top:16px;padding-top:14px;border-top:1px solid rgba(99,179,237,.08)}
+.nt{font-size:15px;font-weight:700;color:#f0f4f8;margin-bottom:4px}
+.nm{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(200,214,229,.45);margin-bottom:10px}
+.sl{font-family:'JetBrains Mono',monospace;font-size:9px;color:#4fd1c5;text-transform:uppercase;letter-spacing:1.5px;margin:10px 0 4px}
+.di{font-size:11px;padding:2px 0;color:#a0aec0;cursor:pointer;transition:color .12s}
+.di:hover{color:#63b3ed}
+.di .am{font-family:'JetBrains Mono',monospace;font-size:9px;color:#ed8936;margin-left:3px}
+
+.tip{position:absolute;pointer-events:none;background:rgba(13,19,33,.96);border:1px solid rgba(99,179,237,.25);border-radius:5px;padding:7px 11px;font-size:11px;color:#f0f4f8;z-index:300;opacity:0;transition:opacity .12s;max-width:220px}
+.tip.v{opacity:1}
+
+.st{position:absolute;bottom:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(200,214,229,.35);display:flex;gap:14px;z-index:50}
+.st b{color:#4fd1c5;font-weight:400}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hdr">
+    <h1>SIMCO<b>::</b>PRODUCTION_TREE</h1>
+    <div class="hdr-r">
+      <input class="sb" id="search" placeholder="搜索产品…"/>
+      <button class="btn" id="breset">重置</button>
+      <button class="btn on" id="blbl">标签</button>
+      <button class="btn" id="bside">面板</button>
+    </div>
+  </div>
+  <div class="main">
+    <div id="gc">
+      <div class="st" id="stats"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="side" id="side">
+      <h3>图例</h3>
+      <div id="leg"></div>
+      <div class="ni" id="info" style="display:none"></div>
+    </div>
+  </div>
+</div>
+<script>
+/* ═══ colors & labels ═══ */
+const CC={energy:"#f6e05e",resource:"#63b3ed",agriculture:"#68d391",mining:"#a0aec0",refinery:"#ed8936",factory:"#fc8181",consumer:"#b794f4",aerospace:"#4fd1c5",research:"#f687b3",intermediate:"#718096",quarry:"#d69e2e",food:"#f6ad55",construction:"#e2e8f0"};
+const LL={energy:"能源",resource:"基础资源",agriculture:"农业",mining:"采矿",refinery:"精炼/燃料",factory:"制造/电子",consumer:"终端消费品",aerospace:"航空航天",research:"研究",intermediate:"中间材料",quarry:"采石/伐木",food:"食品加工",construction:"建筑"};
+
+/* ═══ data ═══ */
+function getData(){
+const N=[
+{id:1,n:"Power",c:"energy"},{id:2,n:"Water",c:"resource"},{id:66,n:"Seeds",c:"agriculture"},
+{id:10,n:"Crude Oil",c:"refinery"},{id:14,n:"Minerals",c:"mining"},{id:15,n:"Bauxite",c:"mining"},
+{id:16,n:"Silicon",c:"mining"},{id:42,n:"Iron Ore",c:"mining"},{id:44,n:"Sand",c:"mining"},
+{id:68,n:"Gold Ore",c:"mining"},{id:104,n:"Clay",c:"quarry"},{id:105,n:"Limestone",c:"quarry"},
+{id:106,n:"Wood",c:"quarry"},
+{id:3,n:"Apples",c:"agriculture"},{id:4,n:"Oranges",c:"agriculture"},{id:5,n:"Grapes",c:"agriculture"},
+{id:6,n:"Grain",c:"agriculture"},{id:72,n:"Sugarcane",c:"agriculture"},{id:40,n:"Cotton",c:"agriculture"},
+{id:118,n:"Coffee Beans",c:"agriculture"},{id:120,n:"Vegetables",c:"agriculture"},{id:136,n:"Cocoa",c:"agriculture"},
+{id:17,n:"Chemicals",c:"mining"},{id:18,n:"Aluminium",c:"intermediate"},{id:43,n:"Steel",c:"intermediate"},
+{id:45,n:"Glass",c:"intermediate"},{id:69,n:"Golden Bars",c:"intermediate"},{id:73,n:"Ethanol",c:"refinery"},
+{id:74,n:"Methane",c:"refinery"},{id:12,n:"Diesel",c:"refinery"},{id:108,n:"Planks",c:"construction"},
+{id:103,n:"Cement",c:"construction"},{id:102,n:"Bricks",c:"construction"},
+{id:11,n:"Petrol",c:"refinery"},{id:19,n:"Plastic",c:"intermediate"},{id:41,n:"Fabric",c:"intermediate"},
+{id:20,n:"Processors",c:"factory"},{id:75,n:"Carbon Fibers",c:"intermediate"},{id:135,n:"Sugar",c:"food"},
+{id:133,n:"Flour",c:"food"},{id:139,n:"Fodder",c:"food"},{id:141,n:"Vegetable Oil",c:"food"},
+{id:119,n:"Coffee Powder",c:"food"},{id:107,n:"Steel Beams",c:"construction"},
+{id:101,n:"Reinforced Concrete",c:"construction"},{id:110,n:"Tools",c:"construction"},
+{id:109,n:"Windows",c:"construction"},{id:9,n:"Eggs",c:"agriculture"},{id:13,n:"Transport",c:"refinery"},
+{id:46,n:"Leather",c:"intermediate"},
+{id:21,n:"Electronic Comps",c:"factory"},{id:22,n:"Batteries",c:"factory"},
+{id:76,n:"Carbon Composite",c:"intermediate"},{id:35,n:"Software",c:"factory"},
+{id:115,n:"Cows",c:"agriculture"},{id:116,n:"Pigs",c:"agriculture"},{id:134,n:"Butter",c:"food"},
+{id:137,n:"Dough",c:"food"},{id:138,n:"Sauce",c:"food"},{id:60,n:"Underwear",c:"consumer"},
+{id:62,n:"Dress",c:"consumer"},{id:83,n:"Rocket Fuel",c:"aerospace"},{id:85,n:"Solid Fuel Booster",c:"aerospace"},
+{id:142,n:"Salad",c:"food"},
+{id:23,n:"Displays",c:"factory"},{id:7,n:"Steak",c:"agriculture"},{id:8,n:"Sausages",c:"agriculture"},
+{id:117,n:"Milk",c:"agriculture"},{id:52,n:"Combustion Engine",c:"factory"},
+{id:48,n:"Electric Motor",c:"factory"},{id:50,n:"Basic Interior",c:"factory"},
+{id:79,n:"High Grade E-Comps",c:"aerospace"},{id:77,n:"Fuselage",c:"aerospace"},
+{id:78,n:"Wing",c:"aerospace"},{id:84,n:"Propellant Tank",c:"aerospace"},
+{id:86,n:"Rocket Engine",c:"aerospace"},{id:87,n:"Heat Shield",c:"aerospace"},
+{id:89,n:"Jet Engine",c:"aerospace"},{id:111,n:"Construction Units",c:"construction"},
+{id:114,n:"Robots",c:"factory"},{id:61,n:"Gloves",c:"consumer"},{id:63,n:"Stiletto Heel",c:"consumer"},
+{id:65,n:"Sneakers",c:"consumer"},{id:49,n:"Luxury Interior",c:"factory"},
+{id:124,n:"Orange Juice",c:"food"},{id:125,n:"Apple Cider",c:"food"},{id:126,n:"Ginger Beer",c:"food"},
+{id:128,n:"Pasta",c:"food"},{id:132,n:"Cocktails",c:"food"},{id:143,n:"Samosa",c:"food"},
+{id:121,n:"Bread",c:"food"},
+{id:24,n:"Smartphones",c:"consumer"},{id:25,n:"Tablets",c:"consumer"},{id:27,n:"Monitors",c:"consumer"},
+{id:28,n:"Televisions",c:"consumer"},{id:47,n:"On-board Computer",c:"factory"},
+{id:51,n:"Car Body",c:"factory"},{id:80,n:"Flight Computer",c:"aerospace"},
+{id:88,n:"Ion Drive",c:"aerospace"},{id:82,n:"Attitude Control",c:"aerospace"},
+{id:112,n:"Bulldozer",c:"construction"},{id:122,n:"Cheese",c:"food"},{id:140,n:"Chocolate",c:"food"},
+{id:71,n:"Necklace",c:"consumer"},{id:64,n:"Handbags",c:"consumer"},{id:70,n:"Luxury Watch",c:"consumer"},
+{id:123,n:"Apple Pie",c:"food"},{id:129,n:"Hamburger",c:"food"},{id:131,n:"Meat Balls",c:"food"},
+{id:26,n:"Laptops",c:"consumer"},{id:81,n:"Cockpit",c:"aerospace"},
+{id:90,n:"Sub-orbital 2nd Stage",c:"aerospace"},{id:92,n:"Orbital Booster",c:"aerospace"},
+{id:53,n:"Economy E-Car",c:"consumer"},{id:54,n:"Luxury E-Car",c:"consumer"},
+{id:55,n:"Economy Car",c:"consumer"},{id:56,n:"Luxury Car",c:"consumer"},
+{id:57,n:"Truck",c:"consumer"},{id:99,n:"Satellite",c:"aerospace"},
+{id:127,n:"Frozen Pizza",c:"food"},{id:130,n:"Lasagna",c:"food"},
+{id:97,n:"Single Engine Plane",c:"aerospace"},{id:98,n:"Quadcopter",c:"aerospace"},
+{id:91,n:"Sub-orbital Rocket",c:"aerospace"},{id:95,n:"Jumbo Jet",c:"aerospace"},
+{id:96,n:"Luxury Jet",c:"aerospace"},{id:93,n:"Starship",c:"aerospace"},
+{id:94,n:"BFR",c:"aerospace"},
+{id:29,n:"Plant Research",c:"research"},{id:30,n:"Energy Research",c:"research"},
+{id:31,n:"Mining Research",c:"research"},{id:32,n:"Electronics Research",c:"research"},
+{id:33,n:"Breeding Research",c:"research"},{id:34,n:"Chemistry Research",c:"research"},
+{id:58,n:"Automotive Research",c:"research"},{id:59,n:"Fashion Research",c:"research"},
+{id:100,n:"Aerospace Research",c:"research"},{id:113,n:"Materials Research",c:"research"},
+];
+
+const E=[
+// Power → raw extractions
+{s:1,t:2},{s:1,t:10},{s:1,t:14},{s:1,t:15},{s:1,t:16},{s:1,t:42},{s:1,t:44},{s:1,t:68},
+// Power → intermediate processing
+{s:1,t:18,a:2},{s:1,t:43,a:2},{s:1,t:45,a:2},{s:1,t:69,a:2},{s:1,t:17,a:1},{s:1,t:73,a:1},
+{s:1,t:74,a:1},{s:1,t:75,a:1},{s:1,t:41,a:1},{s:1,t:12,a:1},{s:1,t:19,a:1},{s:1,t:83,a:5},
+// Water → crops
+{s:2,t:3,a:3},{s:2,t:4,a:3},{s:2,t:5,a:3},{s:2,t:6,a:1},{s:2,t:72,a:3},{s:2,t:40,a:3},
+{s:2,t:118,a:3},{s:2,t:120,a:2},{s:2,t:136,a:3},
+// Water → livestock & food
+{s:2,t:115,a:16},{s:2,t:116,a:4},{s:2,t:117,a:2},{s:2,t:138,a:1},{s:2,t:126,a:1},
+// Seeds → crops
+{s:66,t:3,a:1},{s:66,t:4,a:1},{s:66,t:5,a:1},{s:66,t:6,a:1},{s:66,t:72,a:1},{s:66,t:40,a:1},
+{s:66,t:118,a:1},{s:66,t:120,a:1},{s:66,t:136,a:1},
+// Crude Oil → refinery/materials
+{s:10,t:11,a:2},{s:10,t:12,a:2},{s:10,t:75,a:1},{s:10,t:19,a:1},
+// Mining
+{s:14,t:17,a:2},{s:15,t:18,a:3},{s:16,t:20,a:3},{s:42,t:43,a:3},{s:44,t:45,a:3},{s:68,t:69,a:3},
+// Construction materials
+{s:44,t:103,a:1},{s:105,t:103,a:3},{s:104,t:102,a:4},{s:106,t:108,a:3},
+{s:43,t:107,a:4},{s:43,t:101,a:2},{s:103,t:101,a:2},{s:43,t:110,a:2},{s:106,t:110,a:1},
+{s:45,t:109,a:3},{s:18,t:109,a:1},
+// Sugarcane → Ethanol, Sugar; Petrol, Diesel, Transport
+{s:72,t:73,a:4},{s:72,t:135,a:1},{s:73,t:11,a:1},{s:1,t:11,a:1},{s:73,t:12,a:1},
+{s:12,t:13,a:1},{s:1,t:13,a:1},
+// Chemicals → Batteries, Solid Fuel Booster
+{s:17,t:22,a:4},{s:17,t:85,a:50},
+// Agriculture processing
+{s:40,t:41,a:4},{s:6,t:133,a:15},{s:6,t:139,a:10},{s:6,t:9,a:2},
+// Vegetables → Fodder, Vegetable Oil
+{s:120,t:139,a:1},{s:120,t:141,a:10},
+// Fodder → livestock; Water edges above
+{s:139,t:115,a:12},{s:139,t:116,a:4},{s:139,t:117,a:1},
+// Livestock products
+{s:115,t:7},{s:115,t:46,a:1},{s:116,t:8},
+// Milk products
+{s:117,t:134,a:1},{s:117,t:122,a:1},{s:117,t:140,a:1},
+// Electronics
+{s:16,t:21,a:1},{s:20,t:21,a:1},{s:19,t:21,a:2},
+{s:45,t:23,a:2},{s:21,t:23,a:1},{s:19,t:23,a:1},{s:20,t:35,a:1},
+{s:21,t:24,a:1},{s:23,t:24,a:1},{s:22,t:24,a:1},{s:20,t:24,a:1},
+{s:21,t:25,a:2},{s:23,t:25,a:1},{s:22,t:25,a:1},{s:20,t:25,a:1},
+{s:21,t:26,a:2},{s:23,t:26,a:1},{s:22,t:26,a:1},{s:20,t:26,a:2},{s:18,t:26,a:1},
+{s:23,t:27,a:2},{s:21,t:27,a:2},{s:19,t:27,a:1},
+{s:23,t:28,a:2},{s:21,t:28,a:3},{s:19,t:28,a:2},
+// Carbon Fibers (CrudeOil+Power) → Carbon Composite
+{s:75,t:76,a:4},
+// Factory components
+{s:21,t:47,a:2},{s:20,t:47,a:1},{s:35,t:47,a:1},
+{s:21,t:48,a:2},{s:22,t:48,a:2},
+{s:41,t:49,a:3},{s:46,t:49,a:2},{s:21,t:49,a:1},
+{s:41,t:50,a:2},{s:19,t:50,a:2},
+{s:43,t:51,a:4},{s:18,t:51,a:2},{s:45,t:51,a:1},
+{s:43,t:52,a:2},{s:18,t:52,a:1},{s:21,t:52,a:1},
+// Cars
+{s:51,t:53,a:1},{s:48,t:53,a:1},{s:50,t:53,a:1},{s:47,t:53,a:1},
+{s:51,t:54,a:1},{s:48,t:54,a:1},{s:49,t:54,a:1},{s:47,t:54,a:1},
+{s:51,t:55,a:1},{s:52,t:55,a:1},{s:50,t:55,a:1},{s:47,t:55,a:1},
+{s:51,t:56,a:1},{s:52,t:56,a:1},{s:49,t:56,a:1},{s:47,t:56,a:1},
+{s:51,t:57,a:2},{s:52,t:57,a:2},{s:50,t:57,a:1},{s:47,t:57,a:1},
+// Fashion
+{s:41,t:60,a:2},{s:41,t:62,a:4},{s:41,t:61,a:2},{s:46,t:61,a:1},
+{s:46,t:63,a:2},{s:19,t:63,a:1},{s:46,t:64,a:3},{s:69,t:64,a:1},
+{s:46,t:65,a:2},{s:19,t:65,a:1},
+{s:69,t:70,a:2},{s:45,t:70,a:1},{s:21,t:70,a:1},{s:69,t:71,a:3},
+// Dough = Flour×2 + Butter×1 + Egg×1
+{s:133,t:137,a:2},{s:134,t:137,a:1},{s:9,t:137,a:1},
+// Sauce = Vegetables×2 + Butter×1 + Water×1 (Water edge above)
+{s:120,t:138,a:2},{s:134,t:138,a:1},
+// Bread, Apple Pie = Dough×1 + Apples×2 + Sugar×2
+{s:137,t:121,a:2},{s:137,t:123,a:1},{s:3,t:123,a:2},{s:135,t:123,a:2},
+// Orange Juice = Oranges×5 + Sugar×1; Apple Cider = Apples×8
+{s:4,t:124,a:5},{s:135,t:124,a:1},{s:3,t:125,a:8},
+// Ginger Beer = Water×1 + Vegetables×3 + Sugar×2 (Water edge above)
+{s:135,t:126,a:2},{s:120,t:126,a:3},
+// Frozen Pizza = Dough×2 + Cheese×1 + Sausages×1 + Vegetables×2
+{s:137,t:127,a:2},{s:122,t:127,a:1},{s:8,t:127,a:1},{s:120,t:127,a:2},
+// Pasta = Flour×2 + Eggs×2
+{s:133,t:128,a:2},{s:9,t:128,a:2},
+// Hamburger = Bread×1 + Steak×4 + Vegetables×3 + Butter×1 + VegetableOil×1
+{s:121,t:129,a:1},{s:7,t:129,a:4},{s:120,t:129,a:3},{s:134,t:129,a:1},{s:141,t:129,a:1},
+// Lasagna = Pasta×1 + Sauce×1 + Steak×1 + Cheese×1
+{s:128,t:130,a:1},{s:138,t:130,a:1},{s:7,t:130,a:1},{s:122,t:130,a:1},
+// Meat Balls = Sausages×2 + Sauce×1 + Bread×1 + VegetableOil×1
+{s:8,t:131,a:2},{s:138,t:131,a:1},{s:121,t:131,a:1},{s:141,t:131,a:1},
+// Cocktails = OrangeJuice×1 + AppleCider×1 + GingerBeer×2 + CoffeePowder×8
+{s:124,t:132,a:1},{s:125,t:132,a:1},{s:126,t:132,a:2},{s:119,t:132,a:8},
+// Salad = Vegetables×5 + VegetableOil×1 + Cheese×2
+{s:120,t:142,a:5},{s:141,t:142,a:1},{s:122,t:142,a:2},
+// Samosa = Flour×4 + Vegetables×5 + VegetableOil×1
+{s:133,t:143,a:4},{s:120,t:143,a:5},{s:141,t:143,a:1},
+// Chocolate = Cocoa×10 + Sugar×1 + Milk×1
+{s:136,t:140,a:10},{s:135,t:140,a:1},{s:117,t:140,a:1},
+// Coffee Powder = CoffeeBeans×10
+{s:118,t:119,a:10},
+// Construction
+{s:101,t:111,a:2},{s:102,t:111,a:2},{s:108,t:111,a:2},{s:109,t:111,a:1},{s:110,t:111,a:1},{s:107,t:111,a:1},
+{s:43,t:112,a:4},{s:52,t:112,a:1},{s:21,t:112,a:1},
+{s:43,t:114,a:2},{s:21,t:114,a:2},{s:20,t:114,a:1},{s:35,t:114,a:1},
+// Aerospace structures
+{s:76,t:77,a:4},{s:18,t:77,a:2},{s:76,t:78,a:3},{s:18,t:78,a:1},
+{s:21,t:79,a:3},{s:69,t:79,a:1},
+{s:79,t:80,a:2},{s:35,t:80,a:2},{s:20,t:80,a:1},
+{s:23,t:81,a:2},{s:80,t:81,a:1},{s:79,t:81,a:1},
+{s:79,t:82,a:2},{s:22,t:82,a:1},
+// RocketFuel=Methane×1+Power×5; PropellantTank; SFB=Aluminium+Chemicals+RocketFuel
+{s:74,t:83,a:1},{s:18,t:84,a:3},{s:76,t:84,a:1},{s:18,t:85,a:2},{s:83,t:85,a:100},
+// Rocket Engine; Heat Shield = Steel×20 + Silicon×30
+{s:43,t:86,a:2},{s:76,t:86,a:2},{s:43,t:87,a:20},{s:16,t:87,a:30},
+{s:79,t:88,a:3},{s:22,t:88,a:2},
+{s:43,t:89,a:3},{s:76,t:89,a:1},{s:18,t:89,a:1},
+// Spacecraft
+{s:86,t:90,a:1},{s:84,t:90,a:1},{s:82,t:90,a:1},{s:83,t:90,a:2},{s:87,t:90,a:1},
+{s:90,t:91,a:1},{s:85,t:91,a:2},{s:81,t:91,a:1},
+{s:86,t:92,a:2},{s:84,t:92,a:2},{s:85,t:92,a:2},{s:83,t:92,a:4},
+{s:90,t:93,a:1},{s:92,t:93,a:1},{s:81,t:93,a:1},
+{s:93,t:94,a:2},{s:92,t:94,a:2},
+// Aircraft
+{s:77,t:95,a:1},{s:78,t:95,a:2},{s:89,t:95,a:4},{s:81,t:95,a:1},{s:50,t:95,a:2},
+{s:77,t:96,a:1},{s:78,t:96,a:2},{s:89,t:96,a:2},{s:81,t:96,a:1},{s:49,t:96,a:1},
+{s:77,t:97,a:1},{s:78,t:97,a:1},{s:52,t:97,a:1},{s:81,t:97,a:1},
+{s:77,t:98,a:1},{s:48,t:98,a:4},{s:80,t:98,a:1},{s:22,t:98,a:2},
+{s:88,t:99,a:1},{s:80,t:99,a:1},{s:79,t:99,a:2},{s:23,t:99,a:1},{s:87,t:99,a:1},
+];
+
+return {nodes:N.map(d=>({id:d.id,name:d.n,cat:d.c})), edges:E.map(d=>({source:d.s,target:d.t,amount:d.a||1}))};
+}
+
+/* ═══ compute layer (longest-path from roots) ═══ */
+function assignLayers(nodes,edges){
+  const map={}; nodes.forEach(n=>{map[n.id]=n;});
+  const inE={}; nodes.forEach(n=>{inE[n.id]=[];});
+  edges.forEach(e=>{ if(inE[e.target]) inE[e.target].push(e.source); });
+
+  const memo={};
+  function depth(id){
+    if(memo[id]!==undefined) return memo[id];
+    memo[id]=-1; // cycle guard
+    const parents=inE[id]||[];
+    if(parents.length===0){memo[id]=0; return 0;}
+    let mx=0;
+    for(const p of parents){ const d=depth(p); if(d>=0) mx=Math.max(mx,d+1); }
+    memo[id]=mx; return mx;
+  }
+  nodes.forEach(n=>{ n.layer=depth(n.id); });
+
+  // research → rightmost
+  let mx=0; nodes.forEach(n=>{ if(n.cat!=="research") mx=Math.max(mx,n.layer); });
+  nodes.forEach(n=>{ if(n.cat==="research") n.layer=mx+1; });
+  return mx+1; // total layers (0..mx+1)
+}
+
+/* ═══ layer-internal ordering (barycenter) ═══ */
+function orderWithinLayers(nodes,edges,numLayers){
+  const byLayer=[]; for(let i=0;i<=numLayers;i++) byLayer[i]=[];
+  nodes.forEach(n=>byLayer[n.layer].push(n));
+
+  // initial: sort by category
+  const catOrder=["energy","resource","quarry","mining","agriculture","refinery","intermediate",
+    "food","construction","factory","consumer","aerospace","research"];
+  byLayer.forEach(arr=>{
+    arr.sort((a,b)=>{
+      const ca=catOrder.indexOf(a.cat), cb=catOrder.indexOf(b.cat);
+      return (ca-cb)||(a.name<b.name?-1:1);
+    });
+    arr.forEach((n,i)=>{n._ord=i;});
+  });
+
+  const map={}; nodes.forEach(n=>{map[n.id]=n;});
+
+  // barycenter sweeps
+  for(let sweep=0;sweep<6;sweep++){
+    // forward
+    for(let ly=1;ly<=numLayers;ly++){
+      byLayer[ly].forEach(n=>{
+        const parents=edges.filter(e=>e.target===n.id).map(e=>map[e.source]).filter(Boolean);
+        if(parents.length) n._bary=parents.reduce((s,p)=>s+p._ord,0)/parents.length;
+        else n._bary=n._ord;
+      });
+      byLayer[ly].sort((a,b)=>a._bary-b._bary);
+      byLayer[ly].forEach((n,i)=>{n._ord=i;});
+    }
+    // backward
+    for(let ly=numLayers-1;ly>=0;ly--){
+      byLayer[ly].forEach(n=>{
+        const children=edges.filter(e=>e.source===n.id).map(e=>map[e.target]).filter(Boolean);
+        if(children.length) n._bary=children.reduce((s,c)=>s+c._ord,0)/children.length;
+        else n._bary=n._ord;
+      });
+      byLayer[ly].sort((a,b)=>a._bary-b._bary);
+      byLayer[ly].forEach((n,i)=>{n._ord=i;});
+    }
+  }
+
+  return byLayer;
+}
+
+/* ═══ render ═══ */
+let svg,gRoot,allNodes,allEdges,showLabels=true,selNode=null;
+let nodeSel,linkSel,lblSel;
+
+function render(){
+  const {nodes,edges}=getData();
+  allNodes=nodes; allEdges=edges;
+  const numLayers=assignLayers(nodes,edges);
+  const byLayer=orderWithinLayers(nodes,edges,numLayers);
+
+  /* ── coordinates ── */
+  const COL_W=220;           // horizontal spacing
+  const ROW_H=36;            // vertical spacing
+  const PAD_L=100, PAD_T=50;
+  const maxInCol=Math.max(...byLayer.map(a=>a.length));
+
+  byLayer.forEach((col,li)=>{
+    const colH=col.length*ROW_H;
+    const totalH=maxInCol*ROW_H;
+    const offsetY=PAD_T+(totalH-colH)/2;
+    col.forEach((nd,ri)=>{
+      nd.x=PAD_L+li*COL_W;
+      nd.y=offsetY+ri*ROW_H;
+    });
+  });
+
+  const totalW=PAD_L+(numLayers+1)*COL_W+100;
+  const totalH=PAD_T+maxInCol*ROW_H+80;
+  const map={}; nodes.forEach(n=>{map[n.id]=n;});
+
+  /* ── svg ── */
+  const ct=document.getElementById("gc");
+  const W=ct.clientWidth, H=ct.clientHeight;
+  d3.select("#gc svg").remove();
+  svg=d3.select("#gc").append("svg").attr("width",W).attr("height",H);
+  gRoot=svg.append("g");
+
+  /* ── arrow defs ── */
+  const defs=svg.append("defs");
+  Object.entries(CC).forEach(([k,col])=>{
+    defs.append("marker").attr("id","ar-"+k)
+      .attr("viewBox","0 -4 8 8").attr("refX",14).attr("refY",0)
+      .attr("markerWidth",5).attr("markerHeight",5).attr("orient","auto")
+      .append("path").attr("d","M0,-4L8,0L0,4").attr("fill",col).attr("fill-opacity",.6);
+  });
+
+  /* ── layer columns ── */
+  const colG=gRoot.append("g");
+  for(let i=0;i<=numLayers;i++){
+    const x=PAD_L+i*COL_W;
+    colG.append("line").attr("x1",x).attr("x2",x)
+      .attr("y1",PAD_T-30).attr("y2",totalH)
+      .attr("stroke","rgba(99,179,237,.06)").attr("stroke-dasharray","4 6");
+    let lbl="L"+i;
+    if(i===0) lbl="L0 原材料";
+    else if(i===numLayers) lbl="研究";
+    colG.append("text").attr("x",x).attr("y",PAD_T-36)
+      .attr("text-anchor","middle")
+      .attr("font-family","JetBrains Mono,monospace").attr("font-size",9)
+      .attr("fill","rgba(99,179,237,.2)").text(lbl);
+  }
+
+  /* ── edges (cubic bezier) ── */
+  const eG=gRoot.append("g");
+  const validE=edges.filter(e=>map[e.source]&&map[e.target]);
+  linkSel=eG.selectAll("path").data(validE).join("path")
+    .attr("fill","none")
+    .attr("d",d=>{
+      const s=map[d.source],t=map[d.target];
+      const dx=(t.x-s.x);
+      const c1x=s.x+dx*0.4, c2x=t.x-dx*0.4;
+      return `M${s.x},${s.y} C${c1x},${s.y} ${c2x},${t.y} ${t.x},${t.y}`;
+    })
+    .attr("stroke",d=>CC[map[d.target].cat]||"#555")
+    .attr("stroke-width",d=>Math.max(.6,Math.min(2,d.amount*.5)))
+    .attr("stroke-opacity",.12)
+    .attr("marker-end",d=>"url(#ar-"+map[d.target].cat+")");
+
+  /* ── nodes ── */
+  const deg={}; nodes.forEach(n=>{deg[n.id]={i:0,o:0};});
+  validE.forEach(e=>{deg[e.source].o++;deg[e.target].i++;});
+
+  const nG=gRoot.append("g");
+  nodeSel=nG.selectAll("circle").data(nodes).join("circle")
+    .attr("cx",d=>d.x).attr("cy",d=>d.y)
+    .attr("r",d=>Math.max(3,Math.min(8,2.5+(deg[d.id].i+deg[d.id].o)*.3)))
+    .attr("fill",d=>CC[d.cat]||"#555")
+    .attr("stroke",d=>d3.color(CC[d.cat]||"#555").darker(.5))
+    .attr("stroke-width",1.2)
+    .attr("cursor","pointer")
+    .on("mouseover",onOver).on("mouseout",onOut).on("click",onClick);
+
+  /* ── labels ── */
+  const lG=gRoot.append("g");
+  lblSel=lG.selectAll("text").data(nodes).join("text")
+    .attr("x",d=>d.x+Math.max(5,Math.min(10,3+(deg[d.id].i+deg[d.id].o)*.3))+3)
+    .attr("y",d=>d.y)
+    .attr("dominant-baseline","middle")
+    .attr("font-family","Noto Sans SC,sans-serif").attr("font-size",8.5)
+    .attr("fill","rgba(200,214,229,.55)")
+    .text(d=>d.name)
+    .style("display",showLabels?"block":"none");
+
+  /* ── zoom + initial fit ── */
+  const zm=d3.zoom().scaleExtent([.05,5]).on("zoom",e=>{gRoot.attr("transform",e.transform);});
+  svg.call(zm);
+  const s0=Math.min(W/totalW,H/totalH)*0.92;
+  const tx0=(W-totalW*s0)/2, ty0=(H-totalH*s0)/2;
+  svg.call(zm.transform,d3.zoomIdentity.translate(tx0,ty0).scale(s0));
+
+  /* ── stats ── */
+  document.getElementById("stats").innerHTML=
+    `节点 <b>${nodes.length}</b> · 边 <b>${validE.length}</b> · 层级 <b>${numLayers+1}</b>`;
+
+  /* ── legend ── */
+  const used=new Set(nodes.map(n=>n.cat));
+  const leg=document.getElementById("leg"); leg.innerHTML="";
+  Object.entries(CC).forEach(([k,col])=>{
+    if(!used.has(k))return;
+    const cnt=nodes.filter(n=>n.cat===k).length;
+    const d=document.createElement("div"); d.className="li"; d.dataset.cat=k;
+    d.innerHTML=`<div class="ld" style="background:${col}"></div><span>${LL[k]||k} (${cnt})</span>`;
+    d.onclick=()=>{
+      d.classList.toggle("off");
+      applyFilter();
+    };
+    leg.appendChild(d);
+  });
+
+  function applyFilter(){
+    const off=new Set([...document.querySelectorAll(".li.off")].map(e=>e.dataset.cat));
+    nodeSel.style("opacity",d=>off.has(d.cat)?.04:1);
+    lblSel.style("opacity",d=>off.has(d.cat)?0:1);
+    linkSel.style("stroke-opacity",d=>{
+      const s=map[d.source],t=map[d.target];
+      return (off.has(s.cat)||off.has(t.cat))?.01:.12;
+    });
+  }
+
+  /* ── interactions ── */
+  function onOver(ev,d){
+    const tip=document.getElementById("tip");
+    tip.innerHTML=`<b>${d.name}</b><br><span style="color:${CC[d.cat]}">${LL[d.cat]||d.cat}</span> · Layer ${d.layer}`;
+    tip.classList.add("v"); tip.style.left=(ev.pageX+10)+"px"; tip.style.top=(ev.pageY-10)+"px";
+    if(!selNode) hlNode(d);
+  }
+  function onOut(){ document.getElementById("tip").classList.remove("v"); if(!selNode) clearHL(); }
+  function onClick(ev,d){ ev.stopPropagation(); selNode=d; hlNode(d); showInfo(d); }
+
+  function hlNode(d){
+    const conn=new Set([d.id]); const hlE=new Set();
+    validE.forEach(e=>{
+      if(e.source===d.id||e.target===d.id){conn.add(e.source);conn.add(e.target);hlE.add(e);}
+    });
+    nodeSel.style("opacity",n=>conn.has(n.id)?1:.04);
+    lblSel.style("opacity",n=>conn.has(n.id)?1:.03)
+      .attr("font-weight",n=>n.id===d.id?700:400).attr("font-size",n=>n.id===d.id?10.5:8.5);
+    linkSel.style("stroke-opacity",e=>hlE.has(e)?.65:.015);
+  }
+  function clearHL(){
+    selNode=null;
+    nodeSel.style("opacity",1);
+    lblSel.style("opacity",1).attr("font-weight",400).attr("font-size",8.5);
+    linkSel.style("stroke-opacity",.12);
+    document.getElementById("info").style.display="none";
+  }
+
+  function showInfo(d){
+    const el=document.getElementById("info"); el.style.display="block";
+    const ins=[],outs=[];
+    validE.forEach(e=>{
+      if(e.target===d.id&&map[e.source]) ins.push({nd:map[e.source],a:e.amount});
+      if(e.source===d.id&&map[e.target]) outs.push({nd:map[e.target],a:e.amount});
+    });
+    let h=`<div class="nt">${d.name}</div><div class="nm">${LL[d.cat]||d.cat} · ID ${d.id} · Layer ${d.layer}</div>`;
+    if(ins.length){
+      h+=`<div class="sl">原料 (${ins.length})</div>`;
+      ins.forEach(i=>{h+=`<div class="di" data-id="${i.nd.id}">← ${i.nd.name}<span class="am">×${i.a}</span></div>`;});
+    } else h+=`<div class="sl">原料</div><div class="di" style="color:#4fd1c5">基础资源（无需原料）</div>`;
+    if(outs.length){
+      h+=`<div class="sl">用于生产 (${outs.length})</div>`;
+      outs.forEach(o=>{h+=`<div class="di" data-id="${o.nd.id}">→ ${o.nd.name}</div>`;});
+    }
+    el.innerHTML=h;
+    el.querySelectorAll(".di[data-id]").forEach(el=>{
+      el.onclick=()=>{
+        const nd=nodes.find(n=>n.id===+el.dataset.id);
+        if(nd){selNode=nd;hlNode(nd);showInfo(nd);}
+      };
+    });
+  }
+
+  svg.on("click",()=>clearHL());
+
+  /* ── search ── */
+  document.getElementById("search").oninput=e=>{
+    const q=e.target.value.toLowerCase().trim();
+    if(!q){clearHL();return;}
+    const m=nodes.filter(n=>n.name.toLowerCase().includes(q));
+    if(m.length===1){selNode=m[0];hlNode(m[0]);showInfo(m[0]);}
+    else if(m.length>1){
+      const ids=new Set(m.map(n=>n.id));
+      nodeSel.style("opacity",n=>ids.has(n.id)?1:.04);
+      lblSel.style("opacity",n=>ids.has(n.id)?1:.03)
+        .attr("font-weight",n=>ids.has(n.id)?700:400);
+    }
+  };
+
+  /* ── buttons ── */
+  document.getElementById("breset").onclick=()=>{
+    clearHL(); document.getElementById("search").value="";
+    svg.transition().duration(400).call(zm.transform,d3.zoomIdentity.translate(tx0,ty0).scale(s0));
+  };
+  document.getElementById("blbl").onclick=function(){
+    showLabels=!showLabels; this.classList.toggle("on",showLabels);
+    lblSel.style("display",showLabels?"block":"none");
+  };
+  document.getElementById("bside").onclick=()=>{document.getElementById("side").classList.toggle("off");};
+}
+
+render();
+window.addEventListener("resize",render);
+</script>
+</body>
+</html>
