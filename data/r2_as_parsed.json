@@ -1,0 +1,4437 @@
+{
+  "source_file": "r2_as.txt",
+  "parsed_at": "2026-04-03T02:08:20.817Z",
+  "total_quotes": 296,
+  "quotes": [
+    {
+      "company": "Golden Wheelbarrow ltd",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buyig 200x SEP :re-97:"
+    },
+    {
+      "company": "Lath Corp HQ",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 5 SOR"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 100 LUX"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying 50x lux :re-96:"
+    },
+    {
+      "company": "mj2n2",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 10 :re-96:"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "SOR :re-91: Any Q x 20"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94: Any Q x 20"
+    },
+    {
+      "company": "MILKYWAY",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 120 LUX !!!!!!!!"
+    },
+    {
+      "company": "MILKYWAY",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Still need 25 :re-96: !!!!!!!!!!!"
+    },
+    {
+      "company": "Lath Corp HQ",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 3 SOR"
+    },
+    {
+      "company": "theDeepSpace",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 90000,
+      "from_delta": false,
+      "raw": "Q4 :re-96: LUX @ 90k"
+    },
+    {
+      "company": "theDeepSpace",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q4",
+      "price": 61000,
+      "from_delta": false,
+      "raw": "Q4 :re-99: SAT @ 61k"
+    },
+    {
+      "company": "MILKYWAY",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Still need 16 luxs :re-96: any one ???"
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 2 BFR :re-94:"
+    },
+    {
+      "company": "Berkshire Hathaway B",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": ":re-97: ⭐ ⭐"
+    },
+    {
+      "company": "Msyu Need some Cocktails",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buy 4 bfr"
+    },
+    {
+      "company": "BEST FRIEND",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q6",
+      "price": 129000,
+      "from_delta": false,
+      "raw": "Q6 sor 129k (33)"
+    },
+    {
+      "company": "BEST FRIEND",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q5",
+      "price": 63000,
+      "from_delta": false,
+      "raw": "Q5 sat 63k (14)"
+    },
+    {
+      "company": "BEST FRIEND",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 910000,
+      "from_delta": false,
+      "raw": "Q5 bfr 910k (2)"
+    },
+    {
+      "company": "Power Mann",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying 3 :re-96:"
+    },
+    {
+      "company": "Power Mann",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying 1 :re-96:"
+    },
+    {
+      "company": "Lath Corp HQ",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling some Jumbos"
+    },
+    {
+      "company": "Oogle Holdings",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q4",
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling q4 BFR :re-94: send dm to offer"
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q0",
+      "price": 815000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q1",
+      "price": 831000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q2",
+      "price": 847000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q3",
+      "price": 863000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q4",
+      "price": 879000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 895000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q6",
+      "price": 911000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q7",
+      "price": 927000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q8",
+      "price": 943000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "Funky Sales",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q9",
+      "price": 959000,
+      "from_delta": true,
+      "raw": "buying 10 BFR :re-94: Q0 @815K +16K/Q",
+      "base_quality": "Q0",
+      "base_price": 815000,
+      "delta_per_q": 16000
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94: Any Q x 20"
+    },
+    {
+      "company": "Kapakmerah",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 920000,
+      "from_delta": false,
+      "raw": "Selling :re-94: q5 @920k"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 3 :re-96:"
+    },
+    {
+      "company": "Raf habanjar",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": "Q4",
+      "price": 38000,
+      "from_delta": false,
+      "raw": "Selling sep q4 38k"
+    },
+    {
+      "company": "Zlatan Sas",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 :re-91:"
+    },
+    {
+      "company": "Zlatan Sas",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 60 :re-99:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying LUX :re-96: x200"
+    },
+    {
+      "company": "Zlatan Sas",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 200 :re-97:"
+    },
+    {
+      "company": "Foxil Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 4 x SOR"
+    },
+    {
+      "company": "JC INDUSTRIAL GROUP",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q0",
+      "price": 87000,
+      "from_delta": false,
+      "raw": "Selling 1 LUX :re-96: Q0 @87k"
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q0",
+      "price": 55000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q1",
+      "price": 56000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q2",
+      "price": 57000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q3",
+      "price": 58000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q4",
+      "price": 59000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q5",
+      "price": 60000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q6",
+      "price": 61000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q7",
+      "price": 62000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q8",
+      "price": 63000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": "Q9",
+      "price": 64000,
+      "from_delta": true,
+      "raw": "SAT :re-99: Q5 @60K +1.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 60000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q0",
+      "price": 34500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q1",
+      "price": 35200,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q2",
+      "price": 35900,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q3",
+      "price": 36600,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q4",
+      "price": 37300,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q5",
+      "price": 38000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q6",
+      "price": 38700,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q7",
+      "price": 39400,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q8",
+      "price": 40100,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q9",
+      "price": 40800,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q5 @38K +0.7K/Q",
+      "base_quality": "Q5",
+      "base_price": 38000,
+      "delta_per_q": 700
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q0",
+      "price": 82500,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q1",
+      "price": 84000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q2",
+      "price": 85500,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q3",
+      "price": 87000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 88500,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q5",
+      "price": 90000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q6",
+      "price": 91500,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q7",
+      "price": 93000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q8",
+      "price": 94500,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q9",
+      "price": 96000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q5 @90K +1.5K/Q",
+      "base_quality": "Q5",
+      "base_price": 90000,
+      "delta_per_q": 1500
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q0",
+      "price": 240000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q1",
+      "price": 244000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q2",
+      "price": 248000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q3",
+      "price": 252000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q4",
+      "price": 256000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 260000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q6",
+      "price": 264000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q7",
+      "price": 268000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q8",
+      "price": 272000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": "Q9",
+      "price": 276000,
+      "from_delta": true,
+      "raw": "JUM :re-95: Q5 @260K +4.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 260000,
+      "delta_per_q": 4000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q0",
+      "price": 114000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q1",
+      "price": 116000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q2",
+      "price": 118000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q3",
+      "price": 120000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q4",
+      "price": 122000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": 124000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q6",
+      "price": 126000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q7",
+      "price": 128000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q8",
+      "price": 130000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q9",
+      "price": 132000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q5 @124K +2.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 124000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q0",
+      "price": 825000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q1",
+      "price": 840000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q2",
+      "price": 855000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q3",
+      "price": 870000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q4",
+      "price": 885000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 900000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q6",
+      "price": 915000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q7",
+      "price": 930000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q8",
+      "price": 945000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "FLASH SNEAKERS INC.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q9",
+      "price": 960000,
+      "from_delta": true,
+      "raw": "BFR :re-94: Q5 @900K +15.0K/Q",
+      "base_quality": "Q5",
+      "base_price": 900000,
+      "delta_per_q": 15000
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 5 :re-96:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Spending $30 mln in in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Internacional prime worlds",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling :re-97:"
+    },
+    {
+      "company": "Kroner Territories",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 4 :re-94: BFR"
+    },
+    {
+      "company": "Kroner Territories",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 8 :re-91: SOR"
+    },
+    {
+      "company": "Aloha Sands",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 3 sors"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying LUX :re-96: x100"
+    },
+    {
+      "company": "Simplot Industries",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q4",
+      "price": 62000,
+      "from_delta": false,
+      "raw": "Selling Q4 :re-99: $62k"
+    },
+    {
+      "company": "Kroner Territories",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 8 SOR"
+    },
+    {
+      "company": "Lath Corp HQ",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 4 Seps."
+    },
+    {
+      "company": "Hofi AG",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q6",
+      "price": 266000,
+      "from_delta": false,
+      "raw": "Sell :re-95: Q6 266k"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q6",
+      "price": 925000,
+      "from_delta": false,
+      "raw": "Selling :re-94: bfr q6 .. 925k (20 available)"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": 124000,
+      "from_delta": false,
+      "raw": "Selling :re-91: sor q5 .....124k (40 available)"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 92000,
+      "from_delta": false,
+      "raw": "🔴Selling :re-96: lux q4...... 92k (0 available)🔴"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q4",
+      "price": 66000,
+      "from_delta": false,
+      "raw": "Selling :re-99: sat q4 ... 66k (40 available)"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": "Q4",
+      "price": 40000,
+      "from_delta": false,
+      "raw": "Selling :re-97: sep q4 ...40k (20 available)"
+    },
+    {
+      "company": "Credit Suisse",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q4",
+      "price": 270000,
+      "from_delta": false,
+      "raw": "Selling :re-95: jumbo q4...270k (20 available)"
+    },
+    {
+      "company": "Kapakmerah",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 910000,
+      "from_delta": false,
+      "raw": "Selling :re-94: q5 @910k"
+    },
+    {
+      "company": "Berkshire Hathaway B",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 3 :re-91:"
+    },
+    {
+      "company": "Kroner Territories",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 4 :re-91: SOR"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94: Any Q x 20"
+    },
+    {
+      "company": "Pexx SE",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying SOR :re-91:"
+    },
+    {
+      "company": "Ontheroad",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q0",
+      "price": 116000,
+      "from_delta": false,
+      "raw": "Selling 5 :re-91: Q0 @116k"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94: Any Q x 20"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "JUM :re-95: Any Q x 50"
+    },
+    {
+      "company": "DDDDCDDDD",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "LUX :re-96: Any Q x 50"
+    },
+    {
+      "company": "OVNI.cuba",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying 80 SOR in contracts of 10 units"
+    },
+    {
+      "company": "ElectroZ",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q5",
+      "price": 94500,
+      "from_delta": false,
+      "raw": "Selling 10 :re-96: Q5 94.5k$, 3 :re-95: Q3 260k$"
+    },
+    {
+      "company": "ElectroZ",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q3",
+      "price": 260000,
+      "from_delta": false,
+      "raw": "Selling 10 :re-96: Q5 94.5k$, 3 :re-95: Q3 260k$"
+    },
+    {
+      "company": "ElectroZ",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 260000,
+      "from_delta": false,
+      "raw": "Selling 10 :re-96: Q5 94.5k$, 3 :re-95: Q3 260k$"
+    },
+    {
+      "company": "Growdin Consultations",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buy 17 sep maybe more(up to 60) if price and q is good"
+    },
+    {
+      "company": "DaDe99",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buy sep"
+    },
+    {
+      "company": "RISE HIGH",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying :re-94: x2"
+    },
+    {
+      "company": "DaDe99",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buy lux"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "Pexx SE",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying SOR"
+    },
+    {
+      "company": "Atalent",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 15 lux"
+    },
+    {
+      "company": "RISE HIGH",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": 850000,
+      "from_delta": false,
+      "raw": "Buying :re-94: under 850k"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 3 :re-96:"
+    },
+    {
+      "company": "H.H. Holdings",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 31x :re-91:"
+    },
+    {
+      "company": "H.H. Holdings",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "7x :re-95:"
+    },
+    {
+      "company": "H.H. Holdings",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "150x :re-97:"
+    },
+    {
+      "company": "Internacional prime worlds",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling :re-97:"
+    },
+    {
+      "company": "Reborn Company Inc.",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q5",
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling Q5 :re-99:"
+    },
+    {
+      "company": "Borsook Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 10x LUX :re-96:"
+    },
+    {
+      "company": "ZiU inc",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buying 20 LUX :re-96:"
+    },
+    {
+      "company": "Im Zeichen der Zauberkugel",
+      "direction": "sell",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": 915000,
+      "from_delta": false,
+      "raw": ":re-94: Q5 915k"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying LUX :re-96:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SAT :re-99:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SOR :re-91:"
+    },
+    {
+      "company": "Just Ferb",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": "Q0",
+      "price": null,
+      "from_delta": false,
+      "raw": "selling my first :re-97: q0 for now :/ I have just 1"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Lux :re-96:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Sor :re-91:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "Big boss Vision",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 10 :re-91:"
+    },
+    {
+      "company": "Postos Moreira",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q3",
+      "price": 260000,
+      "from_delta": false,
+      "raw": "Selling :re-95: Q3 260k / :re-99: Q3 60k"
+    },
+    {
+      "company": "Postos Moreira",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q3",
+      "price": 60000,
+      "from_delta": false,
+      "raw": "Selling :re-95: Q3 260k / :re-99: Q3 60k"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying LUX :re-96:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SAT :re-99:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SOR :re-91:"
+    },
+    {
+      "company": "Big boss Vision",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying :re-91:"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO BFR"
+    },
+    {
+      "company": "Eco Harvest Retail",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 sep 25 + 25 50 sats 25 +25 20 lux 20 sor 10+10 both and 3 bfr 1x1"
+    },
+    {
+      "company": "Eco Harvest Retail",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 sep 25 + 25 50 sats 25 +25 20 lux 20 sor 10+10 both and 3 bfr 1x1"
+    },
+    {
+      "company": "Eco Harvest Retail",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 sep 25 + 25 50 sats 25 +25 20 lux 20 sor 10+10 both and 3 bfr 1x1"
+    },
+    {
+      "company": "Eco Harvest Retail",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 sep 25 + 25 50 sats 25 +25 20 lux 20 sor 10+10 both and 3 bfr 1x1"
+    },
+    {
+      "company": "Eco Harvest Retail",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 50 sep 25 + 25 50 sats 25 +25 20 lux 20 sor 10+10 both and 3 bfr 1x1"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Lux :re-96:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Sor :re-91:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "Big boss Vision",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying :re-91:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Ludige Trading",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "spending 20 mln in :re-91: :re-94: :re-95: :re-96: :re-97: :re-99:"
+    },
+    {
+      "company": "Simplot Industries",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q4",
+      "price": 62000,
+      "from_delta": false,
+      "raw": "Sell Q4 :re-99: $62k"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "DaDe99",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buy lux"
+    },
+    {
+      "company": "ManiCraftz",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 9 lux :re-96:"
+    },
+    {
+      "company": "Postos Moreira",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q3",
+      "price": 260000,
+      "from_delta": false,
+      "raw": "Selling :re-95: Q3 260k / :re-99: Q3 60k"
+    },
+    {
+      "company": "Postos Moreira",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q3",
+      "price": 60000,
+      "from_delta": false,
+      "raw": "Selling :re-95: Q3 260k / :re-99: Q3 60k"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying LUX :re-96:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SAT :re-99:"
+    },
+    {
+      "company": "Freds Stores",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SOR :re-91:"
+    },
+    {
+      "company": "Just Ferb",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": "Q0",
+      "price": null,
+      "from_delta": false,
+      "raw": "selling my first :re-97: q0 for now, I have just 1"
+    },
+    {
+      "company": "Pexx SE",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying SOR"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q0",
+      "price": 116000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q1",
+      "price": 118000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q2",
+      "price": 120000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q3",
+      "price": 122000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q4",
+      "price": 124000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": 126000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q6",
+      "price": 128000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q7",
+      "price": 130000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q8",
+      "price": 132000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q9",
+      "price": 134000,
+      "from_delta": true,
+      "raw": "SOR :re-91: Q0 @ 116k +2k/Q (batch of 10)",
+      "base_quality": "Q0",
+      "base_price": 116000,
+      "delta_per_q": 2000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q0",
+      "price": 88000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q1",
+      "price": 89000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q2",
+      "price": 90000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q3",
+      "price": 91000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 92000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q5",
+      "price": 93000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q6",
+      "price": 94000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q7",
+      "price": 95000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q8",
+      "price": 96000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": "Q9",
+      "price": 97000,
+      "from_delta": true,
+      "raw": "LUX :re-96: Q0 @ 88k +1k/Q (batch of of 10)",
+      "base_quality": "Q0",
+      "base_price": 88000,
+      "delta_per_q": 1000
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q0",
+      "price": 37000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q1",
+      "price": 37500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q2",
+      "price": 38000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q3",
+      "price": 38500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q4",
+      "price": 39000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q5",
+      "price": 39500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q6",
+      "price": 40000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q7",
+      "price": 40500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q8",
+      "price": 41000,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Tier 1 Liquidity Provider",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": "Q9",
+      "price": 41500,
+      "from_delta": true,
+      "raw": "SEP :re-97: Q0 @ 37k +0.5k/Q (batch of 50)",
+      "base_quality": "Q0",
+      "base_price": 37000,
+      "delta_per_q": 500
+    },
+    {
+      "company": "Msyu Need some Cocktails",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "buy bfr x4"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 10 :re-96:"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 4 :re-91:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY BFR"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO"
+    },
+    {
+      "company": "LONEFOX",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUY SEP SAT SOR LUX JUMBO"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BFR :re-94: batches of 3"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Sor :re-91: batches of 10"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Jum :re-95: batches of 5"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Lux :re-96: batches of 10"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Sep :re-97: batches of 30"
+    },
+    {
+      "company": "aerospace market",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Sat :re-99: batches of 20"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 10 :re-96:"
+    },
+    {
+      "company": "Shaytar Inc.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "4 :re-91:"
+    },
+    {
+      "company": "Seal Corp S.B",
+      "direction": "sell",
+      "product": "SEP",
+      "quality": "Q5",
+      "price": 39500,
+      "from_delta": false,
+      "raw": "SEP :re-97: Q5 at 39,5k"
+    },
+    {
+      "company": "Seal Corp S.B",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q5",
+      "price": 94000,
+      "from_delta": false,
+      "raw": "LUX :re-96: Q5 at 94k"
+    },
+    {
+      "company": "Seal Corp S.B",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": 127000,
+      "from_delta": false,
+      "raw": "SOR :re-91: Q5 at 127k"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "Planet Aerospace",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q1",
+      "price": 110000,
+      "from_delta": false,
+      "raw": "Selling 1 Q1 SOR :re-91: for 110K! Contact me for opportunities!"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each :re-95:"
+    },
+    {
+      "company": "Reborn Company Inc.",
+      "direction": "sell",
+      "product": "SAT",
+      "quality": "Q5",
+      "price": null,
+      "from_delta": false,
+      "raw": "Q5 :re-99: for Sale"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q4",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-94:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q5",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-94:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": "Q6",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-94:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q4",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q6",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each"
+    },
+    {
+      "company": "ZiU inc",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 20 LUX o(^_^)o"
+    },
+    {
+      "company": "Planet Aerospace",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q1",
+      "price": 110000,
+      "from_delta": false,
+      "raw": "Selling :re-91: Q1 for 110k! DM me for purchases."
+    },
+    {
+      "company": "Schwagel Inc.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING 4 :re-99:"
+    },
+    {
+      "company": "Planet Aerospace",
+      "direction": "sell",
+      "product": "SOR",
+      "quality": "Q1",
+      "price": 110000,
+      "from_delta": false,
+      "raw": "Selling Q1 :re-91: for 110k, contact me for purchases."
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q4",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q5",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "Sun Space Corp",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": "Q6",
+      "price": null,
+      "from_delta": false,
+      "raw": "BUYING ➡️ Q4/Q5/Q6 :re-91:"
+    },
+    {
+      "company": "ZiU inc",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 30 Sep and 30 LUX"
+    },
+    {
+      "company": "ZiU inc",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "Buying 30 Sep and 30 LUX"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "BFR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "5x bfr :re-94:"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "SEP",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "50x sep :re-97:"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "SAT",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "50x sat :re-99:"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "LUX",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "25x lux :re-96:"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "JUM",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "15x jumbo :re-95:"
+    },
+    {
+      "company": "Fibonacci Inc.",
+      "direction": "buy",
+      "product": "SOR",
+      "quality": null,
+      "price": null,
+      "from_delta": false,
+      "raw": "20x sor :re-91:"
+    },
+    {
+      "company": "ROGUE420",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 96000,
+      "from_delta": false,
+      "raw": "🌟Selling Q4 :re-96: @ 96k🌟"
+    },
+    {
+      "company": "EggInASacR2",
+      "direction": "sell",
+      "product": "JUM",
+      "quality": "Q5",
+      "price": 267000,
+      "from_delta": false,
+      "raw": "Selling 50 q5 jumbos at 267k each"
+    },
+    {
+      "company": "ROGUE420",
+      "direction": "sell",
+      "product": "LUX",
+      "quality": "Q4",
+      "price": 95000,
+      "from_delta": false,
+      "raw": "🌟Selling Q4 :re-96: @ 95k🌟"
+    }
+  ],
+  "summary": {
+    "SEP": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 34500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 37000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Just Ferb"
+            ]
+          }
+        ]
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 35200,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 37500,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 35900,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 38000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 36600,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 38500,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": 37300,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 39000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 38000,
+            "count": 1,
+            "companies": [
+              "Raf habanjar"
+            ]
+          },
+          {
+            "price": 40000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          }
+        ]
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": 38000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 39500,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 39500,
+            "count": 1,
+            "companies": [
+              "Seal Corp S.B"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": 38700,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 40000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 39400,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 40500,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 40100,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 41000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 40800,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 41500,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 12,
+            "companies": [
+              "DaDe99",
+              "Eco Harvest Retail",
+              "Fibonacci Inc.",
+              "Golden Wheelbarrow ltd",
+              "Growdin Consultations",
+              "H.H. Holdings",
+              "LONEFOX",
+              "Lath Corp HQ",
+              "Ludige Trading",
+              "ZiU inc",
+              "Zlatan Sas",
+              "aerospace market"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": null,
+            "count": 2,
+            "companies": [
+              "Berkshire Hathaway B",
+              "Internacional prime worlds"
+            ]
+          }
+        ]
+      }
+    },
+    "SOR": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 114000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 116000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 116000,
+            "count": 1,
+            "companies": [
+              "Ontheroad"
+            ]
+          }
+        ]
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 116000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 118000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 110000,
+            "count": 1,
+            "companies": [
+              "Planet Aerospace"
+            ]
+          }
+        ]
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 118000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 120000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 120000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 122000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 122000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 124000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 124000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 126000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 124000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          },
+          {
+            "price": 127000,
+            "count": 1,
+            "companies": [
+              "Seal Corp S.B"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 126000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 128000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 129000,
+            "count": 1,
+            "companies": [
+              "BEST FRIEND"
+            ]
+          }
+        ]
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 128000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 130000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 130000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 132000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 132000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 134000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 19,
+            "companies": [
+              "Aloha Sands",
+              "Berkshire Hathaway B",
+              "Big boss Vision",
+              "DDDDCDDDD",
+              "Eco Harvest Retail",
+              "EggInASacR2",
+              "Fibonacci Inc.",
+              "Foxil Corp",
+              "Freds Stores",
+              "H.H. Holdings",
+              "Kroner Territories",
+              "LONEFOX",
+              "Lath Corp HQ",
+              "Ludige Trading",
+              "OVNI.cuba",
+              "Pexx SE",
+              "Shaytar Inc.",
+              "Zlatan Sas",
+              "aerospace market"
+            ]
+          }
+        ],
+        "sell": []
+      }
+    },
+    "LUX": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 82500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 88000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 87000,
+            "count": 1,
+            "companies": [
+              "JC INDUSTRIAL GROUP"
+            ]
+          }
+        ]
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 84000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 89000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 85500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 90000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 87000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 91000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": 88500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 92000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 90000,
+            "count": 1,
+            "companies": [
+              "theDeepSpace"
+            ]
+          },
+          {
+            "price": 92000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          },
+          {
+            "price": 95000,
+            "count": 1,
+            "companies": [
+              "ROGUE420"
+            ]
+          },
+          {
+            "price": 96000,
+            "count": 1,
+            "companies": [
+              "ROGUE420"
+            ]
+          }
+        ]
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": 90000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 93000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 94000,
+            "count": 1,
+            "companies": [
+              "Seal Corp S.B"
+            ]
+          },
+          {
+            "price": 94500,
+            "count": 1,
+            "companies": [
+              "ElectroZ"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": 91500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 94000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 93000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 95000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 94500,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 96000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 96000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          },
+          {
+            "price": 97000,
+            "count": 1,
+            "companies": [
+              "Tier 1 Liquidity Provider"
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 17,
+            "companies": [
+              "Atalent",
+              "Borsook Inc.",
+              "DDDDCDDDD",
+              "DaDe99",
+              "Eco Harvest Retail",
+              "EggInASacR2",
+              "Fibonacci Inc.",
+              "Freds Stores",
+              "LONEFOX",
+              "Ludige Trading",
+              "MILKYWAY",
+              "ManiCraftz",
+              "Power Mann",
+              "Shaytar Inc.",
+              "ZiU inc",
+              "aerospace market",
+              "mj2n2"
+            ]
+          }
+        ],
+        "sell": []
+      }
+    },
+    "BFR": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 815000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 825000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 831000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 840000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 847000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 855000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 863000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 870000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 879000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 885000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Oogle Holdings"
+            ]
+          }
+        ]
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 895000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 900000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 910000,
+            "count": 2,
+            "companies": [
+              "BEST FRIEND",
+              "Kapakmerah"
+            ]
+          },
+          {
+            "price": 915000,
+            "count": 1,
+            "companies": [
+              "Im Zeichen der Zauberkugel"
+            ]
+          },
+          {
+            "price": 920000,
+            "count": 1,
+            "companies": [
+              "Kapakmerah"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Sun Space Corp"
+            ]
+          },
+          {
+            "price": 911000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 915000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 925000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          }
+        ]
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 927000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 930000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 943000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 945000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 959000,
+            "count": 1,
+            "companies": [
+              "Funky Sales"
+            ]
+          },
+          {
+            "price": 960000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 11,
+            "companies": [
+              "DDDDCDDDD",
+              "Eco Harvest Retail",
+              "EggInASacR2",
+              "FLASH SNEAKERS INC.",
+              "Fibonacci Inc.",
+              "Kroner Territories",
+              "LONEFOX",
+              "Ludige Trading",
+              "Msyu Need some Cocktails",
+              "RISE HIGH",
+              "aerospace market"
+            ]
+          },
+          {
+            "price": 850000,
+            "count": 1,
+            "companies": [
+              "RISE HIGH"
+            ]
+          }
+        ],
+        "sell": []
+      }
+    },
+    "SAT": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 55000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 56000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 57000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 58000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 60000,
+            "count": 1,
+            "companies": [
+              "Postos Moreira"
+            ]
+          }
+        ]
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": 59000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 61000,
+            "count": 1,
+            "companies": [
+              "theDeepSpace"
+            ]
+          },
+          {
+            "price": 62000,
+            "count": 1,
+            "companies": [
+              "Simplot Industries"
+            ]
+          },
+          {
+            "price": 66000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          }
+        ]
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": 60000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": null,
+            "count": 1,
+            "companies": [
+              "Reborn Company Inc."
+            ]
+          },
+          {
+            "price": 63000,
+            "count": 1,
+            "companies": [
+              "BEST FRIEND"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": 61000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 62000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 63000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 64000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 8,
+            "companies": [
+              "Eco Harvest Retail",
+              "Fibonacci Inc.",
+              "Freds Stores",
+              "LONEFOX",
+              "Ludige Trading",
+              "Schwagel Inc.",
+              "Zlatan Sas",
+              "aerospace market"
+            ]
+          }
+        ],
+        "sell": []
+      }
+    },
+    "JUM": {
+      "Q0": {
+        "buy": [
+          {
+            "price": 240000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q1": {
+        "buy": [
+          {
+            "price": 244000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q2": {
+        "buy": [
+          {
+            "price": 248000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q3": {
+        "buy": [
+          {
+            "price": 252000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 260000,
+            "count": 2,
+            "companies": [
+              "ElectroZ",
+              "Postos Moreira"
+            ]
+          }
+        ]
+      },
+      "Q4": {
+        "buy": [
+          {
+            "price": 256000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 270000,
+            "count": 1,
+            "companies": [
+              "Credit Suisse"
+            ]
+          }
+        ]
+      },
+      "Q5": {
+        "buy": [
+          {
+            "price": 260000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 260000,
+            "count": 1,
+            "companies": [
+              "ElectroZ"
+            ]
+          },
+          {
+            "price": 267000,
+            "count": 1,
+            "companies": [
+              "EggInASacR2"
+            ]
+          }
+        ]
+      },
+      "Q6": {
+        "buy": [
+          {
+            "price": 264000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": 266000,
+            "count": 1,
+            "companies": [
+              "Hofi AG"
+            ]
+          }
+        ]
+      },
+      "Q7": {
+        "buy": [
+          {
+            "price": 268000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q8": {
+        "buy": [
+          {
+            "price": 272000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "Q9": {
+        "buy": [
+          {
+            "price": 276000,
+            "count": 1,
+            "companies": [
+              "FLASH SNEAKERS INC."
+            ]
+          }
+        ],
+        "sell": []
+      },
+      "unspecified": {
+        "buy": [
+          {
+            "price": null,
+            "count": 6,
+            "companies": [
+              "DDDDCDDDD",
+              "Fibonacci Inc.",
+              "H.H. Holdings",
+              "LONEFOX",
+              "Ludige Trading",
+              "aerospace market"
+            ]
+          }
+        ],
+        "sell": [
+          {
+            "price": null,
+            "count": 2,
+            "companies": [
+              "EggInASacR2",
+              "Lath Corp HQ"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+➖ 🇸​​​​​ 🇪​​​​​ 🇱 ​​​​​🇱​​​​​ 🇮​​​​​ 🇳 ​​​​​🇬​​​​​
+:re-97: :re-97: :re-97: :re-97:
+Product : SEP
+Quality : Q7⭐️⭐️⭐️⭐️⭐️⭐️⭐️
+Price : $39K
+:re-91: :re-91: :re-91:
+Product : SOR
+Quality : Q4⭐️⭐️⭐️⭐️
+Price : $128K
+:re-94: :re-94: :re-94: :re-94:
+Product : BFR
+Quality : Q4⭐️⭐️⭐️⭐️
+Price : $920K
+
+
+误识别成：1305k
+Selling q7 Sub-orbital Rocket 亚轨道火箭 @130500 
+
+误识别成9000k
+Selling lux Luxury Jet 豪华私人飞机 q3 @90000$
+
+误识别成4090k
+Selling sep q9 80 units @40900
+
+这个误识别的结果很奇怪，q2-q7都有结果，而且数值很奇怪
+Selling Q5 LUX Luxury Jet 豪华私人飞机  @ 88k - 35 available
+
+
+这个识别结果把卫星识别成要买的了，而且价格是3k
+Selling
+Q8 :re-99: --> @65.500
+Q5 :re-91: --> @130.000
+Q5 :re-94: --> @935.000
+Buying
+Q0+ :re-82: 100.000x --> mp -3%
+Q2-Q3-Q4 :re-99: 3.000x --> 58.000
+Q1+ :re-21: 500.000x --> mp -3%
+
+
+Selling Q4 :re-95: Q4 252k:Q4 :re-99: 58.5k 4/5 :re-86: -2%mp

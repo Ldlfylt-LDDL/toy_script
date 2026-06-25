@@ -1,0 +1,2389 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "name": "Power",
+      "zh": "电力",
+      "cat": "energy"
+    },
+    {
+      "id": 2,
+      "name": "Water",
+      "zh": "水",
+      "cat": "resource"
+    },
+    {
+      "id": 66,
+      "name": "Seeds",
+      "zh": "种子",
+      "cat": "agriculture"
+    },
+    {
+      "id": 10,
+      "name": "Crude Oil",
+      "zh": "原油",
+      "cat": "refinery"
+    },
+    {
+      "id": 14,
+      "name": "Minerals",
+      "zh": "矿石",
+      "cat": "mining"
+    },
+    {
+      "id": 15,
+      "name": "Bauxite",
+      "zh": "铝土矿",
+      "cat": "mining"
+    },
+    {
+      "id": 16,
+      "name": "Silicon",
+      "zh": "硅",
+      "cat": "mining"
+    },
+    {
+      "id": 42,
+      "name": "Iron Ore",
+      "zh": "铁矿石",
+      "cat": "mining"
+    },
+    {
+      "id": 44,
+      "name": "Sand",
+      "zh": "沙子",
+      "cat": "mining"
+    },
+    {
+      "id": 68,
+      "name": "Gold Ore",
+      "zh": "金矿石",
+      "cat": "mining"
+    },
+    {
+      "id": 104,
+      "name": "Clay",
+      "zh": "黏土",
+      "cat": "quarry"
+    },
+    {
+      "id": 105,
+      "name": "Limestone",
+      "zh": "石灰石",
+      "cat": "quarry"
+    },
+    {
+      "id": 106,
+      "name": "Wood",
+      "zh": "木材",
+      "cat": "quarry"
+    },
+    {
+      "id": 3,
+      "name": "Apples",
+      "zh": "苹果",
+      "cat": "agriculture"
+    },
+    {
+      "id": 4,
+      "name": "Oranges",
+      "zh": "橙子",
+      "cat": "agriculture"
+    },
+    {
+      "id": 5,
+      "name": "Grapes",
+      "zh": "葡萄",
+      "cat": "agriculture"
+    },
+    {
+      "id": 6,
+      "name": "Grain",
+      "zh": "谷物",
+      "cat": "agriculture"
+    },
+    {
+      "id": 72,
+      "name": "Sugarcane",
+      "zh": "甘蔗",
+      "cat": "agriculture"
+    },
+    {
+      "id": 40,
+      "name": "Cotton",
+      "zh": "棉花",
+      "cat": "agriculture"
+    },
+    {
+      "id": 118,
+      "name": "Coffee Beans",
+      "zh": "咖啡豆",
+      "cat": "agriculture"
+    },
+    {
+      "id": 120,
+      "name": "Vegetables",
+      "zh": "蔬菜",
+      "cat": "agriculture"
+    },
+    {
+      "id": 136,
+      "name": "Cocoa",
+      "zh": "可可",
+      "cat": "agriculture"
+    },
+    {
+      "id": 17,
+      "name": "Chemicals",
+      "zh": "化学品",
+      "cat": "mining"
+    },
+    {
+      "id": 18,
+      "name": "Aluminium",
+      "zh": "铝",
+      "cat": "intermediate"
+    },
+    {
+      "id": 43,
+      "name": "Steel",
+      "zh": "钢铁",
+      "cat": "intermediate"
+    },
+    {
+      "id": 45,
+      "name": "Glass",
+      "zh": "玻璃",
+      "cat": "intermediate"
+    },
+    {
+      "id": 69,
+      "name": "Golden Bars",
+      "zh": "金条",
+      "cat": "intermediate"
+    },
+    {
+      "id": 73,
+      "name": "Ethanol",
+      "zh": "乙醇",
+      "cat": "refinery"
+    },
+    {
+      "id": 74,
+      "name": "Methane",
+      "zh": "甲烷",
+      "cat": "refinery"
+    },
+    {
+      "id": 12,
+      "name": "Diesel",
+      "zh": "柴油",
+      "cat": "refinery"
+    },
+    {
+      "id": 108,
+      "name": "Planks",
+      "zh": "木板",
+      "cat": "construction"
+    },
+    {
+      "id": 103,
+      "name": "Cement",
+      "zh": "水泥",
+      "cat": "construction"
+    },
+    {
+      "id": 102,
+      "name": "Bricks",
+      "zh": "砖块",
+      "cat": "construction"
+    },
+    {
+      "id": 11,
+      "name": "Petrol",
+      "zh": "汽油",
+      "cat": "refinery"
+    },
+    {
+      "id": 19,
+      "name": "Plastic",
+      "zh": "塑料",
+      "cat": "intermediate"
+    },
+    {
+      "id": 41,
+      "name": "Fabric",
+      "zh": "织物",
+      "cat": "intermediate"
+    },
+    {
+      "id": 20,
+      "name": "Processors",
+      "zh": "处理器",
+      "cat": "factory"
+    },
+    {
+      "id": 75,
+      "name": "Carbon Fibers",
+      "zh": "碳纤维",
+      "cat": "intermediate"
+    },
+    {
+      "id": 135,
+      "name": "Sugar",
+      "zh": "糖",
+      "cat": "food"
+    },
+    {
+      "id": 133,
+      "name": "Flour",
+      "zh": "面粉",
+      "cat": "food"
+    },
+    {
+      "id": 139,
+      "name": "Fodder",
+      "zh": "饲料",
+      "cat": "food"
+    },
+    {
+      "id": 141,
+      "name": "Vegetable Oil",
+      "zh": "植物油",
+      "cat": "food"
+    },
+    {
+      "id": 119,
+      "name": "Coffee Powder",
+      "zh": "咖啡粉",
+      "cat": "food"
+    },
+    {
+      "id": 107,
+      "name": "Steel Beams",
+      "zh": "钢梁",
+      "cat": "construction"
+    },
+    {
+      "id": 101,
+      "name": "Reinforced Concrete",
+      "zh": "钢筋混凝土",
+      "cat": "construction"
+    },
+    {
+      "id": 110,
+      "name": "Tools",
+      "zh": "工具",
+      "cat": "construction"
+    },
+    {
+      "id": 109,
+      "name": "Windows",
+      "zh": "玻璃窗",
+      "cat": "construction"
+    },
+    {
+      "id": 9,
+      "name": "Eggs",
+      "zh": "鸡蛋",
+      "cat": "agriculture"
+    },
+    {
+      "id": 13,
+      "name": "Transport",
+      "zh": "运输",
+      "cat": "refinery"
+    },
+    {
+      "id": 46,
+      "name": "Leather",
+      "zh": "皮革",
+      "cat": "intermediate"
+    },
+    {
+      "id": 21,
+      "name": "Electronic Comps",
+      "zh": "电子元件",
+      "cat": "factory"
+    },
+    {
+      "id": 22,
+      "name": "Batteries",
+      "zh": "电池",
+      "cat": "factory"
+    },
+    {
+      "id": 76,
+      "name": "Carbon Composite",
+      "zh": "碳复合材料",
+      "cat": "intermediate"
+    },
+    {
+      "id": 35,
+      "name": "Software",
+      "zh": "软件",
+      "cat": "research"
+    },
+    {
+      "id": 115,
+      "name": "Cows",
+      "zh": "奶牛",
+      "cat": "agriculture"
+    },
+    {
+      "id": 116,
+      "name": "Pigs",
+      "zh": "猪",
+      "cat": "agriculture"
+    },
+    {
+      "id": 134,
+      "name": "Butter",
+      "zh": "黄油",
+      "cat": "food"
+    },
+    {
+      "id": 137,
+      "name": "Dough",
+      "zh": "面团",
+      "cat": "food"
+    },
+    {
+      "id": 138,
+      "name": "Sauce",
+      "zh": "酱料",
+      "cat": "food"
+    },
+    {
+      "id": 60,
+      "name": "Underwear",
+      "zh": "内衣",
+      "cat": "consumer"
+    },
+    {
+      "id": 62,
+      "name": "Dress",
+      "zh": "连衣裙",
+      "cat": "consumer"
+    },
+    {
+      "id": 83,
+      "name": "Rocket Fuel",
+      "zh": "火箭燃料",
+      "cat": "aerospace"
+    },
+    {
+      "id": 85,
+      "name": "Solid Fuel Booster",
+      "zh": "固体燃料助推器",
+      "cat": "aerospace"
+    },
+    {
+      "id": 142,
+      "name": "Salad",
+      "zh": "沙拉",
+      "cat": "food"
+    },
+    {
+      "id": 23,
+      "name": "Displays",
+      "zh": "显示屏",
+      "cat": "factory"
+    },
+    {
+      "id": 7,
+      "name": "Steak",
+      "zh": "牛排",
+      "cat": "agriculture"
+    },
+    {
+      "id": 8,
+      "name": "Sausages",
+      "zh": "香肠",
+      "cat": "agriculture"
+    },
+    {
+      "id": 117,
+      "name": "Milk",
+      "zh": "牛奶",
+      "cat": "agriculture"
+    },
+    {
+      "id": 52,
+      "name": "Combustion Engine",
+      "zh": "内燃机",
+      "cat": "factory"
+    },
+    {
+      "id": 48,
+      "name": "Electric Motor",
+      "zh": "电动机",
+      "cat": "factory"
+    },
+    {
+      "id": 50,
+      "name": "Basic Interior",
+      "zh": "基础内饰",
+      "cat": "factory"
+    },
+    {
+      "id": 79,
+      "name": "High Grade E-Comps",
+      "zh": "高级电子元件",
+      "cat": "aerospace"
+    },
+    {
+      "id": 77,
+      "name": "Fuselage",
+      "zh": "机身",
+      "cat": "aerospace"
+    },
+    {
+      "id": 78,
+      "name": "Wing",
+      "zh": "机翼",
+      "cat": "aerospace"
+    },
+    {
+      "id": 84,
+      "name": "Propellant Tank",
+      "zh": "推进剂罐",
+      "cat": "aerospace"
+    },
+    {
+      "id": 86,
+      "name": "Rocket Engine",
+      "zh": "火箭发动机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 87,
+      "name": "Heat Shield",
+      "zh": "隔热板",
+      "cat": "aerospace"
+    },
+    {
+      "id": 89,
+      "name": "Jet Engine",
+      "zh": "喷气发动机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 111,
+      "name": "Construction Units",
+      "zh": "建筑单元",
+      "cat": "construction"
+    },
+    {
+      "id": 114,
+      "name": "Robots",
+      "zh": "机器人",
+      "cat": "factory"
+    },
+    {
+      "id": 61,
+      "name": "Gloves",
+      "zh": "手套",
+      "cat": "consumer"
+    },
+    {
+      "id": 63,
+      "name": "Stiletto Heel",
+      "zh": "细跟高跟鞋",
+      "cat": "consumer"
+    },
+    {
+      "id": 65,
+      "name": "Sneakers",
+      "zh": "运动鞋",
+      "cat": "consumer"
+    },
+    {
+      "id": 49,
+      "name": "Luxury Interior",
+      "zh": "豪华内饰",
+      "cat": "factory"
+    },
+    {
+      "id": 124,
+      "name": "Orange Juice",
+      "zh": "橙汁",
+      "cat": "food"
+    },
+    {
+      "id": 125,
+      "name": "Apple Cider",
+      "zh": "苹果酒",
+      "cat": "food"
+    },
+    {
+      "id": 126,
+      "name": "Ginger Beer",
+      "zh": "姜汁啤酒",
+      "cat": "food"
+    },
+    {
+      "id": 128,
+      "name": "Pasta",
+      "zh": "意大利面",
+      "cat": "food"
+    },
+    {
+      "id": 132,
+      "name": "Cocktails",
+      "zh": "鸡尾酒",
+      "cat": "food"
+    },
+    {
+      "id": 143,
+      "name": "Samosa",
+      "zh": "炸三角",
+      "cat": "food"
+    },
+    {
+      "id": 121,
+      "name": "Bread",
+      "zh": "面包",
+      "cat": "food"
+    },
+    {
+      "id": 24,
+      "name": "Smartphones",
+      "zh": "智能手机",
+      "cat": "consumer"
+    },
+    {
+      "id": 25,
+      "name": "Tablets",
+      "zh": "平板电脑",
+      "cat": "consumer"
+    },
+    {
+      "id": 27,
+      "name": "Monitors",
+      "zh": "显示器",
+      "cat": "consumer"
+    },
+    {
+      "id": 28,
+      "name": "Televisions",
+      "zh": "电视",
+      "cat": "consumer"
+    },
+    {
+      "id": 47,
+      "name": "On-board Computer",
+      "zh": "车载电脑",
+      "cat": "factory"
+    },
+    {
+      "id": 51,
+      "name": "Car Body",
+      "zh": "车身",
+      "cat": "factory"
+    },
+    {
+      "id": 80,
+      "name": "Flight Computer",
+      "zh": "飞行电脑",
+      "cat": "aerospace"
+    },
+    {
+      "id": 88,
+      "name": "Ion Drive",
+      "zh": "离子驱动",
+      "cat": "aerospace"
+    },
+    {
+      "id": 82,
+      "name": "Attitude Control",
+      "zh": "姿态控制系统",
+      "cat": "aerospace"
+    },
+    {
+      "id": 112,
+      "name": "Bulldozer",
+      "zh": "推土机",
+      "cat": "construction"
+    },
+    {
+      "id": 122,
+      "name": "Cheese",
+      "zh": "奶酪",
+      "cat": "food"
+    },
+    {
+      "id": 140,
+      "name": "Chocolate",
+      "zh": "巧克力",
+      "cat": "food"
+    },
+    {
+      "id": 71,
+      "name": "Necklace",
+      "zh": "项链",
+      "cat": "consumer"
+    },
+    {
+      "id": 64,
+      "name": "Handbags",
+      "zh": "手提包",
+      "cat": "consumer"
+    },
+    {
+      "id": 70,
+      "name": "Luxury Watch",
+      "zh": "奢华手表",
+      "cat": "consumer"
+    },
+    {
+      "id": 123,
+      "name": "Apple Pie",
+      "zh": "苹果派",
+      "cat": "food"
+    },
+    {
+      "id": 129,
+      "name": "Hamburger",
+      "zh": "汉堡",
+      "cat": "food"
+    },
+    {
+      "id": 131,
+      "name": "Meat Balls",
+      "zh": "肉丸",
+      "cat": "food"
+    },
+    {
+      "id": 26,
+      "name": "Laptops",
+      "zh": "笔记本电脑",
+      "cat": "consumer"
+    },
+    {
+      "id": 81,
+      "name": "Cockpit",
+      "zh": "驾驶舱",
+      "cat": "aerospace"
+    },
+    {
+      "id": 90,
+      "name": "Sub-orbital 2nd Stage",
+      "zh": "亚轨道二级",
+      "cat": "aerospace"
+    },
+    {
+      "id": 92,
+      "name": "Orbital Booster",
+      "zh": "轨道助推器",
+      "cat": "aerospace"
+    },
+    {
+      "id": 53,
+      "name": "Economy E-Car",
+      "zh": "经济型电动车",
+      "cat": "consumer"
+    },
+    {
+      "id": 54,
+      "name": "Luxury E-Car",
+      "zh": "豪华电动车",
+      "cat": "consumer"
+    },
+    {
+      "id": 55,
+      "name": "Economy Car",
+      "zh": "经济型汽车",
+      "cat": "consumer"
+    },
+    {
+      "id": 56,
+      "name": "Luxury Car",
+      "zh": "豪华汽车",
+      "cat": "consumer"
+    },
+    {
+      "id": 57,
+      "name": "Truck",
+      "zh": "卡车",
+      "cat": "consumer"
+    },
+    {
+      "id": 99,
+      "name": "Satellite",
+      "zh": "卫星",
+      "cat": "aerospace"
+    },
+    {
+      "id": 127,
+      "name": "Frozen Pizza",
+      "zh": "冷冻披萨",
+      "cat": "food"
+    },
+    {
+      "id": 130,
+      "name": "Lasagna",
+      "zh": "千层面",
+      "cat": "food"
+    },
+    {
+      "id": 97,
+      "name": "Single Engine Plane",
+      "zh": "单引擎飞机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 98,
+      "name": "Quadcopter",
+      "zh": "四旋翼无人机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 91,
+      "name": "Sub-orbital Rocket",
+      "zh": "亚轨道火箭",
+      "cat": "aerospace"
+    },
+    {
+      "id": 95,
+      "name": "Jumbo Jet",
+      "zh": "巨型客机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 96,
+      "name": "Luxury Jet",
+      "zh": "豪华私人飞机",
+      "cat": "aerospace"
+    },
+    {
+      "id": 93,
+      "name": "Starship",
+      "zh": "星舰",
+      "cat": "aerospace"
+    },
+    {
+      "id": 94,
+      "name": "BFR",
+      "zh": "超重型火箭",
+      "cat": "aerospace"
+    },
+    {
+      "id": 29,
+      "name": "Plant Research",
+      "zh": "植物研究",
+      "cat": "research"
+    },
+    {
+      "id": 30,
+      "name": "Energy Research",
+      "zh": "能源研究",
+      "cat": "research"
+    },
+    {
+      "id": 31,
+      "name": "Mining Research",
+      "zh": "采矿研究",
+      "cat": "research"
+    },
+    {
+      "id": 32,
+      "name": "Electronics Research",
+      "zh": "电子研究",
+      "cat": "research"
+    },
+    {
+      "id": 33,
+      "name": "Breeding Research",
+      "zh": "育种研究",
+      "cat": "research"
+    },
+    {
+      "id": 34,
+      "name": "Chemistry Research",
+      "zh": "化学研究",
+      "cat": "research"
+    },
+    {
+      "id": 58,
+      "name": "Automotive Research",
+      "zh": "汽车研究",
+      "cat": "research"
+    },
+    {
+      "id": 59,
+      "name": "Fashion Research",
+      "zh": "时尚研究",
+      "cat": "research"
+    },
+    {
+      "id": 100,
+      "name": "Aerospace Research",
+      "zh": "航空研究",
+      "cat": "research"
+    },
+    {
+      "id": 113,
+      "name": "Materials Research",
+      "zh": "材料研究",
+      "cat": "research"
+    }
+  ],
+  "edges": [
+    {
+      "from": 1,
+      "to": 2,
+      "qty": 0.2
+    },
+    {
+      "from": 2,
+      "to": 66,
+      "qty": 0.1
+    },
+    {
+      "from": 1,
+      "to": 10,
+      "qty": 25
+    },
+    {
+      "from": 1,
+      "to": 14,
+      "qty": 20
+    },
+    {
+      "from": 2,
+      "to": 14,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 15,
+      "qty": 14
+    },
+    {
+      "from": 2,
+      "to": 15,
+      "qty": 0.5
+    },
+    {
+      "from": 1,
+      "to": 44,
+      "qty": 2
+    },
+    {
+      "from": 1,
+      "to": 16,
+      "qty": 3
+    },
+    {
+      "from": 44,
+      "to": 16,
+      "qty": 2
+    },
+    {
+      "from": 1,
+      "to": 42,
+      "qty": 7
+    },
+    {
+      "from": 2,
+      "to": 42,
+      "qty": 0.5
+    },
+    {
+      "from": 1,
+      "to": 68,
+      "qty": 80
+    },
+    {
+      "from": 2,
+      "to": 68,
+      "qty": 2
+    },
+    {
+      "from": 1,
+      "to": 104,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 105,
+      "qty": 2
+    },
+    {
+      "from": 2,
+      "to": 106,
+      "qty": 4
+    },
+    {
+      "from": 66,
+      "to": 106,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "qty": 3
+    },
+    {
+      "from": 66,
+      "to": 3,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 4,
+      "qty": 3
+    },
+    {
+      "from": 66,
+      "to": 4,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 5,
+      "qty": 4
+    },
+    {
+      "from": 66,
+      "to": 5,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 6,
+      "qty": 0.5
+    },
+    {
+      "from": 66,
+      "to": 6,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 9,
+      "qty": 0.4
+    },
+    {
+      "from": 6,
+      "to": 9,
+      "qty": 0.5
+    },
+    {
+      "from": 2,
+      "to": 40,
+      "qty": 1
+    },
+    {
+      "from": 66,
+      "to": 40,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 72,
+      "qty": 3
+    },
+    {
+      "from": 66,
+      "to": 72,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 118,
+      "qty": 0.5
+    },
+    {
+      "from": 66,
+      "to": 118,
+      "qty": 1
+    },
+    {
+      "from": 2,
+      "to": 120,
+      "qty": 2
+    },
+    {
+      "from": 66,
+      "to": 120,
+      "qty": 5
+    },
+    {
+      "from": 2,
+      "to": 136,
+      "qty": 1
+    },
+    {
+      "from": 66,
+      "to": 136,
+      "qty": 1
+    },
+    {
+      "from": 115,
+      "to": 7,
+      "qty": 0.125
+    },
+    {
+      "from": 116,
+      "to": 8,
+      "qty": 0.0625
+    },
+    {
+      "from": 115,
+      "to": 46,
+      "qty": 0.125
+    },
+    {
+      "from": 2,
+      "to": 115,
+      "qty": 16
+    },
+    {
+      "from": 139,
+      "to": 115,
+      "qty": 12
+    },
+    {
+      "from": 2,
+      "to": 116,
+      "qty": 4
+    },
+    {
+      "from": 139,
+      "to": 116,
+      "qty": 4
+    },
+    {
+      "from": 2,
+      "to": 117,
+      "qty": 2
+    },
+    {
+      "from": 139,
+      "to": 117,
+      "qty": 0.5
+    },
+    {
+      "from": 1,
+      "to": 11,
+      "qty": 15
+    },
+    {
+      "from": 10,
+      "to": 11,
+      "qty": 0.75
+    },
+    {
+      "from": 73,
+      "to": 11,
+      "qty": 0.25
+    },
+    {
+      "from": 1,
+      "to": 12,
+      "qty": 15
+    },
+    {
+      "from": 10,
+      "to": 12,
+      "qty": 0.75
+    },
+    {
+      "from": 73,
+      "to": 12,
+      "qty": 0.25
+    },
+    {
+      "from": 12,
+      "to": 13,
+      "qty": 0.005
+    },
+    {
+      "from": 1,
+      "to": 13,
+      "qty": 0.01
+    },
+    {
+      "from": 1,
+      "to": 19,
+      "qty": 5
+    },
+    {
+      "from": 10,
+      "to": 19,
+      "qty": 0.2
+    },
+    {
+      "from": 1,
+      "to": 73,
+      "qty": 20
+    },
+    {
+      "from": 72,
+      "to": 73,
+      "qty": 10
+    },
+    {
+      "from": 1,
+      "to": 74,
+      "qty": 20
+    },
+    {
+      "from": 10,
+      "to": 75,
+      "qty": 0.1
+    },
+    {
+      "from": 1,
+      "to": 75,
+      "qty": 0.5
+    },
+    {
+      "from": 74,
+      "to": 83,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 83,
+      "qty": 5
+    },
+    {
+      "from": 1,
+      "to": 17,
+      "qty": 0.2
+    },
+    {
+      "from": 14,
+      "to": 17,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 18,
+      "qty": 15
+    },
+    {
+      "from": 15,
+      "to": 18,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 43,
+      "qty": 5
+    },
+    {
+      "from": 42,
+      "to": 43,
+      "qty": 1
+    },
+    {
+      "from": 17,
+      "to": 43,
+      "qty": 0.1
+    },
+    {
+      "from": 1,
+      "to": 45,
+      "qty": 2
+    },
+    {
+      "from": 16,
+      "to": 45,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 69,
+      "qty": 40
+    },
+    {
+      "from": 68,
+      "to": 69,
+      "qty": 200
+    },
+    {
+      "from": 103,
+      "to": 101,
+      "qty": 15
+    },
+    {
+      "from": 44,
+      "to": 101,
+      "qty": 20
+    },
+    {
+      "from": 2,
+      "to": 101,
+      "qty": 20
+    },
+    {
+      "from": 43,
+      "to": 101,
+      "qty": 5
+    },
+    {
+      "from": 104,
+      "to": 102,
+      "qty": 0.5
+    },
+    {
+      "from": 105,
+      "to": 103,
+      "qty": 3
+    },
+    {
+      "from": 43,
+      "to": 107,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 107,
+      "qty": 4
+    },
+    {
+      "from": 106,
+      "to": 108,
+      "qty": 0.5
+    },
+    {
+      "from": 18,
+      "to": 109,
+      "qty": 2
+    },
+    {
+      "from": 45,
+      "to": 109,
+      "qty": 1
+    },
+    {
+      "from": 43,
+      "to": 110,
+      "qty": 0.5
+    },
+    {
+      "from": 108,
+      "to": 110,
+      "qty": 0.5
+    },
+    {
+      "from": 21,
+      "to": 110,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 110,
+      "qty": 1
+    },
+    {
+      "from": 112,
+      "to": 111,
+      "qty": 0.125
+    },
+    {
+      "from": 12,
+      "to": 111,
+      "qty": 5
+    },
+    {
+      "from": 109,
+      "to": 111,
+      "qty": 4
+    },
+    {
+      "from": 107,
+      "to": 111,
+      "qty": 8
+    },
+    {
+      "from": 110,
+      "to": 111,
+      "qty": 4
+    },
+    {
+      "from": 43,
+      "to": 112,
+      "qty": 4
+    },
+    {
+      "from": 51,
+      "to": 112,
+      "qty": 1
+    },
+    {
+      "from": 52,
+      "to": 112,
+      "qty": 2
+    },
+    {
+      "from": 16,
+      "to": 20,
+      "qty": 4
+    },
+    {
+      "from": 17,
+      "to": 20,
+      "qty": 1
+    },
+    {
+      "from": 16,
+      "to": 21,
+      "qty": 3
+    },
+    {
+      "from": 17,
+      "to": 21,
+      "qty": 1
+    },
+    {
+      "from": 17,
+      "to": 22,
+      "qty": 4
+    },
+    {
+      "from": 16,
+      "to": 23,
+      "qty": 5
+    },
+    {
+      "from": 17,
+      "to": 23,
+      "qty": 4
+    },
+    {
+      "from": 16,
+      "to": 79,
+      "qty": 4
+    },
+    {
+      "from": 17,
+      "to": 79,
+      "qty": 3
+    },
+    {
+      "from": 69,
+      "to": 79,
+      "qty": 0.0625
+    },
+    {
+      "from": 20,
+      "to": 24,
+      "qty": 2
+    },
+    {
+      "from": 21,
+      "to": 24,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 24,
+      "qty": 1
+    },
+    {
+      "from": 23,
+      "to": 24,
+      "qty": 1
+    },
+    {
+      "from": 18,
+      "to": 24,
+      "qty": 2
+    },
+    {
+      "from": 20,
+      "to": 25,
+      "qty": 2
+    },
+    {
+      "from": 21,
+      "to": 25,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 25,
+      "qty": 1
+    },
+    {
+      "from": 23,
+      "to": 25,
+      "qty": 2
+    },
+    {
+      "from": 18,
+      "to": 25,
+      "qty": 3
+    },
+    {
+      "from": 20,
+      "to": 26,
+      "qty": 4
+    },
+    {
+      "from": 21,
+      "to": 26,
+      "qty": 3
+    },
+    {
+      "from": 22,
+      "to": 26,
+      "qty": 2
+    },
+    {
+      "from": 23,
+      "to": 26,
+      "qty": 2
+    },
+    {
+      "from": 19,
+      "to": 26,
+      "qty": 3
+    },
+    {
+      "from": 21,
+      "to": 27,
+      "qty": 2
+    },
+    {
+      "from": 23,
+      "to": 27,
+      "qty": 3
+    },
+    {
+      "from": 19,
+      "to": 27,
+      "qty": 3
+    },
+    {
+      "from": 20,
+      "to": 28,
+      "qty": 1
+    },
+    {
+      "from": 21,
+      "to": 28,
+      "qty": 4
+    },
+    {
+      "from": 23,
+      "to": 28,
+      "qty": 4
+    },
+    {
+      "from": 19,
+      "to": 28,
+      "qty": 5
+    },
+    {
+      "from": 40,
+      "to": 41,
+      "qty": 2
+    },
+    {
+      "from": 1,
+      "to": 41,
+      "qty": 1
+    },
+    {
+      "from": 20,
+      "to": 47,
+      "qty": 2
+    },
+    {
+      "from": 21,
+      "to": 47,
+      "qty": 3
+    },
+    {
+      "from": 43,
+      "to": 48,
+      "qty": 2
+    },
+    {
+      "from": 21,
+      "to": 48,
+      "qty": 3
+    },
+    {
+      "from": 23,
+      "to": 49,
+      "qty": 6
+    },
+    {
+      "from": 18,
+      "to": 49,
+      "qty": 2
+    },
+    {
+      "from": 46,
+      "to": 49,
+      "qty": 5
+    },
+    {
+      "from": 23,
+      "to": 50,
+      "qty": 2
+    },
+    {
+      "from": 19,
+      "to": 50,
+      "qty": 2
+    },
+    {
+      "from": 41,
+      "to": 50,
+      "qty": 5
+    },
+    {
+      "from": 18,
+      "to": 51,
+      "qty": 30
+    },
+    {
+      "from": 45,
+      "to": 51,
+      "qty": 5
+    },
+    {
+      "from": 43,
+      "to": 51,
+      "qty": 5
+    },
+    {
+      "from": 43,
+      "to": 52,
+      "qty": 6
+    },
+    {
+      "from": 17,
+      "to": 52,
+      "qty": 5
+    },
+    {
+      "from": 21,
+      "to": 52,
+      "qty": 5
+    },
+    {
+      "from": 75,
+      "to": 76,
+      "qty": 8
+    },
+    {
+      "from": 48,
+      "to": 53,
+      "qty": 2
+    },
+    {
+      "from": 50,
+      "to": 53,
+      "qty": 1
+    },
+    {
+      "from": 51,
+      "to": 53,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 53,
+      "qty": 15
+    },
+    {
+      "from": 47,
+      "to": 53,
+      "qty": 1
+    },
+    {
+      "from": 48,
+      "to": 54,
+      "qty": 4
+    },
+    {
+      "from": 49,
+      "to": 54,
+      "qty": 1
+    },
+    {
+      "from": 51,
+      "to": 54,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 54,
+      "qty": 30
+    },
+    {
+      "from": 47,
+      "to": 54,
+      "qty": 2
+    },
+    {
+      "from": 52,
+      "to": 55,
+      "qty": 1
+    },
+    {
+      "from": 50,
+      "to": 55,
+      "qty": 1
+    },
+    {
+      "from": 51,
+      "to": 55,
+      "qty": 1
+    },
+    {
+      "from": 47,
+      "to": 55,
+      "qty": 1
+    },
+    {
+      "from": 52,
+      "to": 56,
+      "qty": 2
+    },
+    {
+      "from": 49,
+      "to": 56,
+      "qty": 1
+    },
+    {
+      "from": 51,
+      "to": 56,
+      "qty": 1
+    },
+    {
+      "from": 47,
+      "to": 56,
+      "qty": 2
+    },
+    {
+      "from": 52,
+      "to": 57,
+      "qty": 6
+    },
+    {
+      "from": 50,
+      "to": 57,
+      "qty": 1
+    },
+    {
+      "from": 51,
+      "to": 57,
+      "qty": 1
+    },
+    {
+      "from": 43,
+      "to": 57,
+      "qty": 10
+    },
+    {
+      "from": 47,
+      "to": 57,
+      "qty": 1
+    },
+    {
+      "from": 41,
+      "to": 60,
+      "qty": 1
+    },
+    {
+      "from": 41,
+      "to": 61,
+      "qty": 0.5
+    },
+    {
+      "from": 46,
+      "to": 61,
+      "qty": 0.5
+    },
+    {
+      "from": 41,
+      "to": 62,
+      "qty": 3
+    },
+    {
+      "from": 19,
+      "to": 62,
+      "qty": 0.5
+    },
+    {
+      "from": 46,
+      "to": 63,
+      "qty": 1
+    },
+    {
+      "from": 19,
+      "to": 63,
+      "qty": 0.2
+    },
+    {
+      "from": 46,
+      "to": 64,
+      "qty": 1.5
+    },
+    {
+      "from": 19,
+      "to": 65,
+      "qty": 1
+    },
+    {
+      "from": 69,
+      "to": 70,
+      "qty": 0.1
+    },
+    {
+      "from": 21,
+      "to": 70,
+      "qty": 2
+    },
+    {
+      "from": 45,
+      "to": 70,
+      "qty": 0.5
+    },
+    {
+      "from": 69,
+      "to": 71,
+      "qty": 0.25
+    },
+    {
+      "from": 6,
+      "to": 133,
+      "qty": 15
+    },
+    {
+      "from": 117,
+      "to": 134,
+      "qty": 0.5
+    },
+    {
+      "from": 72,
+      "to": 135,
+      "qty": 1
+    },
+    {
+      "from": 1,
+      "to": 135,
+      "qty": 0.5
+    },
+    {
+      "from": 133,
+      "to": 137,
+      "qty": 2
+    },
+    {
+      "from": 9,
+      "to": 137,
+      "qty": 1
+    },
+    {
+      "from": 134,
+      "to": 137,
+      "qty": 0.5
+    },
+    {
+      "from": 120,
+      "to": 138,
+      "qty": 2
+    },
+    {
+      "from": 134,
+      "to": 138,
+      "qty": 0.5
+    },
+    {
+      "from": 2,
+      "to": 138,
+      "qty": 0.5
+    },
+    {
+      "from": 120,
+      "to": 139,
+      "qty": 0.5
+    },
+    {
+      "from": 6,
+      "to": 139,
+      "qty": 10
+    },
+    {
+      "from": 136,
+      "to": 140,
+      "qty": 10
+    },
+    {
+      "from": 117,
+      "to": 140,
+      "qty": 0.5
+    },
+    {
+      "from": 135,
+      "to": 140,
+      "qty": 1
+    },
+    {
+      "from": 120,
+      "to": 141,
+      "qty": 10
+    },
+    {
+      "from": 1,
+      "to": 141,
+      "qty": 1
+    },
+    {
+      "from": 137,
+      "to": 121,
+      "qty": 1
+    },
+    {
+      "from": 117,
+      "to": 122,
+      "qty": 1
+    },
+    {
+      "from": 137,
+      "to": 123,
+      "qty": 1
+    },
+    {
+      "from": 3,
+      "to": 123,
+      "qty": 2
+    },
+    {
+      "from": 135,
+      "to": 123,
+      "qty": 2
+    },
+    {
+      "from": 4,
+      "to": 124,
+      "qty": 5
+    },
+    {
+      "from": 135,
+      "to": 124,
+      "qty": 1
+    },
+    {
+      "from": 3,
+      "to": 125,
+      "qty": 8
+    },
+    {
+      "from": 2,
+      "to": 126,
+      "qty": 1
+    },
+    {
+      "from": 120,
+      "to": 126,
+      "qty": 3
+    },
+    {
+      "from": 135,
+      "to": 126,
+      "qty": 2
+    },
+    {
+      "from": 137,
+      "to": 127,
+      "qty": 2
+    },
+    {
+      "from": 120,
+      "to": 127,
+      "qty": 2
+    },
+    {
+      "from": 122,
+      "to": 127,
+      "qty": 1
+    },
+    {
+      "from": 8,
+      "to": 127,
+      "qty": 1
+    },
+    {
+      "from": 133,
+      "to": 128,
+      "qty": 2
+    },
+    {
+      "from": 9,
+      "to": 128,
+      "qty": 2
+    },
+    {
+      "from": 7,
+      "to": 129,
+      "qty": 4
+    },
+    {
+      "from": 120,
+      "to": 129,
+      "qty": 3
+    },
+    {
+      "from": 134,
+      "to": 129,
+      "qty": 1
+    },
+    {
+      "from": 121,
+      "to": 129,
+      "qty": 0.5
+    },
+    {
+      "from": 141,
+      "to": 129,
+      "qty": 0.5
+    },
+    {
+      "from": 7,
+      "to": 130,
+      "qty": 1
+    },
+    {
+      "from": 122,
+      "to": 130,
+      "qty": 0.5
+    },
+    {
+      "from": 128,
+      "to": 130,
+      "qty": 1
+    },
+    {
+      "from": 138,
+      "to": 130,
+      "qty": 1
+    },
+    {
+      "from": 8,
+      "to": 131,
+      "qty": 2
+    },
+    {
+      "from": 121,
+      "to": 131,
+      "qty": 1
+    },
+    {
+      "from": 138,
+      "to": 131,
+      "qty": 1
+    },
+    {
+      "from": 141,
+      "to": 131,
+      "qty": 0.5
+    },
+    {
+      "from": 124,
+      "to": 132,
+      "qty": 1
+    },
+    {
+      "from": 125,
+      "to": 132,
+      "qty": 1
+    },
+    {
+      "from": 126,
+      "to": 132,
+      "qty": 2
+    },
+    {
+      "from": 118,
+      "to": 119,
+      "qty": 10
+    },
+    {
+      "from": 119,
+      "to": 132,
+      "qty": 8
+    },
+    {
+      "from": 120,
+      "to": 142,
+      "qty": 5
+    },
+    {
+      "from": 141,
+      "to": 142,
+      "qty": 0.5
+    },
+    {
+      "from": 122,
+      "to": 142,
+      "qty": 2
+    },
+    {
+      "from": 120,
+      "to": 143,
+      "qty": 5
+    },
+    {
+      "from": 141,
+      "to": 143,
+      "qty": 1
+    },
+    {
+      "from": 133,
+      "to": 143,
+      "qty": 4
+    },
+    {
+      "from": 48,
+      "to": 114,
+      "qty": 1
+    },
+    {
+      "from": 20,
+      "to": 114,
+      "qty": 2
+    },
+    {
+      "from": 19,
+      "to": 114,
+      "qty": 10
+    },
+    {
+      "from": 76,
+      "to": 77,
+      "qty": 40
+    },
+    {
+      "from": 76,
+      "to": 78,
+      "qty": 30
+    },
+    {
+      "from": 18,
+      "to": 78,
+      "qty": 5
+    },
+    {
+      "from": 79,
+      "to": 80,
+      "qty": 4
+    },
+    {
+      "from": 47,
+      "to": 80,
+      "qty": 2
+    },
+    {
+      "from": 79,
+      "to": 81,
+      "qty": 4
+    },
+    {
+      "from": 23,
+      "to": 81,
+      "qty": 8
+    },
+    {
+      "from": 50,
+      "to": 81,
+      "qty": 1
+    },
+    {
+      "from": 43,
+      "to": 82,
+      "qty": 3
+    },
+    {
+      "from": 22,
+      "to": 82,
+      "qty": 5
+    },
+    {
+      "from": 48,
+      "to": 82,
+      "qty": 3
+    },
+    {
+      "from": 18,
+      "to": 84,
+      "qty": 50
+    },
+    {
+      "from": 83,
+      "to": 84,
+      "qty": 250
+    },
+    {
+      "from": 18,
+      "to": 85,
+      "qty": 30
+    },
+    {
+      "from": 83,
+      "to": 85,
+      "qty": 100
+    },
+    {
+      "from": 17,
+      "to": 85,
+      "qty": 50
+    },
+    {
+      "from": 43,
+      "to": 86,
+      "qty": 20
+    },
+    {
+      "from": 79,
+      "to": 86,
+      "qty": 8
+    },
+    {
+      "from": 18,
+      "to": 86,
+      "qty": 10
+    },
+    {
+      "from": 43,
+      "to": 87,
+      "qty": 20
+    },
+    {
+      "from": 16,
+      "to": 87,
+      "qty": 30
+    },
+    {
+      "from": 79,
+      "to": 88,
+      "qty": 8
+    },
+    {
+      "from": 22,
+      "to": 88,
+      "qty": 30
+    },
+    {
+      "from": 17,
+      "to": 88,
+      "qty": 15
+    },
+    {
+      "from": 79,
+      "to": 89,
+      "qty": 4
+    },
+    {
+      "from": 18,
+      "to": 89,
+      "qty": 5
+    },
+    {
+      "from": 77,
+      "to": 90,
+      "qty": 8
+    },
+    {
+      "from": 84,
+      "to": 90,
+      "qty": 2
+    },
+    {
+      "from": 80,
+      "to": 90,
+      "qty": 2
+    },
+    {
+      "from": 88,
+      "to": 90,
+      "qty": 4
+    },
+    {
+      "from": 82,
+      "to": 90,
+      "qty": 2
+    },
+    {
+      "from": 85,
+      "to": 91,
+      "qty": 1
+    },
+    {
+      "from": 90,
+      "to": 91,
+      "qty": 1
+    },
+    {
+      "from": 77,
+      "to": 92,
+      "qty": 40
+    },
+    {
+      "from": 84,
+      "to": 92,
+      "qty": 16
+    },
+    {
+      "from": 86,
+      "to": 92,
+      "qty": 34
+    },
+    {
+      "from": 81,
+      "to": 93,
+      "qty": 2
+    },
+    {
+      "from": 87,
+      "to": 93,
+      "qty": 10
+    },
+    {
+      "from": 82,
+      "to": 93,
+      "qty": 4
+    },
+    {
+      "from": 84,
+      "to": 93,
+      "qty": 6
+    },
+    {
+      "from": 86,
+      "to": 93,
+      "qty": 7
+    },
+    {
+      "from": 92,
+      "to": 94,
+      "qty": 1
+    },
+    {
+      "from": 93,
+      "to": 94,
+      "qty": 1
+    },
+    {
+      "from": 77,
+      "to": 95,
+      "qty": 40
+    },
+    {
+      "from": 78,
+      "to": 95,
+      "qty": 10
+    },
+    {
+      "from": 81,
+      "to": 95,
+      "qty": 2
+    },
+    {
+      "from": 50,
+      "to": 95,
+      "qty": 140
+    },
+    {
+      "from": 89,
+      "to": 95,
+      "qty": 4
+    },
+    {
+      "from": 77,
+      "to": 96,
+      "qty": 14
+    },
+    {
+      "from": 78,
+      "to": 96,
+      "qty": 2
+    },
+    {
+      "from": 81,
+      "to": 96,
+      "qty": 1
+    },
+    {
+      "from": 69,
+      "to": 96,
+      "qty": 2
+    },
+    {
+      "from": 89,
+      "to": 96,
+      "qty": 2
+    },
+    {
+      "from": 77,
+      "to": 97,
+      "qty": 8
+    },
+    {
+      "from": 78,
+      "to": 97,
+      "qty": 2
+    },
+    {
+      "from": 81,
+      "to": 97,
+      "qty": 1
+    },
+    {
+      "from": 52,
+      "to": 97,
+      "qty": 1
+    },
+    {
+      "from": 47,
+      "to": 98,
+      "qty": 1
+    },
+    {
+      "from": 22,
+      "to": 98,
+      "qty": 1
+    },
+    {
+      "from": 21,
+      "to": 98,
+      "qty": 3
+    },
+    {
+      "from": 19,
+      "to": 98,
+      "qty": 2
+    },
+    {
+      "from": 80,
+      "to": 99,
+      "qty": 4
+    },
+    {
+      "from": 88,
+      "to": 99,
+      "qty": 1
+    },
+    {
+      "from": 79,
+      "to": 99,
+      "qty": 8
+    },
+    {
+      "from": 82,
+      "to": 99,
+      "qty": 2
+    }
+  ]
+}
