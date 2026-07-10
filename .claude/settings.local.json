@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "WebFetch",
+      "WebFetch(domain:www.simcompanies.com)",
+      "WebFetch(domain:simcotools.com)",
+      "WebFetch(domain:simcotools.app)",
+      "WebFetch(domain:api.simcotools.com)",
+      "Bash(curl -s -o /tmp/chemicals.png \"https://www.simcompanies.com/static/images/resources/chemicals.3e24ac27e6a7.png\")",
+      "Bash(curl -s -o /tmp/electronic-components.png \"https://www.simcompanies.com/static/images/resources/electronic-components.e6ccaee14762.png\")",
+      "Bash(curl -s \"https://www.simcompanies.com/api/v4/en/0/market/\")",
+      "Bash(curl -s \"https://www.simcompanies.com/api/v4/en/0/exchange/1/\")",
+      "Bash(curl -s \"https://www.simcompanies.com/api/v4/en/0/encyclopedia/resources/0/1/\")",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s \"https://www.simcompanies.com/api/v4/en/0/exchange/1/sold/\")",
+      "Bash(curl -s \"https://api.simcotools.com\")",
+      "Bash(curl -s \"https://api.simcotools.com/v1/\")",
+      "Bash(curl -s \"https://api.simcotools.com/v1/market\")",
+      "Bash(curl -s \"https://api.simcotools.com/v1/realms/0/resources\")",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(type\\(d\\), str\\(d\\)[:200]\\)\")",
+      "Bash(for page:*)",
+      "Bash(do curl:*)",
+      "Bash(python -c \":*)",
+      "Bash(for id_name in \"98:Quadcopter\" \"21:Electronic_Components\" \"17:Chemicals\" \"19:Plastic\")",
+      "Bash(python -c \"import sys; sys.stdout.buffer.write\\(sys.stdin.buffer.read\\(\\)\\)\")"
+    ],
+    "additionalDirectories": [
+      "c:\\simco_market_analyzer"
+    ]
+  }
+}
