@@ -1,0 +1,16 @@
+// ==UserScript==
+// @name         SimEnergyEmpire Toolkit
+// @namespace    https://www.simenergyempire.com/
+// @version      2.0
+// @description  Weather logger + connection/solar automation for Sim Energy Empire
+// @author       LDDL
+// @match        https://www.simenergyempire.com/*
+// @grant        none
+// @run-at       document-start
+// @license      MIT
+// ==/UserScript==
+
+(() => {
+  // src/see_toolkit/main.js
+  console.log("[see-toolkit] loaded");
+})();
