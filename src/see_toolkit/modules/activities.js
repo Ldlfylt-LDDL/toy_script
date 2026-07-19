@@ -31,6 +31,20 @@ export function normalizeActivities(acts, k) {
   return out;
 }
 
+// Payload for PUT .../edges/{e}/connections/{c}/activities/ — includes capacity
+// (direction + magnitude) and purchasePrice (buy cap), unlike buildings.
+export function connectionActivityPayload(activity, { capacity, purchasePrice, state } = {}) {
+  return {
+    id: activity.id,
+    state: state ?? activity.state,
+    timeTick: activity.timeTick,
+    capacity: capacity ?? activity.capacity,
+    purchasePrice: purchasePrice ?? activity.purchasePrice,
+    isBoosted: activity.isBoosted,
+    firstInChain: activity.firstInChain,
+  };
+}
+
 export function stateAt(normalized, tick) {
   const a = normalized.find((x) => x.timeTick === tick);
   return a ? a.state : undefined;
