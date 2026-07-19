@@ -5,7 +5,7 @@ export async function runModules({ modules, state, dryRun = false, delay = 500 }
   const executed = [];
   for (const mod of modules) {
     let result;
-    try { result = mod.plan(state); } catch (e) { console.error(`[${mod.id}] plan failed`, e); continue; }
+    try { result = await mod.plan(state); } catch (e) { console.error(`[${mod.id}] plan failed`, e); continue; }
     for (const w of result.writes || []) {
       planned.push(w.label);
       if (dryRun) continue;
