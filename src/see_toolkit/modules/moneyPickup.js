@@ -28,6 +28,13 @@ export function moneyPickupModule({ fetchJSON, fetchImpl = fetch }) {
       }));
       return { writes, view: { hubs: hubs.length, total } };
     },
-    render(view, el) { if (el) el.textContent = `Money: collecting $${view.total.toLocaleString()} from ${view.hubs} hub(s)`; },
+    render(view, el) {
+      if (!el) return;
+      el.textContent = view.hubs === 0
+        ? 'Money: nothing to collect'
+        // The game frontend doesn't know about background pickups; its map bubbles
+        // and cash header refresh on the next page navigation / tick.
+        : `Money: collected $${view.total.toLocaleString()} from ${view.hubs} hub(s) — game UI updates on next page switch`;
+    },
   };
 }

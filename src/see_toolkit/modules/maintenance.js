@@ -44,7 +44,7 @@ export function maintenanceModule({ fetchJSON, fetchImpl = fetch, cache, upgrade
         hasUpgrade: (id) => upgrades.has(id),
       });
       const norm = {};
-      for (const d of decisions) norm[d.buildingId] = await activitiesFor(state.playerId, d.buildingId, state.k);
+      await Promise.all(decisions.map(async (d) => { norm[d.buildingId] = await activitiesFor(state.playerId, d.buildingId, state.k); }));
       const writes = decisions
         .filter((d) => stateAt(norm[d.buildingId] || [], d.tick) !== 'Maintenance')
         .map((d) => ({

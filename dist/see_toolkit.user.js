@@ -235,7 +235,7 @@
 
   // src/see_toolkit/core/scheduler.js
   var sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  async function runModules({ modules, state, dryRun = false, delay = 500 }) {
+  async function runModules({ modules, state, dryRun = false, delay = 500, onModule, onWrite }) {
     const planned = [];
     const executed = [];
     const views = {};
@@ -245,12 +245,22 @@
         result = await mod.plan(state);
       } catch (e) {
         console.error(`[${mod.id}] plan failed`, e);
+        if (onModule) try {
+          onModule(mod, null, e);
+        } catch {
+        }
         continue;
       }
       views[mod.id] = result.view;
-      for (const w of result.writes || []) {
+      const list = result.writes || [];
+      for (let i = 0; i < list.length; i++) {
+        const w = list[i];
         planned.push(w.label);
         if (dryRun) continue;
+        if (onWrite) try {
+          onWrite(mod, w.label, i + 1, list.length);
+        } catch {
+        }
         try {
           await w.send();
           executed.push(w.label);
@@ -258,6 +268,10 @@
           console.error(`[${mod.id}] write "${w.label}" failed`, e);
         }
         if (delay) await sleep(delay);
+      }
+      if (onModule) try {
+        onModule(mod, result.view, null);
+      } catch {
       }
     }
     return { planned, executed, views };
@@ -390,7 +404,9 @@
       async plan(state) {
         const solar = (state.buildings || []).filter((b) => b.kind === "SolarPowerPlant");
         const norm = {};
-        for (const b of solar) norm[b.id] = await activitiesFor(state.playerId, b.id, state.k);
+        await Promise.all(solar.map(async (b) => {
+          norm[b.id] = await activitiesFor(state.playerId, b.id, state.k);
+        }));
         const activityAt = (id, tick) => stateAt(norm[id] || [], tick);
         const decisions = planSolarUpgrades({ solarPlants: solar, k: state.k, activityAt });
         const writes = decisions.map((d) => ({
@@ -451,7 +467,9 @@
           hasUpgrade: (id) => upgrades.has(id)
         });
         const norm = {};
-        for (const d of decisions) norm[d.buildingId] = await activitiesFor(state.playerId, d.buildingId, state.k);
+        await Promise.all(decisions.map(async (d) => {
+          norm[d.buildingId] = await activitiesFor(state.playerId, d.buildingId, state.k);
+        }));
         const writes = decisions.filter((d) => stateAt(norm[d.buildingId] || [], d.tick) !== "Maintenance").map((d) => ({
           label: `maint#${d.buildingId}\u2192Maintenance@T${d.tick}`,
           send: async () => {
@@ -505,7 +523,8 @@
         return { writes, view: { hubs: hubs.length, total } };
       },
       render(view, el) {
-        if (el) el.textContent = `Money: collecting $${view.total.toLocaleString()} from ${view.hubs} hub(s)`;
+        if (!el) return;
+        el.textContent = view.hubs === 0 ? "Money: nothing to collect" : `Money: collected $${view.total.toLocaleString()} from ${view.hubs} hub(s) \u2014 game UI updates on next page switch`;
       }
     };
   }
@@ -622,13 +641,25 @@
         const streaks = store.get("connStreak", {});
         const writes = [];
         let flagged = 0, flips = 0;
-        for (const c of power) {
+        const fetched = await Promise.all(power.map(async (c) => {
           const edgeId = c.edge?.id ?? c.edgeId;
           try {
             const detail = await connDetail(edgeId, c.id);
             const edge = { hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id, hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id };
-            for (const hid of [edge.hub1Id, edge.hub2Id]) {
-              for (const h of await hubHistory(hid)) if (h.powerPrice != null) recordPrice(prices, hid, h.timeTick, h.powerPrice);
+            const histories = await Promise.all([hubHistory(edge.hub1Id), hubHistory(edge.hub2Id)]);
+            return { c, edgeId, detail, edge, histories };
+          } catch (e) {
+            console.warn(`[connections] #${c.id} read failed:`, e.message);
+            return null;
+          }
+        }));
+        for (const item of fetched) {
+          if (!item) continue;
+          const { c, edgeId, detail, edge, histories } = item;
+          try {
+            for (let i = 0; i < 2; i++) {
+              const hid = i === 0 ? edge.hub1Id : edge.hub2Id;
+              for (const h of histories[i]) if (h.powerPrice != null) recordPrice(prices, hid, h.timeTick, h.powerPrice);
             }
             const acts = normalizeActivities(detail.connectionActivitySet || [], state.k);
             const act = acts.find((a) => a.timeTick === state.k);
@@ -707,18 +738,45 @@
     async function runOnce(panel) {
       if (running) return;
       running = true;
+      const status = panel.section("status", "SEE Toolkit");
       try {
         const dryRun = store.get("dryRun", "0") === "1";
-        const state = await game.loadState();
-        const res = await runModules({ modules, state, dryRun, delay: 400 + Math.random() * 400 });
+        status.textContent = "Loading game state\u2026";
         for (const mod of modules) {
-          try {
-            mod.render && mod.render(res.views[mod.id], panel.section(mod.id, mod.title));
-          } catch {
-          }
+          const el = panel.section(mod.id, mod.title);
+          if (!el.textContent) el.textContent = "\u2026";
         }
+        const state = await game.loadState();
+        let done = 0;
+        status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 running 0/${modules.length}\u2026`;
+        const res = await runModules({
+          modules,
+          state,
+          dryRun,
+          delay: 400 + Math.random() * 400,
+          // Render each module the moment it finishes, instead of after the whole run.
+          onModule(mod, view, err) {
+            done++;
+            status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 running ${done}/${modules.length}\u2026`;
+            const el = panel.section(mod.id, mod.title);
+            if (err) {
+              el.textContent = "Error \u2014 see console.";
+              return;
+            }
+            try {
+              mod.render && mod.render(view, el);
+            } catch {
+            }
+          },
+          // Live feedback during long serial write sequences (e.g. money pickup).
+          onWrite(mod, label, i, total) {
+            panel.section(mod.id, mod.title).textContent = `${mod.title}: ${i}/${total} \u2014 ${label}`;
+          }
+        });
+        status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`;
         console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? "DRY-RUN " : ""}${res.executed.length} write(s)`, res.planned);
       } catch (e) {
+        status.textContent = "Run failed \u2014 see console.";
         console.error("[see-toolkit] run failed", e);
       } finally {
         running = false;

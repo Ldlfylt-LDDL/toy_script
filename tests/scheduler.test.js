@@ -9,6 +9,16 @@ test('dry-run collects planned writes without sending', async () => {
   assert.deepEqual(res.planned, ['w1']);
   assert.equal(sent, 0);
 });
+test('onModule fires per module as it completes (progressive render)', async () => {
+  const seen = [];
+  const mk = (id) => ({ id, title: id, plan: () => ({ writes: [], view: { id } }) });
+  const bad = { id: 'boom', title: 'B', plan: () => { throw new Error('x'); } };
+  await runModules({
+    modules: [mk('a'), bad, mk('b')], state: {}, dryRun: true, delay: 0,
+    onModule: (mod, view, err) => seen.push([mod.id, view ? view.id : null, !!err]),
+  });
+  assert.deepEqual(seen, [['a', 'a', false], ['boom', null, true], ['b', 'b', false]]);
+});
 test('executes writes serially', async () => {
   const order = [];
   const mk = (id) => ({ id, title: id, plan: () => ({ writes: [{ label: id, send: async () => { order.push(id); } }], view: {} }) });

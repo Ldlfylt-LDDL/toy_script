@@ -47,14 +47,28 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
       const writes = [];
       let flagged = 0, flips = 0;
 
-      for (const c of power) {
+      // Read phase in parallel — the per-tick cache dedupes overlapping hub fetches.
+      // (Only writes must be serialized; reads mirror what the game client does itself.)
+      const fetched = await Promise.all(power.map(async (c) => {
         const edgeId = c.edge?.id ?? c.edgeId;
         try {
           const detail = await connDetail(edgeId, c.id);
           const edge = { hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id, hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id };
-          // accumulate prices for both hubs
-          for (const hid of [edge.hub1Id, edge.hub2Id]) {
-            for (const h of await hubHistory(hid)) if (h.powerPrice != null) recordPrice(prices, hid, h.timeTick, h.powerPrice);
+          const histories = await Promise.all([hubHistory(edge.hub1Id), hubHistory(edge.hub2Id)]);
+          return { c, edgeId, detail, edge, histories };
+        } catch (e) {
+          console.warn(`[connections] #${c.id} read failed:`, e.message);
+          return null;
+        }
+      }));
+
+      for (const item of fetched) {
+        if (!item) continue;
+        const { c, edgeId, detail, edge, histories } = item;
+        try {
+          for (let i = 0; i < 2; i++) {
+            const hid = i === 0 ? edge.hub1Id : edge.hub2Id;
+            for (const h of histories[i]) if (h.powerPrice != null) recordPrice(prices, hid, h.timeTick, h.powerPrice);
           }
           const acts = normalizeActivities(detail.connectionActivitySet || [], state.k);
           const act = acts.find((a) => a.timeTick === state.k);

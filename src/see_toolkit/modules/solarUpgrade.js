@@ -25,7 +25,7 @@ export function solarUpgradeModule({ fetchJSON, fetchImpl = fetch, cache }) {
     async plan(state) {
       const solar = (state.buildings || []).filter((b) => b.kind === 'SolarPowerPlant');
       const norm = {};
-      for (const b of solar) norm[b.id] = await activitiesFor(state.playerId, b.id, state.k);
+      await Promise.all(solar.map(async (b) => { norm[b.id] = await activitiesFor(state.playerId, b.id, state.k); }));
       const activityAt = (id, tick) => stateAt(norm[id] || [], tick);
       const decisions = planSolarUpgrades({ solarPlants: solar, k: state.k, activityAt });
       const writes = decisions.map((d) => ({
