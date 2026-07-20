@@ -1,5 +1,6 @@
 import { nextTickWithPhase } from '../core/time.js';
 import { gameHeaders } from '../core/api.js';
+import { miniTable } from '../core/ui.js';
 import { normalizeActivities, stateAt, buildingActivityPayload } from './activities.js';
 
 // Pure: which solar plants need an upgrade scheduled, and at which tick.
@@ -27,7 +28,14 @@ export function solarUpgradeModule({ fetchJSON, fetchImpl = fetch, cache }) {
       const norm = {};
       await Promise.all(solar.map(async (b) => { norm[b.id] = await activitiesFor(state.playerId, b.id, state.k); }));
       const activityAt = (id, tick) => stateAt(norm[id] || [], tick);
+      const target = nextTickWithPhase(state.k, 2);
       const decisions = planSolarUpgrades({ solarPlants: solar, k: state.k, activityAt });
+      const queued = new Set(decisions.map((d) => d.buildingId));
+      const items = solar.map((b) => ({
+        name: (b.name || `#${b.id}`).replace('Solar Plant in ', ''),
+        level: b.level, condition: b.condition,
+        status: activityAt(b.id, target) === 'Upgrade' ? 'scheduled' : (queued.has(b.id) ? 'queued' : 'ok'),
+      }));
       const writes = decisions.map((d) => ({
         label: `solar#${d.buildingId}→Upgrade@T${d.tick}`,
         send: async () => {
@@ -42,8 +50,15 @@ export function solarUpgradeModule({ fetchJSON, fetchImpl = fetch, cache }) {
           if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
         },
       }));
-      return { writes, view: { scheduled: decisions.length, target: nextTickWithPhase(state.k, 2) } };
+      return { writes, view: { scheduled: decisions.length, target, items } };
     },
-    render(view, el) { if (el) el.textContent = `Solar: ${view.scheduled} scheduled for night T${view.target}`; },
+    render(view, sec) {
+      if (!sec) return;
+      sec.setDot(view.scheduled > 0 ? 'busy' : 'ok');
+      sec.setSummary(`${view.scheduled} queued · night T${view.target}`);
+      const color = (s) => (s === 'queued' ? '#ff9800' : s === 'scheduled' ? '#4caf50' : '#888');
+      sec.body.replaceChildren(miniTable(['Plant', 'Lv', 'Cond', 'State'],
+        view.items.map((i) => [i.name, i.level, i.condition + '%', { text: i.status, color: color(i.status) }])));
+    },
   };
 }

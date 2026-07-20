@@ -16,6 +16,11 @@ export function weatherModule(store) {
     id: 'weather', title: 'Weather Logger',
     install,
     plan: () => ({ writes: [], view: { count: (store.get('weather', []) || []).length } }),
-    render(view, el) { if (el) el.textContent = `Captured batches: ${view.count}`; },
+    render(view, sec) {
+      if (!sec) return;
+      sec.setDot('ok');
+      sec.setSummary(`${view.count} batch(es)`);
+      sec.body.textContent = `Passively captured weather batches in storage: ${view.count}`;
+    },
   };
 }

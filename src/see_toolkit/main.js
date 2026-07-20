@@ -40,10 +40,14 @@ import { connectionsModule } from './modules/connections/index.js';
   async function runOnce(panel) {
     if (running) return;
     running = true;
-    const status = panel.section('status', 'SEE Toolkit');
     try {
       const dryRun = store.get('dryRun', '0') === '1';
-      status.textContent = 'Checking tick…';
+      const auto = store.get('connAuto', '0') === '1';
+      panel.setBadges([
+        dryRun ? { text: 'DRY-RUN', color: '#ff9800' } : null,
+        auto ? { text: 'connAuto', color: '#4caf50' } : { text: 'read-only', color: '#888' },
+      ].filter(Boolean));
+      panel.setStatus('Checking tick…');
 
       // Tick gate: a tick lasts 4h, so nothing changes within one. Cost one cheap
       // app-data request; if the tick has not advanced since the last completed run
@@ -53,40 +57,38 @@ import { connectionsModule } from './modules/connections/index.js';
       const lastRunTick = store.get('lastRunTick', null);
       const force = store.get('forceRun', '0') === '1';
       if (!force && tick === lastRunTick) {
-        status.textContent = `Tick ${tick} · up to date — no new tick, skipped (set see:forceRun=1 to run anyway)`;
+        panel.setStatus(`Tick ${tick} · up to date — no new tick (set see:forceRun=1 to run anyway)`);
         return;
       }
       if (force) store.set('forceRun', '0');
 
-      status.textContent = 'Loading game state…';
-      // Pre-create every module section so the panel shows structure immediately.
-      for (const mod of modules) {
-        const el = panel.section(mod.id, mod.title);
-        if (!el.textContent) el.textContent = '…';
-      }
+      panel.setStatus('Loading game state…');
+      for (const mod of modules) panel.section(mod.id, mod.title); // pre-create sections
       const state = await game.loadState();
       let done = 0;
-      status.textContent = `Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · running 0/${modules.length}…`;
+      panel.setStatus(`Tick ${state.lastComputedTick} · running 0/${modules.length}…`);
       const res = await runModules({
         modules, state, dryRun, delay: 400 + Math.random() * 400,
         // Render each module the moment it finishes, instead of after the whole run.
         onModule(mod, view, err) {
           done++;
-          status.textContent = `Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · running ${done}/${modules.length}…`;
-          const el = panel.section(mod.id, mod.title);
-          if (err) { el.textContent = 'Error — see console.'; return; }
-          try { mod.render && mod.render(view, el); } catch {}
+          panel.setStatus(`Tick ${state.lastComputedTick} · running ${done}/${modules.length}…`);
+          const sec = panel.section(mod.id, mod.title);
+          if (err) { sec.setDot('error'); sec.setSummary('error — see console'); return; }
+          try { mod.render && mod.render(view, sec); } catch {}
         },
         // Live feedback during long serial write sequences (e.g. money pickup).
         onWrite(mod, label, i, total) {
-          panel.section(mod.id, mod.title).textContent = `${mod.title}: ${i}/${total} — ${label}`;
+          const sec = panel.section(mod.id, mod.title);
+          sec.setDot('busy');
+          sec.setSummary(`${i}/${total} — ${label}`);
         },
       });
       store.set('lastRunTick', state.lastComputedTick);
-      status.textContent = `Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · ${res.executed.length} write(s) · ${new Date().toLocaleTimeString()}`;
+      panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · ${res.executed.length} write(s) · ${new Date().toLocaleTimeString()}`);
       console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? 'DRY-RUN ' : ''}${res.executed.length} write(s)`, res.planned);
     } catch (e) {
-      status.textContent = 'Run failed — see console.';
+      panel.setStatus('Run failed — see console.');
       console.error('[see-toolkit] run failed', e);
     } finally {
       running = false;

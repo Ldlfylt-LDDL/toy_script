@@ -1,6 +1,7 @@
 import { phase } from '../../core/time.js';
 import { gameHeaders } from '../../core/api.js';
 import { median } from '../../core/stats.js';
+import { miniTable } from '../../core/ui.js';
 import { normalizeActivities, connectionActivityPayload } from '../activities.js';
 import { recordPrice, spreadSamples, hubPriceSamples } from './priceStore.js';
 import { forecast } from './forecast.js';
@@ -45,6 +46,7 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
       const prices = store.get('prices', {});
       const streaks = store.get('connStreak', {});
       const writes = [];
+      const rows = [];
       let flagged = 0, flips = 0;
 
       // Read phase in parallel — the per-tick cache dedupes overlapping hub fetches.
@@ -53,7 +55,10 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
         const edgeId = c.edge?.id ?? c.edgeId;
         try {
           const detail = await connDetail(edgeId, c.id);
-          const edge = { hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id, hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id };
+          const edge = {
+            hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id, hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id,
+            hub1Name: detail.edge?.hub1?.name, hub2Name: detail.edge?.hub2?.name,
+          };
           const histories = await Promise.all([hubHistory(edge.hub1Id), hubHistory(edge.hub2Id)]);
           return { c, edgeId, detail, edge, histories };
         } catch (e) {
@@ -83,6 +88,16 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
           streaks[c.id] = st;
           const willFlip = ev.desired !== ev.current && shouldFlip(st.streak, HYSTERESIS);
           if (willFlip) flips++;
+
+          const src = ev.current === 'forward' ? (edge.hub1Name || edge.hub1Id) : (edge.hub2Name || edge.hub2Id);
+          const dst = ev.current === 'forward' ? (edge.hub2Name || edge.hub2Id) : (edge.hub1Name || edge.hub1Id);
+          rows.push({
+            id: c.id,
+            route: `${String(src).slice(0, 8)}→${String(dst).slice(0, 8)}`,
+            n: Math.min(ev.forward.n || 0, ev.reverse.n || 0),
+            edge: ev.forward.median == null ? null : Math.round(Math.max(ev.forward.median ?? -Infinity, ev.reverse.median ?? -Infinity)),
+            willFlip, decommission: score.decommission,
+          });
 
           if (auto) {
             const newSign = ev.desired === 'forward' ? 1 : -1;
@@ -118,12 +133,30 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
 
       store.set('prices', prices);
       store.set('connStreak', streaks);
-      return { writes, view: { total: power.length, flagged, flips, auto } };
+      const coldStart = rows.length && rows.every((r) => r.n < 6);
+      return { writes, view: { total: power.length, flagged, flips, auto, coldStart, rows } };
     },
-    render(view, el) {
-      if (!el) return;
-      el.textContent = `Connections: ${view.total} · ${view.flagged} decommission candidate(s)` +
-        (view.auto ? ` · ${view.flips} flip(s) pending` : ' · auto OFF (evaluation only)');
+    render(view, sec) {
+      if (!sec) return;
+      sec.setDot(view.flagged > 0 ? 'warn' : 'ok');
+      sec.setSummary(`${view.total} · ${view.flagged} flag · ${view.auto ? view.flips + ' flip' : 'auto off'}`);
+      const kids = [];
+      const badgeLine = document.createElement('div');
+      badgeLine.style.cssText = 'margin-bottom:3px;color:#7f8794;font-size:10px';
+      badgeLine.textContent = (view.auto ? 'Auto writes ON' : 'Auto writes OFF (evaluation only — set see:connAuto=1)') +
+        (view.coldStart ? ' · cold start: still gathering price history' : '');
+      kids.push(badgeLine);
+      if (view.rows.length) {
+        kids.push(miniTable(['Conn', 'Route', 'Edge$', 'n', ''],
+          view.rows.map((r) => [
+            '#' + r.id,
+            r.route,
+            { text: r.edge == null ? '—' : '$' + r.edge, color: r.edge > 0 ? '#4caf50' : '#ff5252' },
+            { text: r.n, color: r.n < 6 ? '#888' : '#d6d6d6' },
+            { text: (r.willFlip ? '⇄' : '') + (r.decommission ? '✂' : ''), color: '#ff9800' },
+          ])));
+      }
+      sec.body.replaceChildren(...kids);
     },
   };
 }

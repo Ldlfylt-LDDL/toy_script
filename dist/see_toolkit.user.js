@@ -277,23 +277,137 @@
     return { planned, executed, views };
   }
 
+  // src/see_toolkit/core/ui.js
+  function h(tag, attrs = {}, ...kids) {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v == null) continue;
+      if (k === "style") e.style.cssText = v;
+      else if (k === "class") e.className = v;
+      else if (k.startsWith("on") && typeof v === "function") e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      e.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return e;
+  }
+  var DOT = { ok: "#4caf50", busy: "#ff9800", warn: "#ff5252", error: "#f44336", idle: "#666" };
+  function miniTable(headers, rows) {
+    const cell = (c, tag) => {
+      const o = c && typeof c === "object" ? c : { text: c };
+      return h(tag, { style: `text-align:left;padding:1px 8px 1px 0;white-space:nowrap;${o.color ? "color:" + o.color : ""}` }, o.text);
+    };
+    return h(
+      "table",
+      { style: "border-collapse:collapse;width:100%;font:11px monospace;margin-top:3px" },
+      h("thead", {}, h("tr", {}, ...headers.map((x) => h("th", { style: "text-align:left;padding:1px 8px 2px 0;color:#888;font-weight:normal;border-bottom:1px solid #333" }, x)))),
+      h("tbody", {}, ...rows.map((r) => h("tr", {}, ...r.map((c) => cell(c, "td")))))
+    );
+  }
+  function badge(text, color) {
+    return h("span", { style: `display:inline-block;padding:1px 6px;margin-left:4px;border-radius:3px;font-size:10px;background:${color}22;color:${color};border:1px solid ${color}66` }, text);
+  }
+
   // src/see_toolkit/core/panel.js
   function mountPanel() {
-    const host = document.createElement("div");
-    host.id = "see-panel";
-    host.style.cssText = "position:fixed;bottom:10px;left:10px;z-index:99999;font:12px monospace;background:rgba(20,20,30,0.92);color:#ccc;border:1px solid #444;border-radius:6px;padding:8px 12px;max-width:420px;";
+    const style = h("style", {}, `
+    #see-panel { position:fixed; bottom:12px; left:12px; z-index:99999; width:340px; max-width:90vw;
+      font:12px/1.5 monospace; color:#d6d6d6; background:rgba(18,20,28,0.96);
+      border:1px solid #3a3f4b; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,0.5); }
+    #see-panel.see-collapsed .see-main { display:none; }
+    #see-hdr { display:flex; align-items:center; gap:6px; padding:7px 10px; cursor:move;
+      border-bottom:1px solid #2c313c; user-select:none; }
+    #see-hdr .see-title { color:#ff9800; font-weight:bold; }
+    #see-hdr .see-badges { margin-left:auto; display:flex; align-items:center; }
+    #see-hdr .see-toggle { margin-left:6px; cursor:pointer; color:#888; width:16px; text-align:center; }
+    #see-status { padding:5px 10px; color:#9aa0ac; border-bottom:1px solid #2c313c; font-size:11px; }
+    .see-sec { border-bottom:1px solid #232833; }
+    .see-sec:last-child { border-bottom:none; }
+    .see-sec-hdr { display:flex; align-items:center; gap:7px; padding:6px 10px; cursor:pointer; }
+    .see-sec-hdr:hover { background:rgba(255,255,255,0.03); }
+    .see-dot { width:8px; height:8px; border-radius:50%; flex:none; background:#666; }
+    .see-sec-title { color:#cfd3da; }
+    .see-sec-sum { margin-left:auto; color:#7f8794; font-size:11px; text-align:right; max-width:200px;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .see-sec-body { padding:0 10px 8px 25px; display:none; }
+    .see-sec.see-open .see-sec-body { display:block; }
+    .see-sec.see-open .see-caret { transform:rotate(90deg); }
+    .see-caret { color:#5a616e; font-size:9px; transition:transform .1s; }
+    #see-panel a.see-link { color:#6ab0ff; cursor:pointer; text-decoration:none; }
+    #see-panel a.see-link:hover { text-decoration:underline; }
+  `);
+    const badges = h("span", { class: "see-badges" });
+    const toggle = h("span", { class: "see-toggle", title: "collapse" }, "\u25BE");
+    const header = h("div", { id: "see-hdr" }, h("span", { class: "see-title" }, "\u26A1 SEE Toolkit"), badges, toggle);
+    const statusBar = h("div", { id: "see-status" }, "starting\u2026");
+    const main = h("div", { class: "see-main" }, statusBar);
+    const host = h("div", { id: "see-panel" }, style, header, main);
     document.body.appendChild(host);
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      host.classList.toggle("see-collapsed");
+      toggle.textContent = host.classList.contains("see-collapsed") ? "\u25B8" : "\u25BE";
+    });
+    let dragging = false, dx = 0, dy = 0;
+    header.addEventListener("mousedown", (e) => {
+      if (e.target === toggle) return;
+      dragging = true;
+      dx = e.clientX - host.offsetLeft;
+      dy = e.clientY - host.offsetTop;
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      host.style.left = e.clientX - dx + "px";
+      host.style.top = e.clientY - dy + "px";
+      host.style.right = "auto";
+      host.style.bottom = "auto";
+    });
+    document.addEventListener("mouseup", () => {
+      dragging = false;
+    });
     const sections = /* @__PURE__ */ new Map();
     function section(id, title) {
       if (sections.has(id)) return sections.get(id);
-      const el = document.createElement("div");
-      el.innerHTML = `<div style="color:#ff9800;font-weight:bold;margin:6px 0 2px">${title}</div><div class="see-body"></div>`;
-      host.appendChild(el);
-      const body = el.querySelector(".see-body");
-      sections.set(id, body);
-      return body;
+      const dot = h("span", { class: "see-dot" });
+      const sum = h("span", { class: "see-sec-sum" }, "\u2026");
+      const body = h("div", { class: "see-sec-body" });
+      const sec = h(
+        "div",
+        { class: "see-sec" },
+        h(
+          "div",
+          { class: "see-sec-hdr", onclick: () => sec.classList.toggle("see-open") },
+          h("span", { class: "see-caret" }, "\u25B6"),
+          dot,
+          h("span", { class: "see-sec-title" }, title),
+          sum
+        ),
+        body
+      );
+      main.appendChild(sec);
+      const handle = {
+        body,
+        setDot: (s) => {
+          dot.style.background = DOT[s] || DOT.idle;
+        },
+        setSummary: (t) => {
+          sum.textContent = t;
+          sum.title = t;
+        },
+        open: () => sec.classList.add("see-open")
+      };
+      sections.set(id, handle);
+      return handle;
     }
-    return { section };
+    function setStatus(text) {
+      statusBar.textContent = text;
+    }
+    function setBadges(list) {
+      badges.replaceChildren(...(list || []).map((b) => badge(b.text, b.color)));
+    }
+    return { section, setStatus, setBadges, host };
   }
 
   // src/see_toolkit/modules/weather.js
@@ -316,8 +430,11 @@
       title: "Weather Logger",
       install,
       plan: () => ({ writes: [], view: { count: (store.get("weather", []) || []).length } }),
-      render(view, el) {
-        if (el) el.textContent = `Captured batches: ${view.count}`;
+      render(view, sec) {
+        if (!sec) return;
+        sec.setDot("ok");
+        sec.setSummary(`${view.count} batch(es)`);
+        sec.body.textContent = `Passively captured weather batches in storage: ${view.count}`;
       }
     };
   }
@@ -408,7 +525,15 @@
           norm[b.id] = await activitiesFor(state.playerId, b.id, state.k);
         }));
         const activityAt = (id, tick) => stateAt(norm[id] || [], tick);
+        const target = nextTickWithPhase(state.k, 2);
         const decisions = planSolarUpgrades({ solarPlants: solar, k: state.k, activityAt });
+        const queued = new Set(decisions.map((d) => d.buildingId));
+        const items = solar.map((b) => ({
+          name: (b.name || `#${b.id}`).replace("Solar Plant in ", ""),
+          level: b.level,
+          condition: b.condition,
+          status: activityAt(b.id, target) === "Upgrade" ? "scheduled" : queued.has(b.id) ? "queued" : "ok"
+        }));
         const writes = decisions.map((d) => ({
           label: `solar#${d.buildingId}\u2192Upgrade@T${d.tick}`,
           send: async () => {
@@ -424,10 +549,17 @@
             if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
           }
         }));
-        return { writes, view: { scheduled: decisions.length, target: nextTickWithPhase(state.k, 2) } };
+        return { writes, view: { scheduled: decisions.length, target, items } };
       },
-      render(view, el) {
-        if (el) el.textContent = `Solar: ${view.scheduled} scheduled for night T${view.target}`;
+      render(view, sec) {
+        if (!sec) return;
+        sec.setDot(view.scheduled > 0 ? "busy" : "ok");
+        sec.setSummary(`${view.scheduled} queued \xB7 night T${view.target}`);
+        const color = (s) => s === "queued" ? "#ff9800" : s === "scheduled" ? "#4caf50" : "#888";
+        sec.body.replaceChildren(miniTable(
+          ["Plant", "Lv", "Cond", "State"],
+          view.items.map((i) => [i.name, i.level, i.condition + "%", { text: i.status, color: color(i.status) }])
+        ));
       }
     };
   }
@@ -470,6 +602,12 @@
         await Promise.all(decisions.map(async (d) => {
           norm[d.buildingId] = await activitiesFor(state.playerId, d.buildingId, state.k);
         }));
+        const decMap = new Map(decisions.map((d) => [d.buildingId, d.tick]));
+        const items = (state.buildings || []).filter((b) => b.condition != null && b.condition < MAINT_THRESHOLD).sort((a, b) => a.condition - b.condition).map((b) => ({
+          name: b.name || `#${b.id}`,
+          condition: b.condition,
+          action: decMap.has(b.id) ? `\u2192 T${decMap.get(b.id)}` : "skip (upgrade repairs)"
+        }));
         const writes = decisions.filter((d) => stateAt(norm[d.buildingId] || [], d.tick) !== "Maintenance").map((d) => ({
           label: `maint#${d.buildingId}\u2192Maintenance@T${d.tick}`,
           send: async () => {
@@ -485,10 +623,16 @@
             if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
           }
         }));
-        return { writes, view: { candidates: decisions.length } };
+        return { writes, view: { candidates: decisions.length, threshold: MAINT_THRESHOLD, items } };
       },
-      render(view, el) {
-        if (el) el.textContent = `Maintenance: ${view.candidates} building(s) below condition ${MAINT_THRESHOLD}`;
+      render(view, sec) {
+        if (!sec) return;
+        sec.setDot(view.candidates > 0 ? "warn" : "ok");
+        sec.setSummary(`${view.candidates} to fix (<${view.threshold}%)`);
+        sec.body.replaceChildren(view.items.length ? miniTable(
+          ["Building", "Cond", "Action"],
+          view.items.map((i) => [i.name, { text: i.condition + "%", color: i.condition < 50 ? "#ff5252" : "#d6d6d6" }, i.action])
+        ) : document.createTextNode(`All buildings at or above ${view.threshold}% condition.`));
       }
     };
   }
@@ -505,8 +649,12 @@
       title: "Auto Money Pickup",
       async plan(state) {
         const data = await fetchJSON2(`/api/v1/players/${state.playerId}/money-transactions/for-pick-up/`);
-        const hubs = distinctPickupHubs(data.moneyTransactions || []);
-        const total = (data.moneyTransactions || []).reduce((s, t) => s + (t.money || 0), 0);
+        const txs = data.moneyTransactions || [];
+        const hubs = distinctPickupHubs(txs);
+        const total = txs.reduce((s, t) => s + (t.money || 0), 0);
+        const byHub = {};
+        for (const t of txs) if (t.pickedUp !== true) byHub[t.hubId] = (byHub[t.hubId] || 0) + (t.money || 0);
+        const items = Object.entries(byHub).map(([hubId, amount]) => ({ hubId: +hubId, amount })).sort((a, b) => b.amount - a.amount);
         const writes = hubs.map((hubId) => ({
           label: `pickup hub ${hubId}`,
           send: async () => {
@@ -520,11 +668,20 @@
             if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${await resp.text()}`);
           }
         }));
-        return { writes, view: { hubs: hubs.length, total } };
+        return { writes, view: { hubs: hubs.length, total, items } };
       },
-      render(view, el) {
-        if (!el) return;
-        el.textContent = view.hubs === 0 ? "Money: nothing to collect" : `Money: collected $${view.total.toLocaleString()} from ${view.hubs} hub(s) \u2014 game UI updates on next page switch`;
+      render(view, sec) {
+        if (!sec) return;
+        sec.setDot(view.hubs > 0 ? "busy" : "ok");
+        sec.setSummary(view.hubs === 0 ? "nothing pending" : `$${view.total.toLocaleString()} \xB7 ${view.hubs} hub(s)`);
+        const kids = [];
+        if (view.items.length) {
+          kids.push(miniTable(["Hub", "Amount"], view.items.map((i) => [i.hubId, { text: "$" + i.amount.toLocaleString(), color: "#4caf50" }])));
+        }
+        kids.push(document.createElement("div"));
+        kids[kids.length - 1].style.cssText = "margin-top:4px;color:#7f8794;font-size:10px";
+        kids[kids.length - 1].textContent = "Note: game map/cash refresh on next page switch.";
+        sec.body.replaceChildren(...kids);
       }
     };
   }
@@ -640,12 +797,18 @@
         const prices = store.get("prices", {});
         const streaks = store.get("connStreak", {});
         const writes = [];
+        const rows = [];
         let flagged = 0, flips = 0;
         const fetched = await Promise.all(power.map(async (c) => {
           const edgeId = c.edge?.id ?? c.edgeId;
           try {
             const detail = await connDetail(edgeId, c.id);
-            const edge = { hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id, hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id };
+            const edge = {
+              hub1Id: detail.edge?.hub1Id ?? detail.edge?.hub1?.id,
+              hub2Id: detail.edge?.hub2Id ?? detail.edge?.hub2?.id,
+              hub1Name: detail.edge?.hub1?.name,
+              hub2Name: detail.edge?.hub2?.name
+            };
             const histories = await Promise.all([hubHistory(edge.hub1Id), hubHistory(edge.hub2Id)]);
             return { c, edgeId, detail, edge, histories };
           } catch (e) {
@@ -659,7 +822,7 @@
           try {
             for (let i = 0; i < 2; i++) {
               const hid = i === 0 ? edge.hub1Id : edge.hub2Id;
-              for (const h of histories[i]) if (h.powerPrice != null) recordPrice(prices, hid, h.timeTick, h.powerPrice);
+              for (const h2 of histories[i]) if (h2.powerPrice != null) recordPrice(prices, hid, h2.timeTick, h2.powerPrice);
             }
             const acts = normalizeActivities(detail.connectionActivitySet || [], state.k);
             const act = acts.find((a) => a.timeTick === state.k);
@@ -671,6 +834,16 @@
             streaks[c.id] = st;
             const willFlip = ev.desired !== ev.current && shouldFlip(st.streak, HYSTERESIS);
             if (willFlip) flips++;
+            const src = ev.current === "forward" ? edge.hub1Name || edge.hub1Id : edge.hub2Name || edge.hub2Id;
+            const dst = ev.current === "forward" ? edge.hub2Name || edge.hub2Id : edge.hub1Name || edge.hub1Id;
+            rows.push({
+              id: c.id,
+              route: `${String(src).slice(0, 8)}\u2192${String(dst).slice(0, 8)}`,
+              n: Math.min(ev.forward.n || 0, ev.reverse.n || 0),
+              edge: ev.forward.median == null ? null : Math.round(Math.max(ev.forward.median ?? -Infinity, ev.reverse.median ?? -Infinity)),
+              willFlip,
+              decommission: score.decommission
+            });
             if (auto) {
               const newSign = ev.desired === "forward" ? 1 : -1;
               const capacity = Math.abs(act.capacity) * newSign;
@@ -705,11 +878,31 @@
         }
         store.set("prices", prices);
         store.set("connStreak", streaks);
-        return { writes, view: { total: power.length, flagged, flips, auto } };
+        const coldStart = rows.length && rows.every((r) => r.n < 6);
+        return { writes, view: { total: power.length, flagged, flips, auto, coldStart, rows } };
       },
-      render(view, el) {
-        if (!el) return;
-        el.textContent = `Connections: ${view.total} \xB7 ${view.flagged} decommission candidate(s)` + (view.auto ? ` \xB7 ${view.flips} flip(s) pending` : " \xB7 auto OFF (evaluation only)");
+      render(view, sec) {
+        if (!sec) return;
+        sec.setDot(view.flagged > 0 ? "warn" : "ok");
+        sec.setSummary(`${view.total} \xB7 ${view.flagged} flag \xB7 ${view.auto ? view.flips + " flip" : "auto off"}`);
+        const kids = [];
+        const badgeLine = document.createElement("div");
+        badgeLine.style.cssText = "margin-bottom:3px;color:#7f8794;font-size:10px";
+        badgeLine.textContent = (view.auto ? "Auto writes ON" : "Auto writes OFF (evaluation only \u2014 set see:connAuto=1)") + (view.coldStart ? " \xB7 cold start: still gathering price history" : "");
+        kids.push(badgeLine);
+        if (view.rows.length) {
+          kids.push(miniTable(
+            ["Conn", "Route", "Edge$", "n", ""],
+            view.rows.map((r) => [
+              "#" + r.id,
+              r.route,
+              { text: r.edge == null ? "\u2014" : "$" + r.edge, color: r.edge > 0 ? "#4caf50" : "#ff5252" },
+              { text: r.n, color: r.n < 6 ? "#888" : "#d6d6d6" },
+              { text: (r.willFlip ? "\u21C4" : "") + (r.decommission ? "\u2702" : ""), color: "#ff9800" }
+            ])
+          ));
+        }
+        sec.body.replaceChildren(...kids);
       }
     };
   }
@@ -738,26 +931,27 @@
     async function runOnce(panel) {
       if (running) return;
       running = true;
-      const status = panel.section("status", "SEE Toolkit");
       try {
         const dryRun = store.get("dryRun", "0") === "1";
-        status.textContent = "Checking tick\u2026";
+        const auto = store.get("connAuto", "0") === "1";
+        panel.setBadges([
+          dryRun ? { text: "DRY-RUN", color: "#ff9800" } : null,
+          auto ? { text: "connAuto", color: "#4caf50" } : { text: "read-only", color: "#888" }
+        ].filter(Boolean));
+        panel.setStatus("Checking tick\u2026");
         const tick = await game.getTick();
         const lastRunTick = store.get("lastRunTick", null);
         const force = store.get("forceRun", "0") === "1";
         if (!force && tick === lastRunTick) {
-          status.textContent = `Tick ${tick} \xB7 up to date \u2014 no new tick, skipped (set see:forceRun=1 to run anyway)`;
+          panel.setStatus(`Tick ${tick} \xB7 up to date \u2014 no new tick (set see:forceRun=1 to run anyway)`);
           return;
         }
         if (force) store.set("forceRun", "0");
-        status.textContent = "Loading game state\u2026";
-        for (const mod of modules) {
-          const el = panel.section(mod.id, mod.title);
-          if (!el.textContent) el.textContent = "\u2026";
-        }
+        panel.setStatus("Loading game state\u2026");
+        for (const mod of modules) panel.section(mod.id, mod.title);
         const state = await game.loadState();
         let done = 0;
-        status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 running 0/${modules.length}\u2026`;
+        panel.setStatus(`Tick ${state.lastComputedTick} \xB7 running 0/${modules.length}\u2026`);
         const res = await runModules({
           modules,
           state,
@@ -766,27 +960,30 @@
           // Render each module the moment it finishes, instead of after the whole run.
           onModule(mod, view, err) {
             done++;
-            status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 running ${done}/${modules.length}\u2026`;
-            const el = panel.section(mod.id, mod.title);
+            panel.setStatus(`Tick ${state.lastComputedTick} \xB7 running ${done}/${modules.length}\u2026`);
+            const sec = panel.section(mod.id, mod.title);
             if (err) {
-              el.textContent = "Error \u2014 see console.";
+              sec.setDot("error");
+              sec.setSummary("error \u2014 see console");
               return;
             }
             try {
-              mod.render && mod.render(view, el);
+              mod.render && mod.render(view, sec);
             } catch {
             }
           },
           // Live feedback during long serial write sequences (e.g. money pickup).
           onWrite(mod, label, i, total) {
-            panel.section(mod.id, mod.title).textContent = `${mod.title}: ${i}/${total} \u2014 ${label}`;
+            const sec = panel.section(mod.id, mod.title);
+            sec.setDot("busy");
+            sec.setSummary(`${i}/${total} \u2014 ${label}`);
           }
         });
         store.set("lastRunTick", state.lastComputedTick);
-        status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`;
+        panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`);
         console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? "DRY-RUN " : ""}${res.executed.length} write(s)`, res.planned);
       } catch (e) {
-        status.textContent = "Run failed \u2014 see console.";
+        panel.setStatus("Run failed \u2014 see console.");
         console.error("[see-toolkit] run failed", e);
       } finally {
         running = false;
