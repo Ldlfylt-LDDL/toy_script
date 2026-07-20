@@ -957,8 +957,16 @@
         const tick = await game.getTick();
         const lastRunTick = store.get("lastRunTick", null);
         const force = store.get("forceRun", "0") === "1";
-        if (!force && tick === lastRunTick) {
-          panel.setStatus(`Tick ${tick} \xB7 up to date \u2014 no new tick (set see:forceRun=1 to run anyway)`);
+        const lastViews = store.get("lastViews", null);
+        if (!force && tick === lastRunTick && lastViews) {
+          for (const mod of modules) {
+            const sec = panel.section(mod.id, mod.title);
+            try {
+              mod.render && mod.render(lastViews[mod.id], sec);
+            } catch {
+            }
+          }
+          panel.setStatus(`Tick ${tick} \xB7 showing last run (cached) \xB7 Run now to refresh`);
           return;
         }
         if (force) store.set("forceRun", "0");
@@ -995,6 +1003,7 @@
           }
         });
         store.set("lastRunTick", state.lastComputedTick);
+        store.set("lastViews", res.views);
         panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`);
         console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? "DRY-RUN " : ""}${res.executed.length} write(s)`, res.planned);
       } catch (e) {

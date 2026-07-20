@@ -56,8 +56,15 @@ import { connectionsModule } from './modules/connections/index.js';
       const tick = await game.getTick();
       const lastRunTick = store.get('lastRunTick', null);
       const force = store.get('forceRun', '0') === '1';
-      if (!force && tick === lastRunTick) {
-        panel.setStatus(`Tick ${tick} · up to date — no new tick (set see:forceRun=1 to run anyway)`);
+      const lastViews = store.get('lastViews', null);
+      if (!force && tick === lastRunTick && lastViews) {
+        // Same tick, nothing new to compute: re-render the last run's results from
+        // cache (zero requests) instead of hiding the data panel.
+        for (const mod of modules) {
+          const sec = panel.section(mod.id, mod.title);
+          try { mod.render && mod.render(lastViews[mod.id], sec); } catch {}
+        }
+        panel.setStatus(`Tick ${tick} · showing last run (cached) · Run now to refresh`);
         return;
       }
       if (force) store.set('forceRun', '0');
@@ -85,6 +92,7 @@ import { connectionsModule } from './modules/connections/index.js';
         },
       });
       store.set('lastRunTick', state.lastComputedTick);
+      store.set('lastViews', res.views); // cache for zero-request re-render on same-tick refreshes
       panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · ${res.executed.length} write(s) · ${new Date().toLocaleTimeString()}`);
       console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? 'DRY-RUN ' : ''}${res.executed.length} write(s)`, res.planned);
     } catch (e) {
