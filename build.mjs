@@ -1,7 +1,12 @@
 import esbuild from 'esbuild';
 import { readFileSync } from 'node:fs';
 
-const banner = readFileSync('src/see_toolkit/banner.txt', 'utf8');
+// Auto-increment @version each build (date-time based) so Tampermonkey detects
+// updates via @updateURL and pulls the new build with no copy/paste.
+const d = new Date();
+const p = (n) => String(n).padStart(2, '0');
+const version = `2.1.${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}.${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+const banner = readFileSync('src/see_toolkit/banner.txt', 'utf8').replace('__VERSION__', version);
 const opts = {
   entryPoints: ['src/see_toolkit/main.js'],
   bundle: true,
