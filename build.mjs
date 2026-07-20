@@ -12,7 +12,14 @@ const opts = {
   target: 'es2020',
 };
 
-if (process.argv.includes('--watch')) {
+if (process.argv.includes('--serve')) {
+  // Dev mode: rebuild on save AND serve dist/ so the Tampermonkey dev-loader can
+  // fetch the latest build on every page refresh. Edit → save → refresh = live.
+  const ctx = await esbuild.context(opts);
+  await ctx.watch();
+  const { port } = await ctx.serve({ servedir: 'dist', host: '127.0.0.1', port: 8127 });
+  console.log(`dev server: http://localhost:${port}/see_toolkit.user.js  (watching src, rebuild on save)`);
+} else if (process.argv.includes('--watch')) {
   const ctx = await esbuild.context(opts);
   await ctx.watch();
   console.log('watching…');

@@ -5,6 +5,7 @@
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
+    "dev": "node build.mjs --serve",
     "test": "node --test"
   },
   "devDependencies": {
