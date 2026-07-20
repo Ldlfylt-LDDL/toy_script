@@ -1,7 +1,7 @@
 import { phase, MAX_FUTURE_TICKS } from '../../core/time.js';
 import { gameHeaders } from '../../core/api.js';
 import { h } from '../../core/ui.js';
-import { expectedByPhase, expectedAt, productionExpected, roundToStep, hedgeQuantity, passesFloor, fee } from './sizing.js';
+import { expectedByPhase, expectedAt, productionExpected, solarEfficiency, roundToStep, hedgeQuantity, passesFloor, fee } from './sizing.js';
 import { applyReserveCap } from './reserve.js';
 import { normalizeActivities, stateAt } from '../activities.js';
 
@@ -20,9 +20,25 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
       const history = acts
         .filter((a) => a.state === 'Production' && a.productionOutput != null)
         .map((a) => ({ timeTick: a.timeTick, delivered: a.productionOutput }));
+      const caps = acts.filter((a) => a.productionCapacity != null).map((a) => a.productionCapacity);
+      const capacity = caps.length ? Math.max(...caps) : 0; // current (highest) rated capacity
       const norm = normalizeActivities(acts, k);
-      return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t) };
+      return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t), capacity };
     });
+  }
+  // Weather forecast for a country: tick -> { clouds, daylight }. The weather
+  // timeTick equals the game tick; request N=k+11 to cover the forward window.
+  async function forecast(countryId, k) {
+    return cache.get(`wx:${countryId}`, async () => {
+      const w = await fetchJSON(`/api/v1/weather/countries/${countryId}/ticks/${k + 11}/`);
+      const map = {};
+      for (const r of (w.weatherRecords || [])) map[r.timeTick] = { clouds: r.clouds, daylight: r.daylight };
+      return map;
+    });
+  }
+  async function hubCountry(hubId) {
+    return cache.get(`hubcountry:${hubId}`, async () =>
+      (await fetchJSON(`/api/v1/hubs/${hubId}/`)).countryId);
   }
   async function bestBid(hubId, tick) {
     return cache.get(`pbid:${hubId}:${tick}`, async () => {
@@ -65,11 +81,19 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
       const allCandidates = [];
       for (const hubId of Object.keys(byHub).map(Number)) {
         const plants = byHub[hubId];
-        // per-plant data; expected output at a tick excludes plants scheduled to
-        // upgrade/maintain then (they deliver nothing — don't hedge that output).
+        // per-plant data + the city's weather forecast (this hub's country).
         const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
-        const cityExpectedAt = (tick) =>
-          perPlant.reduce((s, p) => s + productionExpected(p.byPhase, p.scheduledAt(tick), tick), 0);
+        const wx = await forecast(await hubCountry(hubId), state.k);
+        // Expected output at a tick = capacity × solar efficiency (from forecast
+        // clouds/daylight), zeroed for plants scheduled to upgrade/maintain then.
+        // Falls back to the historical per-phase estimate if no forecast for the tick.
+        const cityExpectedAt = (tick) => perPlant.reduce((s, p) => {
+          const sc = p.scheduledAt(tick);
+          if (sc && sc !== 'Production') return s;
+          const w = wx[tick];
+          if (w) return s + p.capacity * (solarEfficiency(w.clouds, w.daylight) / 100);
+          return s + productionExpected(p.byPhase, sc, tick);
+        }, 0);
 
         const rows = [];
         for (let t = state.k; t < state.k + MAX_FUTURE_TICKS; t++) {

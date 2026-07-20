@@ -947,6 +947,10 @@
     const v = byPhase[phase(tick)];
     return v == null ? 0 : v;
   }
+  function solarEfficiency(clouds, daylight) {
+    if (!daylight) return 0;
+    return Math.max(0, Math.min(100, Math.round(100 * (9 - clouds) / 9)));
+  }
   function productionExpected(byPhase, scheduledState, tick) {
     if (scheduledState && scheduledState !== "Production") return 0;
     return expectedAt(byPhase, tick);
@@ -988,9 +992,22 @@
       return cache.get(`sdata:${buildingId}`, async () => {
         const acts = (await fetchJSON2(`/api/v1/players/${playerId}/buildings/${buildingId}/`)).buildingActivitySet || [];
         const history = acts.filter((a) => a.state === "Production" && a.productionOutput != null).map((a) => ({ timeTick: a.timeTick, delivered: a.productionOutput }));
+        const caps = acts.filter((a) => a.productionCapacity != null).map((a) => a.productionCapacity);
+        const capacity = caps.length ? Math.max(...caps) : 0;
         const norm = normalizeActivities(acts, k);
-        return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t) };
+        return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t), capacity };
       });
+    }
+    async function forecast2(countryId, k) {
+      return cache.get(`wx:${countryId}`, async () => {
+        const w = await fetchJSON2(`/api/v1/weather/countries/${countryId}/ticks/${k + 11}/`);
+        const map = {};
+        for (const r of w.weatherRecords || []) map[r.timeTick] = { clouds: r.clouds, daylight: r.daylight };
+        return map;
+      });
+    }
+    async function hubCountry(hubId) {
+      return cache.get(`hubcountry:${hubId}`, async () => (await fetchJSON2(`/api/v1/hubs/${hubId}/`)).countryId);
     }
     async function bestBid(hubId, tick) {
       return cache.get(`pbid:${hubId}:${tick}`, async () => {
@@ -1027,7 +1044,14 @@
         for (const hubId of Object.keys(byHub).map(Number)) {
           const plants = byHub[hubId];
           const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
-          const cityExpectedAt = (tick) => perPlant.reduce((s, p) => s + productionExpected(p.byPhase, p.scheduledAt(tick), tick), 0);
+          const wx = await forecast2(await hubCountry(hubId), state.k);
+          const cityExpectedAt = (tick) => perPlant.reduce((s, p) => {
+            const sc = p.scheduledAt(tick);
+            if (sc && sc !== "Production") return s;
+            const w = wx[tick];
+            if (w) return s + p.capacity * (solarEfficiency(w.clouds, w.daylight) / 100);
+            return s + productionExpected(p.byPhase, sc, tick);
+          }, 0);
           const rows = [];
           for (let t = state.k; t < state.k + MAX_FUTURE_TICKS; t++) {
             const expected = Math.round(cityExpectedAt(t));

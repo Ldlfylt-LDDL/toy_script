@@ -20,6 +20,14 @@ export function expectedAt(byPhase, tick) {
   return v == null ? 0 : v;
 }
 
+// Solar efficiency %, ported verbatim from the game client (function `gse`):
+//   daylight ? round(100 * (9 - clouds) / 9) : 0.
+// `clouds` is a 0–9 scale (0 = clear = 100%, 9 = overcast = 0%). No sun-angle term.
+export function solarEfficiency(clouds, daylight) {
+  if (!daylight) return 0;
+  return Math.max(0, Math.min(100, Math.round((100 * (9 - clouds)) / 9)));
+}
+
 // Expected output only counts if the plant is scheduled to PRODUCE at that tick.
 // If it is scheduled to Upgrade/Maintenance/Sleep, it delivers nothing that tick,
 // so hedging its output there would be a naked short. (We know our own schedule.)

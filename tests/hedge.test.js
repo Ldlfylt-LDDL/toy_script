@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { expectedByPhase, expectedAt, productionExpected, roundToStep, hedgeQuantity, passesFloor, fee } from '../src/see_toolkit/modules/hedge/sizing.js';
+import { expectedByPhase, expectedAt, productionExpected, solarEfficiency, roundToStep, hedgeQuantity, passesFloor, fee } from '../src/see_toolkit/modules/hedge/sizing.js';
 import { applyReserveCap } from '../src/see_toolkit/modules/hedge/reserve.js';
 
 test('expectedByPhase averages delivered output per phase', () => {
@@ -10,6 +10,15 @@ test('expectedByPhase averages delivered output per phase', () => {
   assert.equal(bp[0], 150);
   assert.equal(expectedAt(bp, 150), 150); // 150%6=0
   assert.equal(expectedAt(bp, 146), 0);   // phase 2 not present
+});
+test('solarEfficiency matches the game formula round(100*(9-clouds)/9), 0 at night', () => {
+  assert.equal(solarEfficiency(0, true), 100);
+  assert.equal(solarEfficiency(8, true), 11);
+  assert.equal(solarEfficiency(7, true), 22);
+  assert.equal(solarEfficiency(4, true), 56);
+  assert.equal(solarEfficiency(2, true), 78);
+  assert.equal(solarEfficiency(9, true), 0);
+  assert.equal(solarEfficiency(2, false), 0); // night
 });
 test('productionExpected zeroes output when the plant is scheduled non-Production', () => {
   const bp = { 1: 130 }; // 130 MWh at phase 1 (midday)
