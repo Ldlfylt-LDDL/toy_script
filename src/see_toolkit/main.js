@@ -97,6 +97,19 @@ import { hedgeModule } from './modules/hedge/index.js';
       store.set('lastViews', res.views); // cache for zero-request re-render on same-tick refreshes
       panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · ${res.executed.length} write(s) · ${new Date().toLocaleTimeString()}`);
       console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? 'DRY-RUN ' : ''}${res.executed.length} write(s)`, res.planned);
+
+      // After money was actually collected, the game's own map/cash won't update
+      // (no clean in-place refresh hook — it's a React Router SPA that caches route
+      // data). The only reliable refresh is a full reload. Do it once, only when
+      // money was collected AND the user is on a world/map page (where the stale
+      // bubbles show), and de-duped by tick so it can't loop.
+      const collected = res.executed.some((l) => l.startsWith('pickup'));
+      if (collected && !dryRun && reloadEnabled() && /\/countries/.test(location.pathname)
+          && store.get('lastReloadTick', null) !== String(state.lastComputedTick)) {
+        store.set('lastReloadTick', String(state.lastComputedTick));
+        panel.setStatus('Collected money — refreshing game view…');
+        setTimeout(() => location.reload(), 900);
+      }
     } catch (e) {
       panel.setStatus('Run failed — see console.');
       console.error('[see-toolkit] run failed', e);
@@ -106,6 +119,8 @@ import { hedgeModule } from './modules/hedge/index.js';
   }
 
   function toggle(key) { store.set(key, store.flag(key) ? '0' : '1'); }
+  // Auto-reload defaults ON (unset → on); user can turn it off via the panel toggle.
+  function reloadEnabled() { const v = store.get('autoReload', '1'); return v === '1' || v === 1 || v === true; }
 
   function exportLegacyWeather() {
     const raw = localStorage.getItem('see_weather_log');
@@ -118,9 +133,11 @@ import { hedgeModule } from './modules/hedge/index.js';
 
   function start() {
     const panel = mountPanel();
+    if (store.get('autoReload', null) === null) store.set('autoReload', '1'); // default on
     panel.setControls([
       { label: 'Dry-run', get: () => store.flag('dryRun'), on: () => toggle('dryRun') },
       { label: 'Conn auto', get: () => store.flag('connAuto'), on: () => toggle('connAuto') },
+      { label: 'Auto-reload', get: () => reloadEnabled(), on: () => toggle('autoReload') },
       { label: '▶ Run now', on: () => { store.set('forceRun', '1'); runOnce(panel); } },
       { label: '⭳ Export weather', on: exportLegacyWeather },
     ]);

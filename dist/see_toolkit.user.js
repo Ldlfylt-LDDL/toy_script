@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.184514
+// @version      2.1.20260720.191733
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -1265,6 +1265,12 @@
         store.set("lastViews", res.views);
         panel.setStatus(`Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`);
         console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? "DRY-RUN " : ""}${res.executed.length} write(s)`, res.planned);
+        const collected = res.executed.some((l) => l.startsWith("pickup"));
+        if (collected && !dryRun && reloadEnabled() && /\/countries/.test(location.pathname) && store.get("lastReloadTick", null) !== String(state.lastComputedTick)) {
+          store.set("lastReloadTick", String(state.lastComputedTick));
+          panel.setStatus("Collected money \u2014 refreshing game view\u2026");
+          setTimeout(() => location.reload(), 900);
+        }
       } catch (e) {
         panel.setStatus("Run failed \u2014 see console.");
         console.error("[see-toolkit] run failed", e);
@@ -1274,6 +1280,10 @@
     }
     function toggle(key) {
       store.set(key, store.flag(key) ? "0" : "1");
+    }
+    function reloadEnabled() {
+      const v = store.get("autoReload", "1");
+      return v === "1" || v === 1 || v === true;
     }
     function exportLegacyWeather() {
       const raw = localStorage.getItem("see_weather_log");
@@ -1288,9 +1298,11 @@
     }
     function start() {
       const panel = mountPanel();
+      if (store.get("autoReload", null) === null) store.set("autoReload", "1");
       panel.setControls([
         { label: "Dry-run", get: () => store.flag("dryRun"), on: () => toggle("dryRun") },
         { label: "Conn auto", get: () => store.flag("connAuto"), on: () => toggle("connAuto") },
+        { label: "Auto-reload", get: () => reloadEnabled(), on: () => toggle("autoReload") },
         { label: "\u25B6 Run now", on: () => {
           store.set("forceRun", "1");
           runOnce(panel);
