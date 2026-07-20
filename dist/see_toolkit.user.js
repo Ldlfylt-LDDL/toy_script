@@ -947,6 +947,10 @@
     const v = byPhase[phase(tick)];
     return v == null ? 0 : v;
   }
+  function productionExpected(byPhase, scheduledState, tick) {
+    if (scheduledState && scheduledState !== "Production") return 0;
+    return expectedAt(byPhase, tick);
+  }
   function roundToStep(price, step = 5) {
     return Math.floor(price / step) * step;
   }
@@ -980,10 +984,12 @@
   var RESERVE_BUDGET = 3e4;
   var PRICE_FLOOR = 150;
   function hedgeModule({ fetchJSON: fetchJSON2, fetchImpl = fetch, cache, store }) {
-    async function solarHistory(playerId, buildingId) {
-      return cache.get(`bhist:${buildingId}`, async () => {
-        const d = await fetchJSON2(`/api/v1/players/${playerId}/buildings/${buildingId}/`);
-        return (d.buildingActivitySet || []).filter((a) => a.state === "Production" && a.productionOutput != null).map((a) => ({ timeTick: a.timeTick, delivered: a.productionOutput }));
+    async function solarData(playerId, buildingId, k) {
+      return cache.get(`sdata:${buildingId}`, async () => {
+        const acts = (await fetchJSON2(`/api/v1/players/${playerId}/buildings/${buildingId}/`)).buildingActivitySet || [];
+        const history = acts.filter((a) => a.state === "Production" && a.productionOutput != null).map((a) => ({ timeTick: a.timeTick, delivered: a.productionOutput }));
+        const norm = normalizeActivities(acts, k);
+        return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t) };
       });
     }
     async function bestBid(hubId, tick) {
@@ -1020,9 +1026,8 @@
         const allCandidates = [];
         for (const hubId of Object.keys(byHub).map(Number)) {
           const plants = byHub[hubId];
-          const perPlant = await Promise.all(plants.map((b) => solarHistory(state.playerId, b.id)));
-          const byPhase = perPlant.map(expectedByPhase);
-          const cityExpectedAt = (tick) => byPhase.reduce((s, bp) => s + expectedAt(bp, tick), 0);
+          const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
+          const cityExpectedAt = (tick) => perPlant.reduce((s, p) => s + productionExpected(p.byPhase, p.scheduledAt(tick), tick), 0);
           const rows = [];
           for (let t = state.k; t < state.k + MAX_FUTURE_TICKS; t++) {
             const expected = Math.round(cityExpectedAt(t));

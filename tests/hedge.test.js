@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { expectedByPhase, expectedAt, roundToStep, hedgeQuantity, passesFloor, fee } from '../src/see_toolkit/modules/hedge/sizing.js';
+import { expectedByPhase, expectedAt, productionExpected, roundToStep, hedgeQuantity, passesFloor, fee } from '../src/see_toolkit/modules/hedge/sizing.js';
 import { applyReserveCap } from '../src/see_toolkit/modules/hedge/reserve.js';
 
 test('expectedByPhase averages delivered output per phase', () => {
@@ -10,6 +10,13 @@ test('expectedByPhase averages delivered output per phase', () => {
   assert.equal(bp[0], 150);
   assert.equal(expectedAt(bp, 150), 150); // 150%6=0
   assert.equal(expectedAt(bp, 146), 0);   // phase 2 not present
+});
+test('productionExpected zeroes output when the plant is scheduled non-Production', () => {
+  const bp = { 1: 130 }; // 130 MWh at phase 1 (midday)
+  assert.equal(productionExpected(bp, 'Production', 139), 130); // 139%6=1
+  assert.equal(productionExpected(bp, 'Upgrade', 139), 0);      // upgrading → no output
+  assert.equal(productionExpected(bp, 'Maintenance', 139), 0);
+  assert.equal(productionExpected(bp, undefined, 139), 130);    // unknown → assume it runs
 });
 test('roundToStep rounds down to multiple of 5', () => {
   assert.equal(roundToStep(224), 220);

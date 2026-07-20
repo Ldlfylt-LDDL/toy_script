@@ -1,8 +1,9 @@
 import { phase, MAX_FUTURE_TICKS } from '../../core/time.js';
 import { gameHeaders } from '../../core/api.js';
 import { h } from '../../core/ui.js';
-import { expectedByPhase, expectedAt, roundToStep, hedgeQuantity, passesFloor, fee } from './sizing.js';
+import { expectedByPhase, expectedAt, productionExpected, roundToStep, hedgeQuantity, passesFloor, fee } from './sizing.js';
 import { applyReserveCap } from './reserve.js';
+import { normalizeActivities, stateAt } from '../activities.js';
 
 const ARM_KEY = 'hedgeArmed';      // '1' shows live Confirm buttons (semi-auto)
 const HEDGE_FRACTION = 0.5;        // conservative: hedge half of expected output
@@ -10,12 +11,17 @@ const RESERVE_BUDGET = 30000;      // max $ of Market Reserve to lock across all
 const PRICE_FLOOR = 150;           // don't hedge below this bid (avoid locking a bad price)
 
 export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
-  async function solarHistory(playerId, buildingId) {
-    return cache.get(`bhist:${buildingId}`, async () => {
-      const d = await fetchJSON(`/api/v1/players/${playerId}/buildings/${buildingId}/`);
-      return (d.buildingActivitySet || [])
+  // Returns { byPhase, scheduledAt } for a solar plant: byPhase = avg delivered
+  // output per phase (from past Production ticks); scheduledAt(tick) = the plant's
+  // scheduled state at a future tick (so we can exclude ticks it will be upgrading).
+  async function solarData(playerId, buildingId, k) {
+    return cache.get(`sdata:${buildingId}`, async () => {
+      const acts = (await fetchJSON(`/api/v1/players/${playerId}/buildings/${buildingId}/`)).buildingActivitySet || [];
+      const history = acts
         .filter((a) => a.state === 'Production' && a.productionOutput != null)
         .map((a) => ({ timeTick: a.timeTick, delivered: a.productionOutput }));
+      const norm = normalizeActivities(acts, k);
+      return { byPhase: expectedByPhase(history), scheduledAt: (t) => stateAt(norm, t) };
     });
   }
   async function bestBid(hubId, tick) {
@@ -59,10 +65,11 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
       const allCandidates = [];
       for (const hubId of Object.keys(byHub).map(Number)) {
         const plants = byHub[hubId];
-        // per-phase expected output for this city = sum across its solar plants
-        const perPlant = await Promise.all(plants.map((b) => solarHistory(state.playerId, b.id)));
-        const byPhase = perPlant.map(expectedByPhase);
-        const cityExpectedAt = (tick) => byPhase.reduce((s, bp) => s + expectedAt(bp, tick), 0);
+        // per-plant data; expected output at a tick excludes plants scheduled to
+        // upgrade/maintain then (they deliver nothing — don't hedge that output).
+        const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
+        const cityExpectedAt = (tick) =>
+          perPlant.reduce((s, p) => s + productionExpected(p.byPhase, p.scheduledAt(tick), tick), 0);
 
         const rows = [];
         for (let t = state.k; t < state.k + MAX_FUTURE_TICKS; t++) {

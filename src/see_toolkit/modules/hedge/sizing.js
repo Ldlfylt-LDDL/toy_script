@@ -20,6 +20,14 @@ export function expectedAt(byPhase, tick) {
   return v == null ? 0 : v;
 }
 
+// Expected output only counts if the plant is scheduled to PRODUCE at that tick.
+// If it is scheduled to Upgrade/Maintenance/Sleep, it delivers nothing that tick,
+// so hedging its output there would be a naked short. (We know our own schedule.)
+export function productionExpected(byPhase, scheduledState, tick) {
+  if (scheduledState && scheduledState !== 'Production') return 0;
+  return expectedAt(byPhase, tick);
+}
+
 // Prices must be a multiple of 5 (server validation). Round DOWN for a sell so it
 // still crosses the bid it was derived from.
 export function roundToStep(price, step = 5) {
