@@ -79,11 +79,18 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
 
       const cities = [];
       const allCandidates = [];
+      const formulaCheck = []; // our computed efficiency for a couple of ticks, to compare vs the game's Weather page
       for (const hubId of Object.keys(byHub).map(Number)) {
         const plants = byHub[hubId];
         // per-plant data + the city's weather forecast (this hub's country).
         const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
         const wx = await forecast(await hubCountry(hubId), state.k);
+        if (!formulaCheck.length) {
+          for (let t = state.k; t < state.k + 12 && formulaCheck.length < 2; t++) {
+            const w = wx[t];
+            if (w && w.daylight) formulaCheck.push({ tick: t, clouds: w.clouds, eff: solarEfficiency(w.clouds, w.daylight) });
+          }
+        }
         // Expected output at a tick = capacity × solar efficiency (from forecast
         // clouds/daylight), zeroed for plants scheduled to upgrade/maintain then.
         // Falls back to the historical per-phase estimate if no forecast for the tick.
@@ -121,7 +128,7 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
 
       return {
         writes: [], // semi-auto: nothing auto-executes
-        view: { armed, playerId: state.playerId, cities, suggestions, totalQty, totalLock, budget: RESERVE_BUDGET, floor: PRICE_FLOOR },
+        view: { armed, playerId: state.playerId, cities, suggestions, totalQty, totalLock, budget: RESERVE_BUDGET, floor: PRICE_FLOOR, formulaCheck },
       };
     },
 
@@ -140,6 +147,12 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
         h('div', { style: 'height:5px;background:#232833;border-radius:3px;overflow:hidden' },
           h('div', { style: `height:100%;width:${pct}%;background:${pct > 90 ? '#ff5252' : '#4caf50'}` }))));
       kids.push(note(`Hedge ${Math.round(HEDGE_FRACTION * 100)}% of expected solar output · only bids ≥ $${view.floor}`));
+      // Formula self-check: our computed solar efficiency for a couple of ticks, so
+      // you can compare against the game's Weather page and catch a formula change.
+      if (view.formulaCheck && view.formulaCheck.length) {
+        kids.push(note('⌖ solar-eff check (vs game Weather page): ' +
+          view.formulaCheck.map((f) => `T${f.tick} clouds ${f.clouds} → ${f.eff}%`).join('  ·  '), 'color:#6ab0ff'));
+      }
 
       for (const city of view.cities) {
         kids.push(h('div', { style: 'margin-top:6px;color:#cfd3da;font-size:11px' }, `${city.name}`));

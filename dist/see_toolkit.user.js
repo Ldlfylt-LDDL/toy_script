@@ -1041,10 +1041,17 @@
         const hedgedAt = (hubId, tick) => positions.filter((p) => p.hubId === hubId && p.timeTick === tick && p.position < 0).reduce((s, p) => s + Math.abs(p.position), 0);
         const cities = [];
         const allCandidates = [];
+        const formulaCheck = [];
         for (const hubId of Object.keys(byHub).map(Number)) {
           const plants = byHub[hubId];
           const perPlant = await Promise.all(plants.map((b) => solarData(state.playerId, b.id, state.k)));
           const wx = await forecast2(await hubCountry(hubId), state.k);
+          if (!formulaCheck.length) {
+            for (let t = state.k; t < state.k + 12 && formulaCheck.length < 2; t++) {
+              const w = wx[t];
+              if (w && w.daylight) formulaCheck.push({ tick: t, clouds: w.clouds, eff: solarEfficiency(w.clouds, w.daylight) });
+            }
+          }
           const cityExpectedAt = (tick) => perPlant.reduce((s, p) => {
             const sc = p.scheduledAt(tick);
             if (sc && sc !== "Production") return s;
@@ -1075,7 +1082,7 @@
         return {
           writes: [],
           // semi-auto: nothing auto-executes
-          view: { armed, playerId: state.playerId, cities, suggestions, totalQty, totalLock, budget: RESERVE_BUDGET, floor: PRICE_FLOOR }
+          view: { armed, playerId: state.playerId, cities, suggestions, totalQty, totalLock, budget: RESERVE_BUDGET, floor: PRICE_FLOOR, formulaCheck }
         };
       },
       render(view, sec) {
@@ -1097,6 +1104,9 @@
           )
         ));
         kids.push(note(`Hedge ${Math.round(HEDGE_FRACTION * 100)}% of expected solar output \xB7 only bids \u2265 $${view.floor}`));
+        if (view.formulaCheck && view.formulaCheck.length) {
+          kids.push(note("\u2316 solar-eff check (vs game Weather page): " + view.formulaCheck.map((f) => `T${f.tick} clouds ${f.clouds} \u2192 ${f.eff}%`).join("  \xB7  "), "color:#6ab0ff"));
+        }
         for (const city of view.cities) {
           kids.push(h("div", { style: "margin-top:6px;color:#cfd3da;font-size:11px" }, `${city.name}`));
           const table = h(
