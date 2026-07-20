@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.181431
+// @version      2.1.20260720.184514
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -27,6 +27,10 @@
     function set(key, val) {
       backend.setItem(k(key), JSON.stringify(val));
     }
+    function flag(key) {
+      const v = get(key, "0");
+      return v === "1" || v === 1 || v === true;
+    }
     function appendCapped(key, item, cap) {
       const arr = get(key, []);
       arr.push(item);
@@ -38,7 +42,7 @@
       for (const key in backend) if (key.startsWith(prefix + ":")) total += (backend.getItem(key) || "").length;
       return +(total / 1024).toFixed(1);
     }
-    return { get, set, appendCapped, sizeKB };
+    return { get, set, flag, appendCapped, sizeKB };
   }
 
   // src/see_toolkit/core/cache.js
@@ -810,7 +814,7 @@
       id: "connections",
       title: "Connection Manager",
       async plan(state) {
-        const auto = store.get(AUTO_KEY, "0") === "1";
+        const auto = store.flag(AUTO_KEY);
         const power = (state.connections || []).filter((c) => c.kind === "Power");
         const prices = store.get("prices", {});
         const streaks = store.get("connStreak", {});
@@ -1035,7 +1039,7 @@
       id: "hedge",
       title: "Solar Hedge",
       async plan(state) {
-        const armed = store.get(ARM_KEY, "0") === "1";
+        const armed = store.flag(ARM_KEY);
         const solar = (state.buildings || []).filter((b) => b.kind === "SolarPowerPlant");
         const byHub = {};
         for (const b of solar) (byHub[b.hubId] = byHub[b.hubId] || []).push(b);
@@ -1129,22 +1133,36 @@
           kids.push(table);
         }
         const armBtn = h("button", {
-          style: "margin-top:6px;font:11px monospace;background:#232833;color:" + (view.armed ? "#4caf50" : "#9aa0ac") + ";border:1px solid #3a3f4b;border-radius:4px;padding:3px 8px;cursor:pointer",
-          onclick: () => {
-            store.set(ARM_KEY, view.armed ? "0" : "1");
-            armBtn.textContent = "Arm hedge: " + (store.get(ARM_KEY, "0") === "1" ? "ON" : "OFF");
-          }
-        }, "Arm hedge: " + (view.armed ? "ON" : "OFF"));
+          style: "margin-top:6px;font:11px monospace;background:#232833;color:#9aa0ac;border:1px solid #3a3f4b;border-radius:4px;padding:3px 8px;cursor:pointer"
+        }, "");
+        const paintArm = (on) => {
+          armBtn.textContent = "Arm hedge: " + (on ? "ON" : "OFF");
+          armBtn.style.color = on ? "#4caf50" : "#9aa0ac";
+        };
+        paintArm(view.armed);
+        armBtn.addEventListener("click", () => {
+          const on = !store.flag(ARM_KEY);
+          store.set(ARM_KEY, on ? "1" : "0");
+          paintArm(on);
+          sec.body.querySelectorAll(".see-hedge-confirm").forEach((b) => setConfirmEnabled(b, on));
+        });
         kids.push(armBtn);
         sec.body.replaceChildren(...kids);
       }
     };
+    function setConfirmEnabled(btn, on) {
+      btn.style.opacity = on ? "1" : ".4";
+      btn.style.pointerEvents = on ? "auto" : "none";
+    }
     function confirmCell(view, r) {
       const btn = h("button", {
-        style: "font:10px monospace;background:#2a1f2a;color:#ff5252;border:1px solid #ff5252;border-radius:3px;padding:1px 6px;cursor:pointer" + (view.armed ? "" : ";opacity:.4;pointer-events:none"),
+        class: "see-hedge-confirm",
+        style: "font:10px monospace;background:#2a1f2a;color:#ff5252;border:1px solid #ff5252;border-radius:3px;padding:1px 6px;cursor:pointer",
         title: `Sell ${r.qty} MWh @ $${roundToStep(r.bid)} (locks $${(r.reserveLock || 0).toLocaleString()}, fee $${fee(r.qty, roundToStep(r.bid))})`
       }, "Confirm");
+      setConfirmEnabled(btn, view.armed);
       btn.addEventListener("click", async () => {
+        if (!store.flag(ARM_KEY)) return;
         btn.disabled = true;
         btn.textContent = "\u2026";
         try {
@@ -1188,8 +1206,8 @@
       if (running) return;
       running = true;
       try {
-        const dryRun = store.get("dryRun", "0") === "1";
-        const auto = store.get("connAuto", "0") === "1";
+        const dryRun = store.flag("dryRun");
+        const auto = store.flag("connAuto");
         panel.setBadges([
           dryRun ? { text: "DRY-RUN", color: "#ff9800" } : null,
           auto ? { text: "connAuto", color: "#4caf50" } : { text: "read-only", color: "#888" }
@@ -1197,7 +1215,7 @@
         panel.setStatus("Checking tick\u2026");
         const tick = await game.getTick();
         const lastRunTick = store.get("lastRunTick", null);
-        const force = store.get("forceRun", "0") === "1";
+        const force = store.flag("forceRun");
         const lastViews = store.get("lastViews", null);
         if (!force && tick === lastRunTick && lastViews) {
           for (const mod of modules) {
@@ -1255,7 +1273,7 @@
       }
     }
     function toggle(key) {
-      store.set(key, store.get(key, "0") === "1" ? "0" : "1");
+      store.set(key, store.flag(key) ? "0" : "1");
     }
     function exportLegacyWeather() {
       const raw = localStorage.getItem("see_weather_log");
@@ -1271,8 +1289,8 @@
     function start() {
       const panel = mountPanel();
       panel.setControls([
-        { label: "Dry-run", get: () => store.get("dryRun", "0") === "1", on: () => toggle("dryRun") },
-        { label: "Conn auto", get: () => store.get("connAuto", "0") === "1", on: () => toggle("connAuto") },
+        { label: "Dry-run", get: () => store.flag("dryRun"), on: () => toggle("dryRun") },
+        { label: "Conn auto", get: () => store.flag("connAuto"), on: () => toggle("connAuto") },
         { label: "\u25B6 Run now", on: () => {
           store.set("forceRun", "1");
           runOnce(panel);

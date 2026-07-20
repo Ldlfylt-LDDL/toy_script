@@ -43,8 +43,8 @@ import { hedgeModule } from './modules/hedge/index.js';
     if (running) return;
     running = true;
     try {
-      const dryRun = store.get('dryRun', '0') === '1';
-      const auto = store.get('connAuto', '0') === '1';
+      const dryRun = store.flag('dryRun');
+      const auto = store.flag('connAuto');
       panel.setBadges([
         dryRun ? { text: 'DRY-RUN', color: '#ff9800' } : null,
         auto ? { text: 'connAuto', color: '#4caf50' } : { text: 'read-only', color: '#888' },
@@ -57,7 +57,7 @@ import { hedgeModule } from './modules/hedge/index.js';
       // refreshes within a tick nearly free and removes the periodic bot-like bursts.
       const tick = await game.getTick();
       const lastRunTick = store.get('lastRunTick', null);
-      const force = store.get('forceRun', '0') === '1';
+      const force = store.flag('forceRun');
       const lastViews = store.get('lastViews', null);
       if (!force && tick === lastRunTick && lastViews) {
         // Same tick, nothing new to compute: re-render the last run's results from
@@ -105,7 +105,7 @@ import { hedgeModule } from './modules/hedge/index.js';
     }
   }
 
-  function toggle(key) { store.set(key, store.get(key, '0') === '1' ? '0' : '1'); }
+  function toggle(key) { store.set(key, store.flag(key) ? '0' : '1'); }
 
   function exportLegacyWeather() {
     const raw = localStorage.getItem('see_weather_log');
@@ -119,8 +119,8 @@ import { hedgeModule } from './modules/hedge/index.js';
   function start() {
     const panel = mountPanel();
     panel.setControls([
-      { label: 'Dry-run', get: () => store.get('dryRun', '0') === '1', on: () => toggle('dryRun') },
-      { label: 'Conn auto', get: () => store.get('connAuto', '0') === '1', on: () => toggle('connAuto') },
+      { label: 'Dry-run', get: () => store.flag('dryRun'), on: () => toggle('dryRun') },
+      { label: 'Conn auto', get: () => store.flag('connAuto'), on: () => toggle('connAuto') },
       { label: '▶ Run now', on: () => { store.set('forceRun', '1'); runOnce(panel); } },
       { label: '⭳ Export weather', on: exportLegacyWeather },
     ]);

@@ -5,6 +5,9 @@ export function makeStore(backend = localStorage, prefix = 'see') {
     catch { return fallback; }
   }
   function set(key, val) { backend.setItem(k(key), JSON.stringify(val)); }
+  // Boolean flag read tolerant of both the store's JSON form ("1") and a raw
+  // localStorage set (1 or "1") a user might do by hand.
+  function flag(key) { const v = get(key, '0'); return v === '1' || v === 1 || v === true; }
   function appendCapped(key, item, cap) {
     const arr = get(key, []);
     arr.push(item);
@@ -16,5 +19,5 @@ export function makeStore(backend = localStorage, prefix = 'see') {
     for (const key in backend) if (key.startsWith(prefix + ':')) total += (backend.getItem(key) || '').length;
     return +(total / 1024).toFixed(1);
   }
-  return { get, set, appendCapped, sizeKB };
+  return { get, set, flag, appendCapped, sizeKB };
 }

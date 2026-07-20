@@ -42,7 +42,7 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
   return {
     id: 'connections', title: 'Connection Manager',
     async plan(state) {
-      const auto = store.get(AUTO_KEY, '0') === '1';
+      const auto = store.flag(AUTO_KEY);
       const power = (state.connections || []).filter((c) => c.kind === 'Power');
       const prices = store.get('prices', {});
       const streaks = store.get('connStreak', {});

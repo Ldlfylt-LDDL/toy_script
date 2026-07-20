@@ -66,7 +66,7 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
   return {
     id: 'hedge', title: 'Solar Hedge',
     async plan(state) {
-      const armed = store.get(ARM_KEY, '0') === '1';
+      const armed = store.flag(ARM_KEY);
       const solar = (state.buildings || []).filter((b) => b.kind === 'SolarPowerPlant');
       // group by city
       const byHub = {};
@@ -172,24 +172,40 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
         kids.push(table);
       }
 
-      // arm toggle
+      // arm toggle — reads the LIVE store each click (so it toggles both ways) and
+      // enables/disables the Confirm buttons in place, without needing a re-render.
       const armBtn = h('button', {
-        style: 'margin-top:6px;font:11px monospace;background:#232833;color:' + (view.armed ? '#4caf50' : '#9aa0ac') + ';border:1px solid #3a3f4b;border-radius:4px;padding:3px 8px;cursor:pointer',
-        onclick: () => { store.set(ARM_KEY, view.armed ? '0' : '1'); armBtn.textContent = 'Arm hedge: ' + (store.get(ARM_KEY, '0') === '1' ? 'ON' : 'OFF'); },
-      }, 'Arm hedge: ' + (view.armed ? 'ON' : 'OFF'));
+        style: 'margin-top:6px;font:11px monospace;background:#232833;color:#9aa0ac;border:1px solid #3a3f4b;border-radius:4px;padding:3px 8px;cursor:pointer',
+      }, '');
+      const paintArm = (on) => { armBtn.textContent = 'Arm hedge: ' + (on ? 'ON' : 'OFF'); armBtn.style.color = on ? '#4caf50' : '#9aa0ac'; };
+      paintArm(view.armed);
+      armBtn.addEventListener('click', () => {
+        const on = !store.flag(ARM_KEY);
+        store.set(ARM_KEY, on ? '1' : '0');
+        paintArm(on);
+        sec.body.querySelectorAll('.see-hedge-confirm').forEach((b) => setConfirmEnabled(b, on));
+      });
       kids.push(armBtn);
 
       sec.body.replaceChildren(...kids);
     },
   };
 
-  // Confirm cell factory (closes over placeSell)
+  function setConfirmEnabled(btn, on) {
+    btn.style.opacity = on ? '1' : '.4';
+    btn.style.pointerEvents = on ? 'auto' : 'none';
+  }
+
+  // Confirm cell factory (closes over placeSell + store)
   function confirmCell(view, r) {
     const btn = h('button', {
-      style: 'font:10px monospace;background:#2a1f2a;color:#ff5252;border:1px solid #ff5252;border-radius:3px;padding:1px 6px;cursor:pointer' + (view.armed ? '' : ';opacity:.4;pointer-events:none'),
+      class: 'see-hedge-confirm',
+      style: 'font:10px monospace;background:#2a1f2a;color:#ff5252;border:1px solid #ff5252;border-radius:3px;padding:1px 6px;cursor:pointer',
       title: `Sell ${r.qty} MWh @ $${roundToStep(r.bid)} (locks $${(r.reserveLock || 0).toLocaleString()}, fee $${fee(r.qty, roundToStep(r.bid))})`,
     }, 'Confirm');
+    setConfirmEnabled(btn, view.armed);
     btn.addEventListener('click', async () => {
+      if (!store.flag(ARM_KEY)) return; // hard gate: never place unless armed
       btn.disabled = true; btn.textContent = '…';
       try { await placeSell(view.playerId, r.hubId, r.tick, r.qty, r.bid); btn.textContent = '✓ sold'; btn.style.color = '#4caf50'; btn.style.borderColor = '#4caf50'; }
       catch (e) { btn.textContent = 'err'; btn.title = e.message; btn.disabled = false; }
