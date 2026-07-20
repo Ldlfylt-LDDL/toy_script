@@ -741,6 +741,15 @@
       const status = panel.section("status", "SEE Toolkit");
       try {
         const dryRun = store.get("dryRun", "0") === "1";
+        status.textContent = "Checking tick\u2026";
+        const tick = await game.getTick();
+        const lastRunTick = store.get("lastRunTick", null);
+        const force = store.get("forceRun", "0") === "1";
+        if (!force && tick === lastRunTick) {
+          status.textContent = `Tick ${tick} \xB7 up to date \u2014 no new tick, skipped (set see:forceRun=1 to run anyway)`;
+          return;
+        }
+        if (force) store.set("forceRun", "0");
         status.textContent = "Loading game state\u2026";
         for (const mod of modules) {
           const el = panel.section(mod.id, mod.title);
@@ -773,6 +782,7 @@
             panel.section(mod.id, mod.title).textContent = `${mod.title}: ${i}/${total} \u2014 ${label}`;
           }
         });
+        store.set("lastRunTick", state.lastComputedTick);
         status.textContent = `Tick ${state.lastComputedTick}${dryRun ? " \xB7 DRY-RUN" : ""} \xB7 ${res.executed.length} write(s) \xB7 ${(/* @__PURE__ */ new Date()).toLocaleTimeString()}`;
         console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? "DRY-RUN " : ""}${res.executed.length} write(s)`, res.planned);
       } catch (e) {

@@ -43,6 +43,21 @@ import { connectionsModule } from './modules/connections/index.js';
     const status = panel.section('status', 'SEE Toolkit');
     try {
       const dryRun = store.get('dryRun', '0') === '1';
+      status.textContent = 'Checking tick…';
+
+      // Tick gate: a tick lasts 4h, so nothing changes within one. Cost one cheap
+      // app-data request; if the tick has not advanced since the last completed run
+      // (and no manual force), skip the whole ~50-request burst. This makes page
+      // refreshes within a tick nearly free and removes the periodic bot-like bursts.
+      const tick = await game.getTick();
+      const lastRunTick = store.get('lastRunTick', null);
+      const force = store.get('forceRun', '0') === '1';
+      if (!force && tick === lastRunTick) {
+        status.textContent = `Tick ${tick} · up to date — no new tick, skipped (set see:forceRun=1 to run anyway)`;
+        return;
+      }
+      if (force) store.set('forceRun', '0');
+
       status.textContent = 'Loading game state…';
       // Pre-create every module section so the panel shows structure immediately.
       for (const mod of modules) {
@@ -67,6 +82,7 @@ import { connectionsModule } from './modules/connections/index.js';
           panel.section(mod.id, mod.title).textContent = `${mod.title}: ${i}/${total} — ${label}`;
         },
       });
+      store.set('lastRunTick', state.lastComputedTick);
       status.textContent = `Tick ${state.lastComputedTick}${dryRun ? ' · DRY-RUN' : ''} · ${res.executed.length} write(s) · ${new Date().toLocaleTimeString()}`;
       console.log(`[see-toolkit] tick ${state.lastComputedTick}: ${dryRun ? 'DRY-RUN ' : ''}${res.executed.length} write(s)`, res.planned);
     } catch (e) {
