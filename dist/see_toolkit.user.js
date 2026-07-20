@@ -786,6 +786,7 @@
   var HYSTERESIS = 2;
   var COST_FALLBACK = 5;
   var CAP_BUFFER = 15;
+  var MIN_SAMPLES = 6;
   function evaluateConnection({ prices, edge, capacity, k, phaseOf = phase }) {
     const fwdSamples = spreadSamples(prices, edge.hub1Id, edge.hub2Id, phaseOf(k), phaseOf);
     const revSamples = spreadSamples(prices, edge.hub2Id, edge.hub1Id, phaseOf(k), phaseOf);
@@ -843,8 +844,10 @@
             const act = acts.find((a) => a.timeTick === state.k);
             if (!act) continue;
             const ev = evaluateConnection({ prices, edge, capacity: act.capacity, k: state.k });
-            const score = scoreConnection({ gradientAmplitude: ev.gradientAmplitude });
-            if (score.decommission) flagged++;
+            const samples = Math.min(ev.forward.n || 0, ev.reverse.n || 0);
+            const enough = samples >= MIN_SAMPLES;
+            const decommission = enough && scoreConnection({ gradientAmplitude: ev.gradientAmplitude }).decommission;
+            if (decommission) flagged++;
             const st = bumpStreak(streaks[c.id], ev.desired, ev.current);
             streaks[c.id] = st;
             const willFlip = ev.desired !== ev.current && shouldFlip(st.streak, HYSTERESIS);
@@ -853,11 +856,11 @@
             const dst = ev.current === "forward" ? edge.hub2Name || edge.hub2Id : edge.hub1Name || edge.hub1Id;
             rows.push({
               id: c.id,
-              route: `${String(src).slice(0, 8)}\u2192${String(dst).slice(0, 8)}`,
-              n: Math.min(ev.forward.n || 0, ev.reverse.n || 0),
+              route: `${String(src).slice(0, 9)}\u2192${String(dst).slice(0, 9)}`,
+              n: samples,
               edge: ev.forward.median == null ? null : Math.round(Math.max(ev.forward.median ?? -Infinity, ev.reverse.median ?? -Infinity)),
               willFlip,
-              decommission: score.decommission
+              decommission
             });
             if (auto) {
               const newSign = ev.desired === "forward" ? 1 : -1;
@@ -899,21 +902,26 @@
       render(view, sec) {
         if (!sec) return;
         sec.setDot(view.flagged > 0 ? "warn" : "ok");
-        sec.setSummary(`${view.total} \xB7 ${view.flagged} flag \xB7 ${view.auto ? view.flips + " flip" : "auto off"}`);
+        sec.setSummary(`${view.total} lines \xB7 ${view.auto ? view.flips + " to flip" : "read-only"}`);
+        const line = (txt, extra = "") => {
+          const d = document.createElement("div");
+          d.style.cssText = "margin-bottom:3px;color:#7f8794;font-size:10px;" + extra;
+          d.textContent = txt;
+          return d;
+        };
         const kids = [];
-        const badgeLine = document.createElement("div");
-        badgeLine.style.cssText = "margin-bottom:3px;color:#7f8794;font-size:10px";
-        badgeLine.textContent = (view.auto ? "Auto writes ON" : "Auto writes OFF (evaluation only \u2014 set see:connAuto=1)") + (view.coldStart ? " \xB7 cold start: still gathering price history" : "");
-        kids.push(badgeLine);
+        kids.push(line(view.auto ? "\u25CF Auto trading ON \u2014 will flip direction & set stop-loss" : '\u25CB Read-only (turn on "Conn auto" to let it trade)'));
+        if (view.coldStart) kids.push(line("Cold start: gathering price history \u2014 needs ~6 samples before it acts or judges."));
+        kids.push(line("Profit = best-case $/MWh next tick \xB7 Samples = price history (\u22656 to trust) \xB7 \u2702 low value \xB7 \u21C4 will flip"));
         if (view.rows.length) {
           kids.push(miniTable(
-            ["Conn", "Route", "Edge$", "n", ""],
+            ["Conn", "Route", "Profit/MWh", "Samples", "Flags"],
             view.rows.map((r) => [
               "#" + r.id,
               r.route,
-              { text: r.edge == null ? "\u2014" : "$" + r.edge, color: r.edge > 0 ? "#4caf50" : "#ff5252" },
-              { text: r.n, color: r.n < 6 ? "#888" : "#d6d6d6" },
-              { text: (r.willFlip ? "\u21C4" : "") + (r.decommission ? "\u2702" : ""), color: "#ff9800" }
+              { text: r.edge == null ? "\u2014" : r.edge >= 0 ? "+$" + r.edge : "\u2212$" + Math.abs(r.edge), color: r.edge > 0 ? "#4caf50" : "#ff5252" },
+              { text: r.n < MIN_SAMPLES ? `${r.n} (low)` : r.n, color: r.n < MIN_SAMPLES ? "#888" : "#d6d6d6" },
+              { text: (r.willFlip ? "\u21C4 flip " : "") + (r.decommission ? "\u2702 cut" : "") || "\u2014", color: r.decommission ? "#ff9800" : "#6ab0ff" }
             ])
           ));
         }

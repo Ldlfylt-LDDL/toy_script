@@ -14,6 +14,7 @@ const FLIP_THRESHOLD = 30;     // $ edge over current before flipping
 const HYSTERESIS = 2;          // consecutive evals pointing the same way
 const COST_FALLBACK = 5;       // per-MWh transport/wage estimate
 const CAP_BUFFER = 15;         // safety margin under forecast dest price
+const MIN_SAMPLES = 6;         // price samples needed before we trust the forecast
 
 // Pure-ish evaluation for one connection given accumulated prices and current state.
 export function evaluateConnection({ prices, edge, capacity, k, phaseOf = phase }) {
@@ -80,8 +81,12 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
           if (!act) continue;
           const ev = evaluateConnection({ prices, edge, capacity: act.capacity, k: state.k });
 
-          const score = scoreConnection({ gradientAmplitude: ev.gradientAmplitude });
-          if (score.decommission) flagged++;
+          const samples = Math.min(ev.forward.n || 0, ev.reverse.n || 0);
+          const enough = samples >= MIN_SAMPLES;
+          // Only judge decommission once we have enough price history — during cold
+          // start the forecast is noise and would flag almost everything.
+          const decommission = enough && scoreConnection({ gradientAmplitude: ev.gradientAmplitude }).decommission;
+          if (decommission) flagged++;
 
           // hysteresis on the desired direction
           const st = bumpStreak(streaks[c.id], ev.desired, ev.current);
@@ -93,10 +98,10 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
           const dst = ev.current === 'forward' ? (edge.hub2Name || edge.hub2Id) : (edge.hub1Name || edge.hub1Id);
           rows.push({
             id: c.id,
-            route: `${String(src).slice(0, 8)}→${String(dst).slice(0, 8)}`,
-            n: Math.min(ev.forward.n || 0, ev.reverse.n || 0),
+            route: `${String(src).slice(0, 9)}→${String(dst).slice(0, 9)}`,
+            n: samples,
             edge: ev.forward.median == null ? null : Math.round(Math.max(ev.forward.median ?? -Infinity, ev.reverse.median ?? -Infinity)),
-            willFlip, decommission: score.decommission,
+            willFlip, decommission,
           });
 
           if (auto) {
@@ -139,21 +144,26 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
     render(view, sec) {
       if (!sec) return;
       sec.setDot(view.flagged > 0 ? 'warn' : 'ok');
-      sec.setSummary(`${view.total} · ${view.flagged} flag · ${view.auto ? view.flips + ' flip' : 'auto off'}`);
+      sec.setSummary(`${view.total} lines · ${view.auto ? view.flips + ' to flip' : 'read-only'}`);
+      const line = (txt, extra = '') => {
+        const d = document.createElement('div');
+        d.style.cssText = 'margin-bottom:3px;color:#7f8794;font-size:10px;' + extra;
+        d.textContent = txt;
+        return d;
+      };
       const kids = [];
-      const badgeLine = document.createElement('div');
-      badgeLine.style.cssText = 'margin-bottom:3px;color:#7f8794;font-size:10px';
-      badgeLine.textContent = (view.auto ? 'Auto writes ON' : 'Auto writes OFF (evaluation only — set see:connAuto=1)') +
-        (view.coldStart ? ' · cold start: still gathering price history' : '');
-      kids.push(badgeLine);
+      kids.push(line(view.auto ? '● Auto trading ON — will flip direction & set stop-loss' : '○ Read-only (turn on "Conn auto" to let it trade)'));
+      if (view.coldStart) kids.push(line('Cold start: gathering price history — needs ~6 samples before it acts or judges.'));
+      // Column legend so the table is self-explanatory.
+      kids.push(line('Profit = best-case $/MWh next tick · Samples = price history (≥6 to trust) · ✂ low value · ⇄ will flip'));
       if (view.rows.length) {
-        kids.push(miniTable(['Conn', 'Route', 'Edge$', 'n', ''],
+        kids.push(miniTable(['Conn', 'Route', 'Profit/MWh', 'Samples', 'Flags'],
           view.rows.map((r) => [
             '#' + r.id,
             r.route,
-            { text: r.edge == null ? '—' : '$' + r.edge, color: r.edge > 0 ? '#4caf50' : '#ff5252' },
-            { text: r.n, color: r.n < 6 ? '#888' : '#d6d6d6' },
-            { text: (r.willFlip ? '⇄' : '') + (r.decommission ? '✂' : ''), color: '#ff9800' },
+            { text: r.edge == null ? '—' : (r.edge >= 0 ? '+$' + r.edge : '−$' + Math.abs(r.edge)), color: r.edge > 0 ? '#4caf50' : '#ff5252' },
+            { text: r.n < MIN_SAMPLES ? `${r.n} (low)` : r.n, color: r.n < MIN_SAMPLES ? '#888' : '#d6d6d6' },
+            { text: (r.willFlip ? '⇄ flip ' : '') + (r.decommission ? '✂ cut' : '') || '—', color: r.decommission ? '#ff9800' : '#6ab0ff' },
           ])));
       }
       sec.body.replaceChildren(...kids);
