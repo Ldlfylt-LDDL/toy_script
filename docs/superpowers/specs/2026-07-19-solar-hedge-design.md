@@ -35,25 +35,37 @@ expected output. Pure speculation is a later, separate feature.
   `GET /api/v1/players/{id}/positions/`; SELL placement + cancel — **payload to be
   reverse-engineered** (see §6).
 
+## 3. Per-city markets (critical)
+
+**Each city (hub) has its OWN Power CFD market with its own order book and
+prices.** Hedging is therefore per-city: each solar plant is hedged in the market
+of the city it sits in, using that city's book and that city's expected solar
+output. The module groups the player's solar plants by `hubId` and runs the logic
+per hub. The **Market Reserve is player-global** (one pool at `/market-credit/`),
+so the reserve cap (§3.4) applies across ALL cities' hedges combined.
+
+Solar hubs (current): Abyss 8166, Modoc 8080, Gladefort 8186, Narniaborough 7936,
+Echo Borough 8153, Jirstcrest 8224, Breeze City 8055.
+
 ## 3. Module logic (per run, on tick advance)
 
-1. **Expected sellable solar output per upcoming tick** `E[t]`: for each editable
-   tick `t` (T..T+11), estimate the solar fleet's deliverable MWh. Estimate
+For **each solar city (hub `h`)** independently:
+1. **Expected sellable solar output per upcoming tick** `E[h,t]`: for each editable
+   tick `t` (T..T+11), estimate that city's solar deliverable MWh. Estimate
    empirically = recent average *delivered* solar output at that tick's phase
-   (`t%6`) from building history — this naturally folds in daylight, weather, and
-   capacity, and is ~0 at night. Reuse the per-phase-from-observation pattern used
-   by the connection forecaster.
-2. **Read the CFD buy book** for those ticks; `bid[t]` = best Max Buy.
-3. **Candidate hedge** for tick `t` when `E[t] > 0` (daytime) and `bid[t] ≥ floor`:
-   - quantity `q[t] = round(HEDGE_FRACTION × E[t] − alreadyHedged[t])`,
-     `HEDGE_FRACTION` default 0.5, never exceeding `E[t]` (no naked short).
-   - `alreadyHedged[t]` from `/positions/` (idempotent — don't double-hedge).
-4. **Reserve cap**: sum of `$300 × q[t]` across candidates must stay under
-   `RESERVE_CAP_FRACTION` (default 0.6) of available Market Reserve; trim lowest-
-   value candidates first if over.
-5. **Output**: a list of suggested sell orders `{tick, qty, price=bid[t], reserveLocked, fee}`.
-   In **semi-auto**, render them in the panel with a per-order and a
-   "confirm all" control; only on the user's click does the module place the order.
+   (`t%6`) from that hub's solar building history — folds in daylight, weather, and
+   capacity, ~0 at night. Reuse the per-phase-from-observation pattern.
+2. **Read that city's CFD buy book** `GET /hubs/{h}/orders/power/{t}`; `bid[h,t]` = best Max Buy.
+3. **Candidate hedge** for `(h,t)` when `E[h,t] > 0` (daytime) and `bid[h,t] ≥ floor`:
+   - `q[h,t] = round(HEDGE_FRACTION × E[h,t] − alreadyHedged[h,t])`,
+     default 0.5, never exceeding `E[h,t]` (no naked short).
+   - `alreadyHedged[h,t]` from `/positions/` filtered to hub `h` + tick `t` (idempotent).
+4. **Global reserve cap**: sum of `$300 × q[h,t]` across ALL candidate hubs/ticks must
+   stay under `RESERVE_CAP_FRACTION` (default 0.6) of available Market Reserve; trim
+   the lowest-price candidates first if over.
+5. **Output**: suggested sell orders `{hubId, cityName, tick, qty, price=bid[h,t], reserveLocked, fee}`.
+   In **semi-auto**, render grouped by city with per-order and "confirm all" controls;
+   only a user click places an order.
 
 ## 4. Pure decision layer (unit-tested)
 
@@ -76,18 +88,33 @@ These are pure and injectable; the order placement + `/positions/` reads are thi
 - Config constants at module top: `HEDGE_FRACTION=0.5`, `RESERVE_CAP_FRACTION=0.6`,
   `PRICE_FLOOR=150`.
 
-## 6. Reverse-engineering the order endpoints (first implementation task)
-Capture the SELL-order POST and the cancel/close request **safely**, with the
-user present and approving: place a **limit sell above the market** (e.g. price
-$999 when best bid is $225) so it CANNOT match any buyer and rests unfilled →
-captures the POST payload with no trade executed; then cancel it → captures the
-cancel payload. No position is taken and no money changes hands. Record the exact
-endpoint + payload shape; only then wire the placement adapter.
+## 6. Order endpoint (reverse-engineered 2026-07-19, verified)
+- **Place order**: `POST /api/v1/hubs/{hubId}/orders/power/{tick}/` with body
+  `{"quantity":N, "price":P, "side":"Sell"}` (side "Buy"|"Sell"), signed with
+  `gameHeaders`. To hedge, `side:"Sell"` at `price = best bid` (rounded to a
+  multiple of 5).
+- **Validation**: **price must be a multiple of 5** (server rejects otherwise —
+  learned via a $999 test that was cleanly rejected, placing nothing). The
+  placement adapter must round to a multiple of 5.
+- **Fee**: 5% of notional. **Collateral**: locks ≈ $300 × quantity of Market Reserve.
+- Reads: order book `GET /api/v1/hubs/{hubId}/orders/power/{tick}` (Buy-side =
+  bids), positions `GET /api/v1/players/{id}/positions/` (filter kind=Power, hubId,
+  timeTick). Cancel/withdraw endpoint not needed for v1 (place-on-confirm only;
+  power positions auto-settle at spot).
 
-## 7. Panel / UX
-New "Solar Hedge" section: summary (e.g. "3 ticks · suggest short 60 MWh · lock
-$18k") and an expandable table (Tick, Expected, Suggest qty, Price, Reserve, Fee)
-with confirm controls. Uses the existing section-handle + miniTable UI.
+## 7. Panel / UX (more detailed than existing modules)
+New "Solar Hedge" section, richer than the other modules:
+- **Header summary**: e.g. "3 cities · suggest short 60 MWh · lock $18k / $49k free".
+- **Reserve meter**: a small bar showing Market Reserve used vs available, so the
+  collateral impact is visible at a glance.
+- **Grouped by city**: each solar city is a sub-group with its name and current
+  best bid, then a per-tick table: `Tick · Expected MWh · Suggest qty · Price ·
+  Reserve · Fee · [Confirm]`.
+- **Per-order Confirm button** + a **Confirm all** button per city and globally.
+  Confirmed orders show a ✓ and the resulting locked-in price.
+- Colour cues: bid ≥ floor green, below floor greyed (not hedgeable); already-hedged
+  ticks shown as covered.
+- Respects dry-run (shows suggestions but disarms the Confirm buttons).
 
 ## 8. Non-goals
 - Pure directional speculation (separate later feature).
