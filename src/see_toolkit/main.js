@@ -9,6 +9,7 @@ import { solarUpgradeModule } from './modules/solarUpgrade.js';
 import { maintenanceModule } from './modules/maintenance.js';
 import { moneyPickupModule } from './modules/moneyPickup.js';
 import { connectionsModule } from './modules/connections/index.js';
+import { hedgeModule } from './modules/hedge/index.js';
 
 (function () {
   'use strict';
@@ -31,8 +32,9 @@ import { connectionsModule } from './modules/connections/index.js';
   });
   const money = moneyPickupModule({ fetchJSON });
   const connections = connectionsModule({ fetchJSON, store, cache });
+  const hedge = hedgeModule({ fetchJSON, cache, store });
 
-  const modules = [solar, maintenance, money, connections, weather];
+  const modules = [solar, maintenance, money, connections, hedge, weather];
 
   const RUN_INTERVAL_MS = 60 * 60 * 1000;
   let running = false;
