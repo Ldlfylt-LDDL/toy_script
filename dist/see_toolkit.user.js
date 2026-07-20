@@ -335,8 +335,11 @@
     .see-sec.see-open .see-sec-body { display:block; }
     .see-sec.see-open .see-caret { transform:rotate(90deg); }
     .see-caret { color:#5a616e; font-size:9px; transition:transform .1s; }
-    #see-panel a.see-link { color:#6ab0ff; cursor:pointer; text-decoration:none; }
-    #see-panel a.see-link:hover { text-decoration:underline; }
+    #see-foot { display:flex; flex-wrap:wrap; gap:5px; padding:7px 10px; border-top:1px solid #2c313c; }
+    .see-btn { font:11px monospace; background:#232833; color:#9aa0ac; border:1px solid #3a3f4b;
+      border-radius:4px; padding:3px 8px; cursor:pointer; }
+    .see-btn:hover { border-color:#5a616e; color:#d6d6d6; }
+    .see-btn.on { color:#4caf50; border-color:#356b3a; background:#1f2a20; }
   `);
     const badges = h("span", { class: "see-badges" });
     const toggle = h("span", { class: "see-toggle", title: "collapse" }, "\u25BE");
@@ -407,7 +410,25 @@
     function setBadges(list) {
       badges.replaceChildren(...(list || []).map((b) => badge(b.text, b.color)));
     }
-    return { section, setStatus, setBadges, host };
+    const footer = h("div", { id: "see-foot" });
+    main.appendChild(footer);
+    function setControls(defs) {
+      footer.replaceChildren(...defs.map((d) => {
+        const label = () => d.get ? `${d.label}: ${d.get() ? "ON" : "OFF"}` : d.label;
+        const btn = h("button", { class: "see-btn" }, label());
+        const paint = () => {
+          btn.textContent = label();
+          btn.classList.toggle("on", !!(d.get && d.get()));
+        };
+        btn.addEventListener("click", () => {
+          d.on();
+          paint();
+        });
+        paint();
+        return btn;
+      }));
+    }
+    return { section, setStatus, setBadges, setControls, host };
   }
 
   // src/see_toolkit/modules/weather.js
@@ -566,22 +587,18 @@
 
   // src/see_toolkit/modules/maintenance.js
   var MAINT_THRESHOLD = 50;
-  function planMaintenance({ buildings, k, threshold = MAINT_THRESHOLD, startPhaseOf, hasUpgrade }) {
+  function planMaintenance({ buildings, k, threshold = MAINT_THRESHOLD, hasUpgrade }) {
     const out = [];
     for (const b of buildings) {
       if (b.condition == null || b.condition >= threshold) continue;
-      if (b.kind === "SolarPowerPlant" && hasUpgrade(b.id)) continue;
-      const tick = nextTickWithPhase(k, startPhaseOf(b));
+      const isSolar = b.kind === "SolarPowerPlant";
+      if (isSolar && hasUpgrade(b.id)) continue;
+      const tick = isSolar ? nextTickWithPhase(k, 2) : k;
       out.push({ buildingId: b.id, tick });
     }
     return out;
   }
-  function startPhaseFor(building, lowestOutputPhase) {
-    if (building.kind === "SolarPowerPlant") return 2;
-    const p = lowestOutputPhase && lowestOutputPhase[building.id];
-    return p == null ? 2 : p;
-  }
-  function maintenanceModule({ fetchJSON: fetchJSON2, fetchImpl = fetch, cache, upgradeTargets = () => /* @__PURE__ */ new Set(), lowestOutputPhase = () => ({}) }) {
+  function maintenanceModule({ fetchJSON: fetchJSON2, fetchImpl = fetch, cache, upgradeTargets = () => /* @__PURE__ */ new Set() }) {
     async function activitiesFor(playerId, buildingId, k) {
       const raw = await cache.get(`bact:${buildingId}`, async () => (await fetchJSON2(`/api/v1/players/${playerId}/buildings/${buildingId}/`)).buildingActivitySet || []);
       return normalizeActivities(raw, k);
@@ -591,11 +608,9 @@
       title: "Maintenance Backstop",
       async plan(state) {
         const upgrades = upgradeTargets(state);
-        const phases = lowestOutputPhase(state);
         const decisions = planMaintenance({
           buildings: state.buildings || [],
           k: state.k,
-          startPhaseOf: (b) => startPhaseFor(b, phases),
           hasUpgrade: (id) => upgrades.has(id)
         });
         const norm = {};
@@ -989,11 +1004,34 @@
         running = false;
       }
     }
+    function toggle(key) {
+      store.set(key, store.get(key, "0") === "1" ? "0" : "1");
+    }
+    function exportLegacyWeather() {
+      const raw = localStorage.getItem("see_weather_log");
+      if (!raw) {
+        alert("No legacy weather data (see_weather_log) found.");
+        return;
+      }
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([raw], { type: "application/json" }));
+      a.download = `see_weather_legacy_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.json`;
+      a.click();
+    }
     function start() {
       const panel = mountPanel();
+      panel.setControls([
+        { label: "Dry-run", get: () => store.get("dryRun", "0") === "1", on: () => toggle("dryRun") },
+        { label: "Conn auto", get: () => store.get("connAuto", "0") === "1", on: () => toggle("connAuto") },
+        { label: "\u25B6 Run now", on: () => {
+          store.set("forceRun", "1");
+          runOnce(panel);
+        } },
+        { label: "\u2B73 Export weather", on: exportLegacyWeather }
+      ]);
       runOnce(panel);
       setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
-      console.log("[see-toolkit] active. localStorage see:dryRun=1 to preview, see:connAuto=1 to enable connection writes.");
+      console.log("[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).");
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(start, 4e3));
     else setTimeout(start, 4e3);

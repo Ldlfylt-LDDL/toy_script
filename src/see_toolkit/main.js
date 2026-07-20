@@ -95,11 +95,28 @@ import { connectionsModule } from './modules/connections/index.js';
     }
   }
 
+  function toggle(key) { store.set(key, store.get(key, '0') === '1' ? '0' : '1'); }
+
+  function exportLegacyWeather() {
+    const raw = localStorage.getItem('see_weather_log');
+    if (!raw) { alert('No legacy weather data (see_weather_log) found.'); return; }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([raw], { type: 'application/json' }));
+    a.download = `see_weather_legacy_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+  }
+
   function start() {
     const panel = mountPanel();
+    panel.setControls([
+      { label: 'Dry-run', get: () => store.get('dryRun', '0') === '1', on: () => toggle('dryRun') },
+      { label: 'Conn auto', get: () => store.get('connAuto', '0') === '1', on: () => toggle('connAuto') },
+      { label: '▶ Run now', on: () => { store.set('forceRun', '1'); runOnce(panel); } },
+      { label: '⭳ Export weather', on: exportLegacyWeather },
+    ]);
     runOnce(panel);
     setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
-    console.log('[see-toolkit] active. localStorage see:dryRun=1 to preview, see:connAuto=1 to enable connection writes.');
+    console.log('[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(start, 4000));

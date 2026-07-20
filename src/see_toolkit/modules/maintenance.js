@@ -6,28 +6,23 @@ import { normalizeActivities, stateAt, buildingActivityPayload } from './activit
 export const MAINT_THRESHOLD = 50;
 
 // Pure: which buildings need maintenance and at which tick.
-// startPhaseOf(building) -> phase 0..5 to begin maintenance (solar: 2 = night start;
-//   fossil: the lowest-output phase). hasUpgrade(id) -> bool (an upgrade already repairs it).
-export function planMaintenance({ buildings, k, threshold = MAINT_THRESHOLD, startPhaseOf, hasUpgrade }) {
+//  - Solar plants: schedule at the next night start (phase 2); a 4-tick job then
+//    costs only one daytime tick. Skipped entirely if an upgrade already repairs it.
+//  - Always-on plants (gas/coal/wind): no free window exists, and every tick spent
+//    running degraded loses output, so maintain ASAP (the next editable tick `k`).
+export function planMaintenance({ buildings, k, threshold = MAINT_THRESHOLD, hasUpgrade }) {
   const out = [];
   for (const b of buildings) {
     if (b.condition == null || b.condition >= threshold) continue;
-    if (b.kind === 'SolarPowerPlant' && hasUpgrade(b.id)) continue; // nightly upgrade will repair it
-    const tick = nextTickWithPhase(k, startPhaseOf(b));
+    const isSolar = b.kind === 'SolarPowerPlant';
+    if (isSolar && hasUpgrade(b.id)) continue; // nightly upgrade will repair it
+    const tick = isSolar ? nextTickWithPhase(k, 2) : k;
     out.push({ buildingId: b.id, tick });
   }
   return out;
 }
 
-// Lowest-output phase for a building: solar plants are lowest at night start (2);
-// fossil/always-on use the injected recent-output phase map, defaulting to 2.
-export function startPhaseFor(building, lowestOutputPhase) {
-  if (building.kind === 'SolarPowerPlant') return 2;
-  const p = lowestOutputPhase && lowestOutputPhase[building.id];
-  return p == null ? 2 : p;
-}
-
-export function maintenanceModule({ fetchJSON, fetchImpl = fetch, cache, upgradeTargets = () => new Set(), lowestOutputPhase = () => ({}) }) {
+export function maintenanceModule({ fetchJSON, fetchImpl = fetch, cache, upgradeTargets = () => new Set() }) {
   async function activitiesFor(playerId, buildingId, k) {
     const raw = await cache.get(`bact:${buildingId}`, async () =>
       (await fetchJSON(`/api/v1/players/${playerId}/buildings/${buildingId}/`)).buildingActivitySet || []);
@@ -37,11 +32,9 @@ export function maintenanceModule({ fetchJSON, fetchImpl = fetch, cache, upgrade
     id: 'maintenance', title: 'Maintenance Backstop',
     async plan(state) {
       const upgrades = upgradeTargets(state); // Set of building ids getting upgraded this night
-      const phases = lowestOutputPhase(state);
       const decisions = planMaintenance({
         buildings: state.buildings || [],
         k: state.k,
-        startPhaseOf: (b) => startPhaseFor(b, phases),
         hasUpgrade: (id) => upgrades.has(id),
       });
       const norm = {};

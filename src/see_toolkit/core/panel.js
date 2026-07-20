@@ -26,8 +26,11 @@ export function mountPanel() {
     .see-sec.see-open .see-sec-body { display:block; }
     .see-sec.see-open .see-caret { transform:rotate(90deg); }
     .see-caret { color:#5a616e; font-size:9px; transition:transform .1s; }
-    #see-panel a.see-link { color:#6ab0ff; cursor:pointer; text-decoration:none; }
-    #see-panel a.see-link:hover { text-decoration:underline; }
+    #see-foot { display:flex; flex-wrap:wrap; gap:5px; padding:7px 10px; border-top:1px solid #2c313c; }
+    .see-btn { font:11px monospace; background:#232833; color:#9aa0ac; border:1px solid #3a3f4b;
+      border-radius:4px; padding:3px 8px; cursor:pointer; }
+    .see-btn:hover { border-color:#5a616e; color:#d6d6d6; }
+    .see-btn.on { color:#4caf50; border-color:#356b3a; background:#1f2a20; }
   `);
 
   const badges = h('span', { class: 'see-badges' });
@@ -82,5 +85,19 @@ export function mountPanel() {
   function setStatus(text) { statusBar.textContent = text; }
   function setBadges(list) { badges.replaceChildren(...(list || []).map((b) => badge(b.text, b.color))); }
 
-  return { section, setStatus, setBadges, host };
+  // Controls footer. defs: { label, on(), get?() } — get present ⇒ toggle styling.
+  const footer = h('div', { id: 'see-foot' });
+  main.appendChild(footer);
+  function setControls(defs) {
+    footer.replaceChildren(...defs.map((d) => {
+      const label = () => (d.get ? `${d.label}: ${d.get() ? 'ON' : 'OFF'}` : d.label);
+      const btn = h('button', { class: 'see-btn' }, label());
+      const paint = () => { btn.textContent = label(); btn.classList.toggle('on', !!(d.get && d.get())); };
+      btn.addEventListener('click', () => { d.on(); paint(); });
+      paint();
+      return btn;
+    }));
+  }
+
+  return { section, setStatus, setBadges, setControls, host };
 }
