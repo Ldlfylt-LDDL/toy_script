@@ -37,7 +37,49 @@ import { hedgeModule } from './modules/hedge/index.js';
   const modules = [solar, maintenance, money, connections, hedge, weather];
 
   const RUN_INTERVAL_MS = 60 * 60 * 1000;
+  // Baked in at build time (esbuild define). 'dev' when run unbundled.
+  const BUILD_VERSION = typeof __SEE_VERSION__ !== 'undefined' ? __SEE_VERSION__ : 'dev';
+  const DOWNLOAD_URL = 'https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js';
   let running = false;
+
+  // Numeric tuple compare for versions like "2.1.20260720.205515".
+  function cmpVersion(a, b) {
+    const pa = String(a).split('.').map(Number), pb = String(b).split('.').map(Number);
+    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+      const d = (pa[i] || 0) - (pb[i] || 0);
+      if (d) return d > 0 ? 1 : -1;
+    }
+    return 0;
+  }
+
+  // Fetch the published userscript, read its @version, and compare. On a newer
+  // build, open the raw .user.js — Tampermonkey intercepts it and shows its
+  // reinstall page (one click there installs the update). @grant none, so this
+  // uses a plain CORS fetch (raw.githubusercontent.com allows it).
+  async function checkUpdate(panel, { quiet = false } = {}) {
+    if (!quiet) panel.setStatus('Checking for updates…');
+    try {
+      const r = await fetch(DOWNLOAD_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      const txt = await r.text();
+      const m = txt.match(/@version\s+([\d.]+)/);
+      const remote = m && m[1];
+      if (!remote) { if (!quiet) panel.setStatus('Update check failed — could not read remote version.'); return; }
+      if (cmpVersion(remote, BUILD_VERSION) > 0) {
+        if (quiet) {
+          // Auto-open on load would be popup-blocked (no user gesture); just flag it.
+          panel.setStatus(`⤓ Update available: v${remote} — click "⟳ Update" to install.`);
+        } else {
+          panel.setStatus(`⤓ Update v${remote} — opening installer…`);
+          window.open(DOWNLOAD_URL, '_blank');
+        }
+      } else if (!quiet) {
+        panel.setStatus(`✓ Up to date (v${BUILD_VERSION}).`);
+      }
+    } catch (e) {
+      if (!quiet) panel.setStatus('Update check failed — see console.');
+      console.error('[see-toolkit] update check failed', e);
+    }
+  }
 
   async function runOnce(panel) {
     if (running) return;
@@ -139,10 +181,13 @@ import { hedgeModule } from './modules/hedge/index.js';
       { label: 'Conn auto', get: () => store.flag('connAuto'), on: () => toggle('connAuto') },
       { label: 'Auto-reload', get: () => reloadEnabled(), on: () => toggle('autoReload') },
       { label: '▶ Run now', on: () => { store.set('forceRun', '1'); runOnce(panel); } },
+      { label: `⟳ Update (v${BUILD_VERSION})`, on: () => checkUpdate(panel) },
       { label: '⭳ Export weather', on: exportLegacyWeather },
     ]);
     runOnce(panel);
     setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
+    // Quiet check on load: only surfaces (and opens the installer) if newer.
+    setTimeout(() => checkUpdate(panel, { quiet: true }), 8000);
     console.log('[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).');
   }
 

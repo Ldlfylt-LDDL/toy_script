@@ -15,6 +15,9 @@ const opts = {
   banner: { js: banner },
   legalComments: 'none',
   target: 'es2020',
+  // Bake the build version into the bundle so the in-panel update check can
+  // compare the running version against the remote @version.
+  define: { __SEE_VERSION__: JSON.stringify(version) },
 };
 
 if (process.argv.includes('--serve')) {

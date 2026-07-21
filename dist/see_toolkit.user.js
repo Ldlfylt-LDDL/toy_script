@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.205515
+// @version      2.1.20260720.211444
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -1201,7 +1201,43 @@
     const hedge = hedgeModule({ fetchJSON: fetchJSON2, cache, store });
     const modules = [solar, maintenance, money, connections, hedge, weather];
     const RUN_INTERVAL_MS = 60 * 60 * 1e3;
+    const BUILD_VERSION = true ? "2.1.20260720.211444" : "dev";
+    const DOWNLOAD_URL = "https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js";
     let running = false;
+    function cmpVersion(a, b) {
+      const pa = String(a).split(".").map(Number), pb = String(b).split(".").map(Number);
+      for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+        const d = (pa[i] || 0) - (pb[i] || 0);
+        if (d) return d > 0 ? 1 : -1;
+      }
+      return 0;
+    }
+    async function checkUpdate(panel, { quiet = false } = {}) {
+      if (!quiet) panel.setStatus("Checking for updates\u2026");
+      try {
+        const r = await fetch(DOWNLOAD_URL + "?t=" + Date.now(), { cache: "no-store" });
+        const txt = await r.text();
+        const m = txt.match(/@version\s+([\d.]+)/);
+        const remote = m && m[1];
+        if (!remote) {
+          if (!quiet) panel.setStatus("Update check failed \u2014 could not read remote version.");
+          return;
+        }
+        if (cmpVersion(remote, BUILD_VERSION) > 0) {
+          if (quiet) {
+            panel.setStatus(`\u2913 Update available: v${remote} \u2014 click "\u27F3 Update" to install.`);
+          } else {
+            panel.setStatus(`\u2913 Update v${remote} \u2014 opening installer\u2026`);
+            window.open(DOWNLOAD_URL, "_blank");
+          }
+        } else if (!quiet) {
+          panel.setStatus(`\u2713 Up to date (v${BUILD_VERSION}).`);
+        }
+      } catch (e) {
+        if (!quiet) panel.setStatus("Update check failed \u2014 see console.");
+        console.error("[see-toolkit] update check failed", e);
+      }
+    }
     async function runOnce(panel) {
       if (running) return;
       running = true;
@@ -1307,10 +1343,12 @@
           store.set("forceRun", "1");
           runOnce(panel);
         } },
+        { label: `\u27F3 Update (v${BUILD_VERSION})`, on: () => checkUpdate(panel) },
         { label: "\u2B73 Export weather", on: exportLegacyWeather }
       ]);
       runOnce(panel);
       setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
+      setTimeout(() => checkUpdate(panel, { quiet: true }), 8e3);
       console.log("[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).");
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(start, 4e3));
