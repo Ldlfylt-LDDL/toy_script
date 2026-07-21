@@ -2,6 +2,14 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { expectedByPhase, expectedAt, productionExpected, solarEfficiency, roundToStep, hedgeQuantity, passesFloor, fee } from '../src/see_toolkit/modules/hedge/sizing.js';
 import { applyReserveCap } from '../src/see_toolkit/modules/hedge/reserve.js';
+import { orderUrl } from '../src/see_toolkit/modules/hedge/endpoints.js';
+
+test('orderUrl mirrors the game client route with NO trailing slash', () => {
+  // Client: api_orders(hubId,kind,tick) => `/api/v1/hubs/${hubId}/orders/${kind}/${tick}`.
+  // A trailing slash makes the server reject the POST: "Incorrect resource kind supplied".
+  assert.equal(orderUrl(8186, 156), '/api/v1/hubs/8186/orders/power/156');
+  assert.ok(!orderUrl(8186, 156).endsWith('/'), 'must not end with a slash');
+});
 
 test('expectedByPhase averages delivered output per phase', () => {
   // ticks 138(phase0),144(phase0) delivered 100,200 -> phase0 avg 150

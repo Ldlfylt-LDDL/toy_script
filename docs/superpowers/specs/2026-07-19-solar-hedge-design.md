@@ -88,11 +88,17 @@ These are pure and injectable; the order placement + `/positions/` reads are thi
 - Config constants at module top: `HEDGE_FRACTION=0.5`, `RESERVE_CAP_FRACTION=0.6`,
   `PRICE_FLOOR=150`.
 
-## 6. Order endpoint (reverse-engineered 2026-07-19, verified)
-- **Place order**: `POST /api/v1/hubs/{hubId}/orders/power/{tick}/` with body
-  `{"quantity":N, "price":P, "side":"Sell"}` (side "Buy"|"Sell"), signed with
-  `gameHeaders`. To hedge, `side:"Sell"` at `price = best bid` (rounded to a
-  multiple of 5).
+## 6. Order endpoint (reverse-engineered 2026-07-19; corrected 2026-07-21)
+- **Place order**: `POST /api/v1/hubs/{hubId}/orders/power/{tick}` (NO trailing
+  slash) with body `{"quantity":N, "price":P, "side":"Sell"}` (side
+  "Buy"|"Sell"), signed with `gameHeaders`. To hedge, `side:"Sell"` at
+  `price = best bid` (rounded to a multiple of 5). URL confirmed against the
+  client route builder `api_orders:(hubId,kind,tick)=>`.../hubs/${hubId}/orders/${kind}/${tick}``.
+- **Trailing-slash gotcha**: a trailing slash on the POST makes the server
+  reject with 400 `{"message":"Incorrect resource kind supplied"}`. The original
+  "verified" note was incomplete — the $999 price probe was rejected on price
+  before the path/kind check, masking this. Fixed via a shared `orderUrl()`
+  helper (see `endpoints.js`, unit-tested).
 - **Validation**: **price must be a multiple of 5** (server rejects otherwise —
   learned via a $999 test that was cleanly rejected, placing nothing). The
   placement adapter must round to a multiple of 5.

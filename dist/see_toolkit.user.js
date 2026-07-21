@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.211444
+// @version      2.1.20260720.220151
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -988,6 +988,11 @@
     return { kept, used, budget };
   }
 
+  // src/see_toolkit/modules/hedge/endpoints.js
+  function orderUrl(hubId, tick) {
+    return `/api/v1/hubs/${hubId}/orders/power/${tick}`;
+  }
+
   // src/see_toolkit/modules/hedge/index.js
   var ARM_KEY = "hedgeArmed";
   var HEDGE_FRACTION = 0.5;
@@ -1017,7 +1022,7 @@
     }
     async function bestBid(hubId, tick) {
       return cache.get(`pbid:${hubId}:${tick}`, async () => {
-        const j = await fetchJSON2(`/api/v1/hubs/${hubId}/orders/power/${tick}`);
+        const j = await fetchJSON2(orderUrl(hubId, tick));
         const bids = (j.orders || []).filter((o) => o.side === "Buy").map((o) => o.price);
         return bids.length ? Math.max(...bids) : null;
       });
@@ -1026,7 +1031,7 @@
       return cache.get("positions", async () => ((await fetchJSON2(`/api/v1/players/${playerId}/positions/`)).positions || []).filter((p) => p.kind === "Power"));
     }
     async function placeSell(playerId, hubId, tick, quantity, price) {
-      const url = `/api/v1/hubs/${hubId}/orders/power/${tick}/`;
+      const url = orderUrl(hubId, tick);
       const resp = await fetchImpl(url, {
         method: "POST",
         credentials: "same-origin",
@@ -1201,7 +1206,7 @@
     const hedge = hedgeModule({ fetchJSON: fetchJSON2, cache, store });
     const modules = [solar, maintenance, money, connections, hedge, weather];
     const RUN_INTERVAL_MS = 60 * 60 * 1e3;
-    const BUILD_VERSION = true ? "2.1.20260720.211444" : "dev";
+    const BUILD_VERSION = true ? "2.1.20260720.220151" : "dev";
     const DOWNLOAD_URL = "https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js";
     let running = false;
     function cmpVersion(a, b) {

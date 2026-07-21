@@ -3,6 +3,7 @@ import { gameHeaders } from '../../core/api.js';
 import { h } from '../../core/ui.js';
 import { expectedByPhase, expectedAt, productionExpected, solarEfficiency, roundToStep, hedgeQuantity, passesFloor, fee } from './sizing.js';
 import { applyReserveCap } from './reserve.js';
+import { orderUrl } from './endpoints.js';
 import { normalizeActivities, stateAt } from '../activities.js';
 
 const ARM_KEY = 'hedgeArmed';      // '1' shows live Confirm buttons (semi-auto)
@@ -42,7 +43,7 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
   }
   async function bestBid(hubId, tick) {
     return cache.get(`pbid:${hubId}:${tick}`, async () => {
-      const j = await fetchJSON(`/api/v1/hubs/${hubId}/orders/power/${tick}`);
+      const j = await fetchJSON(orderUrl(hubId, tick));
       const bids = (j.orders || []).filter((o) => o.side === 'Buy').map((o) => o.price);
       return bids.length ? Math.max(...bids) : null;
     });
@@ -54,7 +55,7 @@ export function hedgeModule({ fetchJSON, fetchImpl = fetch, cache, store }) {
   }
 
   async function placeSell(playerId, hubId, tick, quantity, price) {
-    const url = `/api/v1/hubs/${hubId}/orders/power/${tick}/`;
+    const url = orderUrl(hubId, tick);
     const resp = await fetchImpl(url, {
       method: 'POST', credentials: 'same-origin',
       headers: gameHeaders(url, { extra: { 'Content-Type': 'application/json' } }),
