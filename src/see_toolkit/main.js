@@ -36,7 +36,6 @@ import { hedgeModule } from './modules/hedge/index.js';
 
   const modules = [solar, maintenance, money, connections, hedge, weather];
 
-  const RUN_INTERVAL_MS = 60 * 60 * 1000;
   // Baked in at build time (esbuild define). 'dev' when run unbundled.
   const BUILD_VERSION = typeof __SEE_VERSION__ !== 'undefined' ? __SEE_VERSION__ : 'dev';
   const DOWNLOAD_URL = 'https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js';
@@ -164,6 +163,25 @@ import { hedgeModule } from './modules/hedge/index.js';
   // Auto-reload defaults ON (unset → on); user can turn it off via the panel toggle.
   function reloadEnabled() { const v = store.get('autoReload', '1'); return v === '1' || v === 1 || v === true; }
 
+  // Poll once an hour, anchored to the :30 (half past) of each clock hour. Ticks
+  // advance on the hour, so a check at half past reliably lands just after the
+  // boundary — instead of a free-running hourly timer that fires at whatever
+  // minute the page happened to load. Self-reschedules off the wall clock (no
+  // setInterval drift), so it stays on the half-hour indefinitely.
+  function msToNextHalfHour() {
+    const now = new Date();
+    const next = new Date(now);
+    next.setMinutes(30, 0, 0);
+    if (next <= now) next.setHours(next.getHours() + 1);
+    return next - now;
+  }
+  function scheduleHourlyOnHalfHour(panel) {
+    setTimeout(function fire() {
+      runOnce(panel);
+      setTimeout(fire, msToNextHalfHour());
+    }, msToNextHalfHour());
+  }
+
   function exportLegacyWeather() {
     const raw = localStorage.getItem('see_weather_log');
     if (!raw) { alert('No legacy weather data (see_weather_log) found.'); return; }
@@ -184,8 +202,8 @@ import { hedgeModule } from './modules/hedge/index.js';
       { label: `⟳ Update (v${BUILD_VERSION})`, on: () => checkUpdate(panel) },
       { label: '⭳ Export weather', on: exportLegacyWeather },
     ]);
-    runOnce(panel);
-    setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
+    runOnce(panel);                  // immediate populate on page load
+    scheduleHourlyOnHalfHour(panel); // recurring check, anchored to :30 each hour
     // Quiet check on load: only surfaces (and opens the installer) if newer.
     setTimeout(() => checkUpdate(panel, { quiet: true }), 8000);
     console.log('[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).');

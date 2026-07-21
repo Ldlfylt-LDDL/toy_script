@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.223219
+// @version      2.1.20260721.010221
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -1209,8 +1209,7 @@
     const connections = connectionsModule({ fetchJSON: fetchJSON2, store, cache });
     const hedge = hedgeModule({ fetchJSON: fetchJSON2, cache, store });
     const modules = [solar, maintenance, money, connections, hedge, weather];
-    const RUN_INTERVAL_MS = 60 * 60 * 1e3;
-    const BUILD_VERSION = true ? "2.1.20260720.223219" : "dev";
+    const BUILD_VERSION = true ? "2.1.20260721.010221" : "dev";
     const DOWNLOAD_URL = "https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js";
     let running = false;
     function cmpVersion(a, b) {
@@ -1330,6 +1329,19 @@
       const v = store.get("autoReload", "1");
       return v === "1" || v === 1 || v === true;
     }
+    function msToNextHalfHour() {
+      const now = /* @__PURE__ */ new Date();
+      const next = new Date(now);
+      next.setMinutes(30, 0, 0);
+      if (next <= now) next.setHours(next.getHours() + 1);
+      return next - now;
+    }
+    function scheduleHourlyOnHalfHour(panel) {
+      setTimeout(function fire() {
+        runOnce(panel);
+        setTimeout(fire, msToNextHalfHour());
+      }, msToNextHalfHour());
+    }
     function exportLegacyWeather() {
       const raw = localStorage.getItem("see_weather_log");
       if (!raw) {
@@ -1356,7 +1368,7 @@
         { label: "\u2B73 Export weather", on: exportLegacyWeather }
       ]);
       runOnce(panel);
-      setInterval(() => runOnce(panel), RUN_INTERVAL_MS);
+      scheduleHourlyOnHalfHour(panel);
       setTimeout(() => checkUpdate(panel, { quiet: true }), 8e3);
       console.log("[see-toolkit] active. Use the panel buttons (Dry-run / Conn auto / Run now / Export weather).");
     }
