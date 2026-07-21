@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.191733
+// @version      2.1.20260720.205515
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -792,14 +792,14 @@
   var HYSTERESIS = 2;
   var COST_FALLBACK = 5;
   var CAP_BUFFER = 15;
-  var MIN_SAMPLES = 6;
+  var MIN_SAMPLES = 3;
   function evaluateConnection({ prices, edge, capacity, k, phaseOf = phase }) {
     const fwdSamples = spreadSamples(prices, edge.hub1Id, edge.hub2Id, phaseOf(k), phaseOf);
     const revSamples = spreadSamples(prices, edge.hub2Id, edge.hub1Id, phaseOf(k), phaseOf);
     const forward = forecast(fwdSamples);
     const reverse = forecast(revSamples);
     const current = capacity >= 0 ? "forward" : "reverse";
-    const desired = decideDirection({ current, forward, reverse, threshold: FLIP_THRESHOLD });
+    const desired = decideDirection({ current, forward, reverse, threshold: FLIP_THRESHOLD, minSamples: MIN_SAMPLES });
     const gradientAmplitude = Math.max(0, forward.median ?? 0, reverse.median ?? 0);
     return { forward, reverse, current, desired, gradientAmplitude };
   }
@@ -902,7 +902,7 @@
         }
         store.set("prices", prices);
         store.set("connStreak", streaks);
-        const coldStart = rows.length && rows.every((r) => r.n < 6);
+        const coldStart = rows.length && rows.every((r) => r.n < MIN_SAMPLES);
         return { writes, view: { total: power.length, flagged, flips, auto, coldStart, rows } };
       },
       render(view, sec) {
@@ -917,8 +917,8 @@
         };
         const kids = [];
         kids.push(line(view.auto ? "\u25CF Auto trading ON \u2014 will flip direction & set stop-loss" : '\u25CB Read-only (turn on "Conn auto" to let it trade)'));
-        if (view.coldStart) kids.push(line("Cold start: gathering price history \u2014 needs ~6 samples before it acts or judges."));
-        kids.push(line("Profit = best-case $/MWh next tick \xB7 Samples = price history (\u22656 to trust) \xB7 \u2702 low value \xB7 \u21C4 will flip"));
+        if (view.coldStart) kids.push(line(`Cold start: gathering price history \u2014 needs ~${MIN_SAMPLES} samples before it acts or judges.`));
+        kids.push(line(`Profit = best-case $/MWh next tick \xB7 Samples = price history (\u2265${MIN_SAMPLES} to trust) \xB7 \u2702 low value \xB7 \u21C4 will flip`));
         if (view.rows.length) {
           kids.push(miniTable(
             ["Conn", "Route", "Profit/MWh", "Samples", "Flags"],

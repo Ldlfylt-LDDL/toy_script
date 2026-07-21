@@ -14,7 +14,7 @@ const FLIP_THRESHOLD = 30;     // $ edge over current before flipping
 const HYSTERESIS = 2;          // consecutive evals pointing the same way
 const COST_FALLBACK = 5;       // per-MWh transport/wage estimate
 const CAP_BUFFER = 15;         // safety margin under forecast dest price
-const MIN_SAMPLES = 6;         // price samples needed before we trust the forecast
+const MIN_SAMPLES = 3;         // price samples needed before we trust the forecast
 
 // Pure-ish evaluation for one connection given accumulated prices and current state.
 export function evaluateConnection({ prices, edge, capacity, k, phaseOf = phase }) {
@@ -23,7 +23,7 @@ export function evaluateConnection({ prices, edge, capacity, k, phaseOf = phase 
   const forward = forecast(fwdSamples);
   const reverse = forecast(revSamples);
   const current = capacity >= 0 ? 'forward' : 'reverse';
-  const desired = decideDirection({ current, forward, reverse, threshold: FLIP_THRESHOLD });
+  const desired = decideDirection({ current, forward, reverse, threshold: FLIP_THRESHOLD, minSamples: MIN_SAMPLES });
   // gradient amplitude: how far the best-direction median sits above zero
   const gradientAmplitude = Math.max(0, forward.median ?? 0, reverse.median ?? 0);
   return { forward, reverse, current, desired, gradientAmplitude };
@@ -138,7 +138,7 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
 
       store.set('prices', prices);
       store.set('connStreak', streaks);
-      const coldStart = rows.length && rows.every((r) => r.n < 6);
+      const coldStart = rows.length && rows.every((r) => r.n < MIN_SAMPLES);
       return { writes, view: { total: power.length, flagged, flips, auto, coldStart, rows } };
     },
     render(view, sec) {
@@ -153,9 +153,9 @@ export function connectionsModule({ fetchJSON, fetchImpl = fetch, store, cache }
       };
       const kids = [];
       kids.push(line(view.auto ? '● Auto trading ON — will flip direction & set stop-loss' : '○ Read-only (turn on "Conn auto" to let it trade)'));
-      if (view.coldStart) kids.push(line('Cold start: gathering price history — needs ~6 samples before it acts or judges.'));
+      if (view.coldStart) kids.push(line(`Cold start: gathering price history — needs ~${MIN_SAMPLES} samples before it acts or judges.`));
       // Column legend so the table is self-explanatory.
-      kids.push(line('Profit = best-case $/MWh next tick · Samples = price history (≥6 to trust) · ✂ low value · ⇄ will flip'));
+      kids.push(line(`Profit = best-case $/MWh next tick · Samples = price history (≥${MIN_SAMPLES} to trust) · ✂ low value · ⇄ will flip`));
       if (view.rows.length) {
         kids.push(miniTable(['Conn', 'Route', 'Profit/MWh', 'Samples', 'Flags'],
           view.rows.map((r) => [
