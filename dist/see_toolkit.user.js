@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimEnergyEmpire Toolkit
 // @namespace    https://www.simenergyempire.com/
-// @version      2.1.20260720.220151
+// @version      2.1.20260720.223219
 // @description  Weather logger + connection/solar automation for Sim Energy Empire
 // @author       LDDL
 // @match        https://www.simenergyempire.com/*
@@ -725,7 +725,11 @@
   var recentN = (arr, n) => arr.slice(Math.max(0, arr.length - n));
 
   // src/see_toolkit/modules/connections/priceStore.js
+  var SHORTAGE_PRICE = 300;
+  var isBlackoutPrice = (price) => price === 0;
   function recordPrice(prices, hubId, tick, price, cap = 200) {
+    if (price == null) return prices;
+    if (isBlackoutPrice(price)) price = SHORTAGE_PRICE;
     const arr = prices[hubId] || [];
     if (!arr.some((x) => x.t === tick)) arr.push({ t: tick, price });
     arr.sort((a, b) => a.t - b.t);
@@ -1206,7 +1210,7 @@
     const hedge = hedgeModule({ fetchJSON: fetchJSON2, cache, store });
     const modules = [solar, maintenance, money, connections, hedge, weather];
     const RUN_INTERVAL_MS = 60 * 60 * 1e3;
-    const BUILD_VERSION = true ? "2.1.20260720.220151" : "dev";
+    const BUILD_VERSION = true ? "2.1.20260720.223219" : "dev";
     const DOWNLOAD_URL = "https://raw.githubusercontent.com/Ldlfylt-LDDL/toy_script/main/dist/see_toolkit.user.js";
     let running = false;
     function cmpVersion(a, b) {

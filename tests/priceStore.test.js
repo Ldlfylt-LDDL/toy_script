@@ -13,6 +13,13 @@ test('recordPrice appends, dedupes by tick, caps length', () => {
   for (let t = 200; t < 210; t++) recordPrice(p, 1, t, t, 3);
   assert.equal(p[1].length, 3);
 });
+test('recordPrice maps a 0 (blackout) to the $300 cap, not a $0 price', () => {
+  let p = {};
+  recordPrice(p, 1, 140, 0);        // full blackout — most extreme scarcity, reads as >=300
+  recordPrice(p, 1, 141, 135);      // genuine low price is kept as-is
+  assert.equal(priceAt(p, 1, 140), 300);
+  assert.equal(priceAt(p, 1, 141), 135);
+});
 test('spreadSamples = dst[T+1] - src[T] at matching phase', () => {
   // src hub 1, dst hub 2. T=139 (phase1): dst[140]-src[139]
   const p = {
